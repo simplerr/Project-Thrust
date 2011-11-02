@@ -1,0 +1,12 @@
+﻿  Projectile.cpp
+c:\users\axel\documents\visual studio 2010\projects\project thrust\project thrust\projectile.h(19): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+c:\users\axel\documents\visual studio 2010\projects\project thrust\project thrust\projectile.cpp(8): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+c:\users\axel\documents\visual studio 2010\projects\project thrust\project thrust\projectile.cpp(38): warning C4244: '+=' : conversion from 'float' to 'int', possible loss of data
+c:\users\axel\documents\visual studio 2010\projects\project thrust\project thrust\projectile.cpp(69): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+c:\users\axel\documents\visual studio 2010\projects\project thrust\project thrust\projectile.cpp(69): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+c:\users\axel\documents\visual studio 2010\projects\project thrust\project thrust\projectile.cpp(76): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+c:\users\axel\documents\visual studio 2010\projects\project thrust\project thrust\projectile.cpp(78): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+c:\users\axel\documents\visual studio 2010\projects\project thrust\project thrust\projectile.cpp(83): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+c:\users\axel\documents\visual studio 2010\projects\project thrust\project thrust\projectile.cpp(85): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+c:\users\axel\documents\visual studio 2010\projects\project thrust\project thrust\projectile.cpp(90): warning C4305: '-=' : truncation from 'double' to 'float'
+  Project Thrust.vcxproj -> C:\Users\Axel\Documents\Visual Studio 2010\Projects\Project Thrust\Debug\Project Thrust.exe
