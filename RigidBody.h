@@ -57,6 +57,8 @@ public:
 	void SetInertia(float inertia)				{mInertiaTensor = inertia;}
 	void SetRepeatX(bool b)						{mRepeatX = b;}
 	void SetOwner(void* owner)					{mOwner = owner;}
+	void SetParentBody(RigidBody* body)			{mParentBody = body;}
+	void SetSimulate(bool simulate)				{mSimulate = simulate;}
 	void Rotate(float rotation)					{mShape->rotate(rotation);}
 	
 	void ApplyForce(Vector force, Vector pos);
@@ -74,17 +76,21 @@ public:
 	float	GetInertia()		{return mInertiaTensor;}
 	float	GetInvInertia()		{return mInertiaTensor == 0 ? 0 : 1 / mInertiaTensor;}
 	bool	GetSleeping()		{return mSleep;}
+	bool	GetSimulate()		{return mSimulate;}
 	float	GetFriction()		{return mFriction;}
 	void*	GetOwner()			{return mOwner;}
+	RigidBody* GetParentBody()	{return mParentBody;}
 
 private:
 	IDirect3DTexture9*	mTexture;
-	Shape*	mShape;
-	void*	mOwner;
+	Shape*		mShape;
+	RigidBody*	mParentBody;	// :UGLY:
+	void*		mOwner;
 	
 	bool	mCollidable;	// Needed? All rigids can collide?
 	bool	mAlive;
 	bool	mStatic;
+	bool	mSimulate;			// :UGLY: - no need?
 	int		mID;
 
 	// Primary physics states

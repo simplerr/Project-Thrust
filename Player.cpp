@@ -2,6 +2,8 @@
 #include "Graphics.h"
 #include "DirectInput.h"
 #include "Level.h"
+#include "Sword.h"
+#include "Weapon.h"
 #include "RangedWeapon.h"
 
 Collision polyCollision(RigidBody* bodyA, RigidBody* bodyB);
@@ -27,24 +29,32 @@ Player::Player(float x, float y, int width, int height)
 	getBody()->SetFriction(5.0f);
 
 	// Create and set the weapon attributes, the weapon will use this information when it creates projectiles
-	mWeapon = new RangedWeapon(getPosition().x + 20, getPosition().y, 64, 16, 10.0f, "imgs\\normal_gun.bmp");
+	/*mWeapon = new RangedWeapon(getPosition().x + 20, getPosition().y, 64, 16, 10.0f, "imgs\\normal_gun.bmp");
 	mWeapon->setOwner(this);
 	mWeapon->setAllowedBounces(2);
 	mWeapon->setRange(2000);
 	mWeapon->setLifeTime(15.0f);
-	mWeapon->getBody()->getShape()->setRotationAxis(Vector(-5, 0));
+	mWeapon->getBody()->getShape()->setRotationAxis(Vector(-5, 0));*/
+
+	mWeapon = new Sword(getPosition().x, getPosition().y);
+	mWeapon->setOffset(Vector(10, 0));
+	mWeapon->setRotationAxis(Vector(0, 10));
+	mWeapon->setStandardRotation(PI/5);
+	mWeapon->setOwner(this);
 }
 	
 Player::~Player()
 {
 	delete mAnimation;
-	delete mWeapon;
 }
 
 void Player::update(float dt)
 {
 	// Update the animation
 	mAnimation->animate(dt);
+
+	// Update the weapon
+	mWeapon->update(dt);
 
 	/* Update the velocity */
 
@@ -53,6 +63,8 @@ void Player::update(float dt)
 		setVelocity(getVelocity() + Vector(-mAcceleration, 0));	
 		setFacingDirection(LEFT);
 
+		mWeapon->setFlipped(true);
+
 		// If the player is on the ground, continue the animation
 		if(!mInAir)	
 			mAnimation->resume();
@@ -60,6 +72,8 @@ void Player::update(float dt)
 	else if(gDInput->keyDown(DIK_D))	{	// Right
 		setVelocity(getVelocity() + Vector(mAcceleration, 0));	
 		setFacingDirection(RIGHT);
+
+		mWeapon->setFlipped(false);
 
 		// If the player is on the ground, continue the animation
 		if(!mInAir)	
@@ -85,7 +99,7 @@ void Player::update(float dt)
 
 	// Shooting with the left mouse button
 	if(gDInput->mouseButtonPressed(0))	{
-		mWeapon->shoot();
+		mWeapon->attack();
 	}
 
 	// Update the weapon position and rotation
@@ -128,21 +142,23 @@ void Player::collided(Object* collider)
 void Player::updateWeapon()
 {
 	/* Rotate it pointing at the mouse position */
-	mWeapon->getBody()->getShape()->resetRotation();
+	//mWeapon->getBody()->getShape()->resetRotation();
 	// Get mouse position
-	Vector mousePos = gDInput->getCursorPos();
+	//Vector mousePos = gDInput->getCursorPos();
 
 	// Get distance to it
-	float dx = mousePos.x - mWeapon->getPosition().x;
-	float dy = mousePos.y - mWeapon->getPosition().y;
+	//float dx = mousePos.x - mWeapon->getPosition().x;
+	//float dy = mousePos.y - mWeapon->getPosition().y;
 
 	// Point weapon in mouse direction - atan2 to not be limited to tans 180 degree period
-	float rotation = atan2f(dy, dx);
+	//float rotation = atan2f(dy, dx);
 
-	mWeapon->getBody()->rotate(rotation);
+	//mWeapon->rotate(rotation);
 
-	/* Update the position */
-	mWeapon->setPosition(getPosition().x + 20, getPosition().y);
+	/* Update the position 
+		- The position of the weapon is allways the same as the player + the offset asigned
+	*/
+	mWeapon->updatePosition(getPosition());
 }
 
 void Player::setFacingDirection(Direction direction)
@@ -155,4 +171,18 @@ void Player::setLevel(Level* level)
 	// Important to set the weapons level, so it know where to add the projectiles
 	Object::setLevel(level);
 	mWeapon->setLevel(level);
+	getLevel()->addObject(mWeapon);
+}
+
+void Player::setVelocity(Vector velocity)
+{
+	Object::setVelocity(velocity);
+
+	// Set the weapons velocity so it works correctly when collididing with bodies
+	mWeapon->setVelocity(velocity);
+}
+
+void Player::setVelocity(float dx, float dy)
+{
+	setVelocity(Vector(dx, dy));
 }

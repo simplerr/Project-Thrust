@@ -5,9 +5,8 @@
 //#include "Particle.h"
 
 RangedWeapon::RangedWeapon(float x, float y, int width, int height, float damage, string textureSource)
-	:Object(x, y, width, height, textureSource)
+	:Weapon(x, y, width, height, textureSource)
 {
-	mDamage = damage;
 	setAllowedBounces(0);
 	setType(RANGED_WEAPON);
 	setRange(200);
@@ -19,7 +18,7 @@ RangedWeapon::~RangedWeapon()
 
 }
 
-void RangedWeapon::shoot()
+void RangedWeapon::attack(int attack)
 {
 	// Calculate where to spawn the projectile
 	float offsetX = - 10 + 40*cosf(getRotation());
@@ -36,17 +35,4 @@ void RangedWeapon::shoot()
 	bullet->setLifeTime(mLifeTime);
 	bullet->getBody()->SetMass(10000);
 	getLevel()->addObject(bullet);
-
-	// Add particle effect
-	/*ParticleEmitter* emitter = new ParticleEmitter(getOrigin().x + offsetX, getOrigin().y + offsetY);
-	emitter->setDirection(getRotation() - PI/2);
-	emitter->setDimension(8, 8);
-	emitter->setVelocity(13.0f);
-	emitter->setEmittType(PARTICLE_RICOCHET)
-	emitter->setInterval(.005);
-	emitter->setSpreadAngle(PI);
-	emitter->setMax(20);
-	emitter->setLength(25);
-	emitter->setLifeTime(.09f);
-	level->addObject(emitter);*/
 }

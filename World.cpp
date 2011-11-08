@@ -48,6 +48,9 @@ void World::BroadPhase()
 		{
 			RigidBody* bj = mBodyList[j];
 
+			if(bj->GetParentBody() == bi || bi->GetParentBody() == bj)
+				continue;
+
 			Arbiter newArb(bi, bj);
 			ArbiterKey key(bi, bj);
 
@@ -94,9 +97,6 @@ void World::Step(float dt)
 
 			if(b->GetMass() != 0)	
 			{
-				if(b->GetVelocity().y < 1)
-					int asdsad = 1;
-
 				b->SetVelocity(b->GetVelocity() + dt * (Vector(0, GRAVITY, 0) + (b->GetInvMass()) * b->GetForce() * 10000));
 				b->SetAngularVelocity(b->GetAngularVelocity() + dt * (b->GetInvInertia()) * b->GetTorque() * 1000);
 			}
@@ -119,6 +119,12 @@ void World::Step(float dt)
 				if(arb->second.active)
 					arb->second.ApplyImpulse();
 			}
+		}
+
+		for(ArbIter arb = arbiters.begin(); arb != arbiters.end(); arb++)
+		{
+			//if(arb->second.active)
+			//	callback(arb->second.bodyA->GetOwner(), arb->second.bodyB->GetOwner());
 		}
 
 		// Integrate velocities

@@ -147,6 +147,13 @@ void Arbiter::ApplyImpulse()
 {
 	for(int i = 0; i < contactList.size(); i++)
 	{
+		// Kinda hacky, prevents none simulating bodies from being affected from collision impulses
+		int simA = 1, simB = 1;
+		if(!bodyA->GetSimulate())
+			simA = 0;
+		if(!bodyB->GetSimulate())
+			simB = 0;
+
 		Contact* c = contactList[i];
 		c->ra = c->pos - bodyA->GetPosition();
 		c->rb = c->pos - bodyB->GetPosition();
@@ -170,11 +177,12 @@ void Arbiter::ApplyImpulse()
 		// Apply contact impulse
 		Vector Pn = dPn * normal;
 
-		bodyA->SetVelocity(bodyA->GetVelocity() - (bodyA->GetInvMass()) * Pn);
-		bodyA->SetAngularVelocity(bodyA->GetAngularVelocity() - (bodyA->GetInvInertia()) * c->ra.cross(Pn).z);	// Note the .z, x and y is 0
+		bodyA->SetVelocity(bodyA->GetVelocity() - (bodyA->GetInvMass()) * Pn ) ;
+		bodyA->SetAngularVelocity(bodyA->GetAngularVelocity() - (bodyA->GetInvInertia()) * c->ra.cross(Pn).z );	// Note the .z, x and y is 0
 
-		bodyB->SetVelocity(bodyB->GetVelocity() + (bodyB->GetInvMass()) * Pn);
-		bodyB->SetAngularVelocity(bodyB->GetAngularVelocity() + (bodyB->GetInvInertia()) * c->rb.cross(Pn).z);
+		bodyB->SetVelocity(bodyB->GetVelocity() + (bodyB->GetInvMass()) * Pn );
+		bodyB->SetAngularVelocity(bodyB->GetAngularVelocity() + (bodyB->GetInvInertia()) * c->rb.cross(Pn).z );
+
 
 		/* Friction impulse */
 
@@ -198,10 +206,10 @@ void Arbiter::ApplyImpulse()
 		Vector Pt = dPt * tangent;
 		Pt.y = 0;
 
-		bodyA->SetVelocity(bodyA->GetVelocity() - (bodyA->GetInvMass()) * Pt);
-		bodyA->SetAngularVelocity(bodyA->GetAngularVelocity() - (bodyA->GetInvInertia()) * c->ra.cross(Pt).z);	// Note the .z, x and y is 0
+		bodyA->SetVelocity(bodyA->GetVelocity() - (bodyA->GetInvMass()) * Pt );
+		bodyA->SetAngularVelocity(bodyA->GetAngularVelocity() - (bodyA->GetInvInertia()) * c->ra.cross(Pt).z );	// Note the .z, x and y is 0
 
-		bodyB->SetVelocity(bodyB->GetVelocity() + (bodyB->GetInvMass()) * Pt);
-		bodyB->SetAngularVelocity(bodyB->GetAngularVelocity() + (bodyB->GetInvInertia()) * c->rb.cross(Pt).z);
+		bodyB->SetVelocity(bodyB->GetVelocity() + (bodyB->GetInvMass()) * Pt * simB);
+		bodyB->SetAngularVelocity(bodyB->GetAngularVelocity() + (bodyB->GetInvInertia()) * c->rb.cross(Pt).z );
 	}
 }

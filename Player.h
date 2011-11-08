@@ -5,7 +5,7 @@
 #include "Animation.h"
 
 class Level;
-class RangedWeapon;
+class Weapon;
 
 class Player : public Object
 {
@@ -20,6 +20,8 @@ public:
 	void collided(Object* collider);
 	void setFacingDirection(Direction direction);
 	void setLevel(Level* level);
+	void setVelocity(Vector velocity);
+	void setVelocity(float dx, float dy);
 private:
 	Animation*	mAnimation;
 	int			mHealth;
@@ -28,7 +30,7 @@ private:
 	Direction	mFaceDirection;
 	bool		mInAir;
 
-	RangedWeapon* mWeapon;
+	Weapon*		mWeapon;
 };
 
 #endif

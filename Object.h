@@ -17,14 +17,18 @@ public:
 
 	virtual void collided(Object* collider);
 
+	void rotate(float rotate);
+
+	virtual void setVelocity(Vector velocity);
+	virtual void setVelocity(float dx, float dy);
+
 	void setPosition(Vector pos);
 	void setPosition(float x, float y);
-	void setVelocity(Vector velocity);
-	void setVelocity(float dx, float dy);
-	void setWidth(int width);
-	void setHeight(int height);
 	void setId(int id);
 	void setType(ObjectType type);
+	void setRotation(float rotation);
+	void setRotationAxis(Vector axis);
+	void setTexture(string textureSource);
 	virtual void setLevel(Level* level);
 	void kill();
 

@@ -64,14 +64,25 @@ void Object::setType(ObjectType type)
 	mType = type;
 }
 
-void Object::setWidth(int width)
+void Object::setRotation(float rotation)
 {
-	
+	getBody()->getShape()->resetRotation();
+	getBody()->Rotate(rotation);
 }
-	
-void Object::setHeight(int height)
-{
 
+void Object::setTexture(string textureSource)
+{
+	mTexture = gGraphics->loadTexture(textureSource);
+}
+
+void Object::rotate(float rotate)
+{
+	getBody()->Rotate(rotate);
+}
+
+void Object::setRotationAxis(Vector axis)
+{
+	getBody()->getShape()->setRotationAxis(axis);
 }
 
 Vector Object::getPosition()
