@@ -67,6 +67,10 @@ void Sword::collided(Object* collider)
 		// Here only the owner gets moved, but indirectly it's both of them because the sward has the same position as the ower + offset
 		// :NOTE: Not physically correct!
 		getOwner()->getBody()->move(collision.pushX, collision.pushY);
+
+		// Stop the attack
+		restoreRotation();
+		setAttacking(false);
 	}
 }
 
