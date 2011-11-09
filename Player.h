@@ -17,6 +17,7 @@ public:
 	void draw();
 
 	void equipWeapon(Weapon* weapon);
+	void dropWeapon();
 	void updateWeapon();
 
 	bool collided(Object* collider);

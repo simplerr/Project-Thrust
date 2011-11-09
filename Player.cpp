@@ -5,6 +5,7 @@
 #include "Sword.h"
 #include "Weapon.h"
 #include "RangedWeapon.h"
+#include "Loots.h"
 
 Collision polyCollision(RigidBody* bodyA, RigidBody* bodyB);
 
@@ -107,6 +108,9 @@ void Player::update(float dt)
 		if(mWeapon != NULL)
 			mWeapon->attack();
 	}
+
+	if(gDInput->keyPressed(DIK_G))
+		dropWeapon();
 
 	// Update the weapon position and rotation
 	updateWeapon();
@@ -214,5 +218,23 @@ void Player::equipWeapon(Weapon* weapon)
 
 void Player::dropWeapon()
 {
+	if(mWeapon != NULL)
+	{
+		// Remove the equipped weapon from the level
+		getLevel()->removeObject(mWeapon);
+		mWeapon = NULL;
 
+		SwordLoot* newLoot = new SwordLoot(getPosition().x, getPosition().y, 50, 50);
+		newLoot->setLevel(getLevel());
+		if(mFaceDirection == RIGHT)	{
+			newLoot->getBody()->move(50, -50);
+			newLoot->getBody()->ApplyForce(Vector(1, -1), newLoot->getPosition());
+		}
+		else if(mFaceDirection == LEFT)	{
+			newLoot->getBody()->move(-50, -50);
+			newLoot->getBody()->ApplyForce(Vector(-1, -1), newLoot->getPosition());
+		}
+
+		getLevel()->addObject(newLoot);
+	}
 }
