@@ -49,8 +49,19 @@ void Sword::collided(Object* collider)
 		Collision collision = polyCollision(collider->getBody(), this->getBody());
 
 		// Apply impulse to the collided object
-		if(collider->getBody()->GetMass() != 0.0f && getAttacking())
-			collider->getBody()->ApplyForce(Vector(0, -1), collider->getPosition());
+		if(collider->getBody()->GetMass() != 0.0f && getAttacking())	{
+			float forceMagnitude = 5.0f;
+			float angle = getRotation();
+
+			//if(angle < 0.0f)
+			//	angle = PI - angle;
+			angle -= PI/2;
+
+			float x = cosf(angle) * forceMagnitude;
+			float y = sinf(angle) * forceMagnitude;
+
+			collider->getBody()->ApplyForce(Vector(x, y), collider->getPosition());
+		}
 
 		// Move the owner and the sword out of collision
 		// Here only the owner gets moved, but indirectly it's both of them because the sward has the same position as the ower + offset

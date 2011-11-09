@@ -93,7 +93,7 @@ public:
 	Vector	GetPosition()			{return mPosition;}
 	Vector	getDragPos()			{return mDragPos;}
 	int		getSides()				{return mSides;}
-	float	getRotation()			{return mRotation;}
+	float	getRotation()			{return mRotation;}		// :NOTE: Doesn't give correct rotation, if you take mRotation - PI/2 (90dgs) then you get the correct
 
 	// Makes it at a lot cleaner than having it private
 	std::vector<Vector> pointList;

@@ -87,7 +87,7 @@ private:
 	RigidBody*	mParentBody;	// :UGLY:
 	void*		mOwner;
 	
-	bool	mCollidable;	// Needed? All rigids can collide?
+	bool	mCollidable;		// Needed? All rigids can collide?
 	bool	mAlive;
 	bool	mStatic;
 	bool	mSimulate;			// :UGLY: - no need?

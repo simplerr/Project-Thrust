@@ -121,12 +121,6 @@ void World::Step(float dt)
 			}
 		}
 
-		for(ArbIter arb = arbiters.begin(); arb != arbiters.end(); arb++)
-		{
-			//if(arb->second.active)
-			//	callback(arb->second.bodyA->GetOwner(), arb->second.bodyB->GetOwner());
-		}
-
 		// Integrate velocities
 		for(int i = 0; i < mBodyList.size(); i++)
 		{
