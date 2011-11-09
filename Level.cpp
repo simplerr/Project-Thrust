@@ -1,6 +1,7 @@
 #include "Level.h"
 #include "Object.h"
 #include "Player.h"
+#include "Graphics.h"
 #include "DirectInput.h"
 
 Level::Level()
@@ -49,6 +50,10 @@ void Level::draw()
 	{
 		mObjectList[i]->draw();
 	}
+
+	char buffer[256];
+	sprintf(buffer, "objects: %i", mObjectList.size());
+	gGraphics->drawText(buffer, 10, 300);
 }
 
 void Level::handleCollision(void* objA, void* objB)
@@ -61,8 +66,8 @@ void Level::handleCollision(void* objA, void* objB)
 	objectB = (Object*)objB;
 
 	// Call the colide functions
-	objectA->collided(objectB);
-	objectB->collided(objectA);
+	if(objectA->collided(objectB))	// Collided return false if objectB is deleted inside the function
+		objectB->collided(objectA);
 }
 
 void Level::addObject(Object* object)
@@ -92,6 +97,7 @@ void Level::removeObject(Object* object)
 	{
 		if(mObjectList[i]->getId() == object->getId())	{
 			delete mObjectList[i];
+			mObjectList[i] = NULL;
 			mObjectList.erase(mObjectList.begin() + i);
 		}
 	}

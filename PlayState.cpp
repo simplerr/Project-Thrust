@@ -3,6 +3,7 @@
 #include "Level.h"
 #include "Object.h"
 #include "Player.h"
+#include "Loots.h"
 
 PlayState::PlayState()
 {
@@ -25,6 +26,12 @@ PlayState::PlayState()
 	object = new Object(800, 600, 100, 500);
 	object->getBody()->SetMass(0);
 	mLevel->addObject(object);
+
+	SwordLoot* loot = new SwordLoot(400, 300, 50, 50);
+	mLevel->addObject(loot);
+
+	SwordLoot* loot1 = new SwordLoot(600, 300, 50, 50);
+	mLevel->addObject(loot1);
 }
 
 PlayState::~PlayState()

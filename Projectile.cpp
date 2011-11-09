@@ -46,7 +46,7 @@ void Projectile::update(float dt)
 	}
 }
 	
-void Projectile::collided(Object* collider)
+bool Projectile::collided(Object* collider)
 {
 	// Get information about the collision
 	Collision collision = polyCollision(getBody(), collider->getBody());
@@ -95,6 +95,8 @@ void Projectile::collided(Object* collider)
 			setVelocity(newVelocity.x, newVelocity.y);
 		}
 	}
+
+	return true;
 }
 
 void Projectile::setSpeed(float speed)

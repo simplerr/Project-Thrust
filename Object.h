@@ -15,7 +15,7 @@ public:
 	virtual void update(float dt);
 	virtual void draw();
 
-	virtual void collided(Object* collider);
+	virtual bool collided(Object* collider);	// Collided return false if objectB is deleted inside the function
 
 	void rotate(float rotate);
 
@@ -29,6 +29,7 @@ public:
 	void setRotation(float rotation);
 	void setRotationAxis(Vector axis);
 	void setTexture(string textureSource);
+	void setOwner(Object* owner);
 	virtual void setLevel(Level* level);
 	void kill();
 
@@ -39,14 +40,16 @@ public:
 	int			getId();
 	float		getRotation();
 	RigidBody*	getBody();
-	ObjectType	getType();
 	Level*		getLevel();
+	Object*		getOwner();
+	ObjectType	getType();
 	bool		getAlive();
 
 	IDirect3DTexture9* getTexture();
 private:
 	Level*		mLevel;
 	RigidBody*	mBody;
+	Object*		mOwner;
 	ObjectType	mType;
 	int			mId;
 	bool		mAlive;

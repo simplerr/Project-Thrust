@@ -19,19 +19,16 @@ public:
 	void updatePosition(Vector ownerPos);
 	void restoreRotation();
 
-	void setOwner(Object* owner);
 	void setAttacking(bool attacking);
 	void setDamage(float damage);
 	void setOffset(Vector offset);
 	void setStandardRotation(float standardRotation);
 	void setFlipped(bool flipped);
 
-	Object*	getOwner();
 	bool	getAttacking();
 	bool	getFlipped();
 	float	getDamage();
 private:
-	Object*		mOwner;
 	Vector		mOffset;
 	bool		mFlipped;
 	bool		mAttacking;

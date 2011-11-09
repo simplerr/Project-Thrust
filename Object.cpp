@@ -10,6 +10,7 @@ Object::Object(float x, float y, int width, int height, std::string textureSourc
 	mTexture = gGraphics->loadTexture(textureSource);
 
 	setType(PLATFORM);
+	setOwner(NULL);
 }
 	
 Object::~Object()
@@ -28,9 +29,9 @@ void Object::draw()
 	gGraphics->drawTexturedShape(*getBody()->getShape(), mTexture);
 }
 
-void Object::collided(Object* collider)
+bool Object::collided(Object* collider)
 {
-	//showMsg("object");
+	return true;
 }
 
 void Object::setPosition(Vector pos)
@@ -148,4 +149,19 @@ Level* Object::getLevel()
 bool Object::getAlive()
 {
 	return mAlive;
+}
+
+void Object::setOwner(Object* owner)
+{
+	mOwner = owner;
+
+	if(owner != NULL)
+		getBody()->SetParentBody(owner->getBody());
+	else
+		getBody()->SetParentBody(NULL);
+}
+
+Object*	Object::getOwner()
+{
+	return mOwner;
 }

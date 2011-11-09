@@ -41,7 +41,7 @@ void Sword::draw()
 	gGraphics->drawTexturedShape(*getBody()->getShape(), getTexture(), NULL, getFlipped());
 }
 
-void Sword::collided(Object* collider)
+bool Sword::collided(Object* collider)
 {
 	if(getOwner() != collider)
 	{
@@ -72,6 +72,8 @@ void Sword::collided(Object* collider)
 		restoreRotation();
 		setAttacking(false);
 	}
+
+	return true;
 }
 
 void Sword::attack(int attack)

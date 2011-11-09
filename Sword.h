@@ -16,7 +16,7 @@ public:
 	void draw();
 	void attack(int attack = 0);
 
-	void collided(Object* collider);
+	bool collided(Object* collider);
 private:
 	float	mAttackTime;
 	float	mElapsedTime;

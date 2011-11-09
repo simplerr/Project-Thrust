@@ -13,7 +13,7 @@ public:
 
 	void update(float dt);
 	
-	void collided(Object* collider);
+	bool collided(Object* collider);
 
 	void setDamage(float damage)				{mDamage = damage;}
 	void setMaxDistance(float maxDistance)		{mMaxDistance = maxDistance;}

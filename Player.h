@@ -16,8 +16,10 @@ public:
 	void update(float dt);
 	void draw();
 
+	void equipWeapon(Weapon* weapon);
 	void updateWeapon();
-	void collided(Object* collider);
+
+	bool collided(Object* collider);
 	void setFacingDirection(Direction direction);
 	void setLevel(Level* level);
 	void setVelocity(Vector velocity);

@@ -36,11 +36,13 @@ Player::Player(float x, float y, int width, int height)
 	mWeapon->setLifeTime(15.0f);
 	mWeapon->getBody()->getShape()->setRotationAxis(Vector(-5, 0));*/
 
-	mWeapon = new Sword(getPosition().x, getPosition().y);
+	/*mWeapon = new Sword(getPosition().x, getPosition().y);
 	mWeapon->setOffset(Vector(10, 0));
 	mWeapon->setRotationAxis(Vector(0, 10));
 	mWeapon->setStandardRotation(PI/5);
-	mWeapon->setOwner(this);
+	mWeapon->setOwner(this);*/
+
+	mWeapon = NULL;
 }
 	
 Player::~Player()
@@ -54,7 +56,8 @@ void Player::update(float dt)
 	mAnimation->animate(dt);
 
 	// Update the weapon
-	mWeapon->update(dt);
+	if(mWeapon != NULL)
+		mWeapon->update(dt);
 
 	/* Update the velocity */
 
@@ -63,7 +66,8 @@ void Player::update(float dt)
 		setVelocity(getVelocity() + Vector(-mAcceleration, 0));	
 		setFacingDirection(LEFT);
 
-		mWeapon->setFlipped(true);
+		if(mWeapon != NULL)
+			mWeapon->setFlipped(true);
 
 		// If the player is on the ground, continue the animation
 		if(!mInAir)	
@@ -73,7 +77,8 @@ void Player::update(float dt)
 		setVelocity(getVelocity() + Vector(mAcceleration, 0));	
 		setFacingDirection(RIGHT);
 
-		mWeapon->setFlipped(false);
+		if(mWeapon != NULL)
+			mWeapon->setFlipped(false);
 
 		// If the player is on the ground, continue the animation
 		if(!mInAir)	
@@ -99,7 +104,8 @@ void Player::update(float dt)
 
 	// Shooting with the left mouse button
 	if(gDInput->mouseButtonPressed(0))	{
-		mWeapon->attack();
+		if(mWeapon != NULL)
+			mWeapon->attack();
 	}
 
 	// Update the weapon position and rotation
@@ -121,10 +127,11 @@ void Player::draw()
 		gGraphics->drawTexturedShape(*getBody()->getShape(), getTexture(), &mAnimation->getSourceRect(), false);
 	
 	// Draw the weapon
-	mWeapon->draw();
+	if(mWeapon != NULL)
+		mWeapon->draw();
 }
 
-void Player::collided(Object* collider)
+bool Player::collided(Object* collider)
 {
 	// Grab information about the collision :NOTE: Could be done in a better way, ie collided has that information as a parameter
 	Collision collision = polyCollision(collider->getBody(), this->getBody());
@@ -137,6 +144,8 @@ void Player::collided(Object* collider)
 			mAnimation->setFrame(0);
 		}
 	}
+
+	return true;
 }
 
 void Player::updateWeapon()
@@ -158,7 +167,8 @@ void Player::updateWeapon()
 	/* Update the position 
 		- The position of the weapon is allways the same as the player + the offset asigned
 	*/
-	mWeapon->updatePosition(getPosition());
+	if(mWeapon != NULL)
+		mWeapon->updatePosition(getPosition());
 }
 
 void Player::setFacingDirection(Direction direction)
@@ -170,8 +180,8 @@ void Player::setLevel(Level* level)
 {
 	// Important to set the weapons level, so it know where to add the projectiles
 	Object::setLevel(level);
-	mWeapon->setLevel(level);
-	getLevel()->addObject(mWeapon);
+	if(mWeapon != NULL)
+		mWeapon->setLevel(level);
 }
 
 void Player::setVelocity(Vector velocity)
@@ -179,10 +189,30 @@ void Player::setVelocity(Vector velocity)
 	Object::setVelocity(velocity);
 
 	// Set the weapons velocity so it works correctly when collididing with bodies
-	mWeapon->setVelocity(velocity);
+	if(mWeapon != NULL)
+		mWeapon->setVelocity(velocity);
 }
 
 void Player::setVelocity(float dx, float dy)
 {
 	setVelocity(Vector(dx, dy));
+}
+
+void Player::equipWeapon(Weapon* weapon)
+{
+	if(mWeapon != NULL)
+		getLevel()->removeObject(mWeapon);
+	
+	mWeapon = weapon;
+	mWeapon->setLevel(getLevel());
+
+	if(mFaceDirection == LEFT)
+		mWeapon->setFlipped(true);
+
+	getLevel()->addObject(mWeapon);
+}
+
+void Player::dropWeapon()
+{
+
 }

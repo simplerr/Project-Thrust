@@ -9,7 +9,6 @@ Weapon::Weapon(float x, float y, int width, int height, string textureSource)
 	setFlipped(false);
 	setOffset(Vector(0, 0));
 	setDamage(0.0f);
-	setOwner(NULL);
 }
 
 Weapon::~Weapon()
@@ -80,21 +79,6 @@ bool Weapon::getAttacking()
 bool Weapon::getFlipped()
 {
 	return mFlipped;
-}
-
-void Weapon::setOwner(Object* owner)
-{
-	mOwner = owner;
-
-	if(owner != NULL)
-		getBody()->SetParentBody(owner->getBody());
-	else
-		getBody()->SetParentBody(NULL);
-}
-
-Object*	Weapon::getOwner()
-{
-	return mOwner;
 }
 
 float Weapon::getDamage()
