@@ -59,6 +59,7 @@ public:
 	void SetOwner(void* owner)					{mOwner = owner;}
 	void SetParentBody(RigidBody* body)			{mParentBody = body;}
 	void SetSimulate(bool simulate)				{mSimulate = simulate;}
+	void SetGravityEffect(bool gravityEffect)	{mGravityEffect = gravityEffect;}
 	void Rotate(float rotation)					{mShape->rotate(rotation);}
 	
 	void ApplyForce(Vector force, Vector pos);
@@ -79,6 +80,7 @@ public:
 	bool	GetSimulate()		{return mSimulate;}
 	float	GetFriction()		{return mFriction;}
 	void*	GetOwner()			{return mOwner;}
+	bool	GetGravityEffect()	{return mGravityEffect;}
 	RigidBody* GetParentBody()	{return mParentBody;}
 
 private:
@@ -87,6 +89,7 @@ private:
 	RigidBody*	mParentBody;	// :UGLY:
 	void*		mOwner;
 	
+	bool	mGravityEffect;
 	bool	mCollidable;		// Needed? All rigids can collide?
 	bool	mAlive;
 	bool	mStatic;

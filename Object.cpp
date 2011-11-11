@@ -170,3 +170,8 @@ Rect Object::getRect()
 {
 	return getBody()->getShape()->getWorldRect();
 }
+
+void Object::setTexture(IDirect3DTexture9* texture)
+{
+	mTexture = texture;
+}

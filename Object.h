@@ -29,6 +29,7 @@ public:
 	void setRotation(float rotation);
 	void setRotationAxis(Vector axis);
 	void setTexture(string textureSource);
+	void setTexture(IDirect3DTexture9* texture);
 	void setOwner(Object* owner);
 	virtual void setLevel(Level* level);
 	void kill();

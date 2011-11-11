@@ -24,6 +24,7 @@ RigidBody::RigidBody(float x, float y, int width, int height)
 	SetFriction(1.0f);
 	SetSleeping(false);
 	SetRepeatX(false);
+	SetGravityEffect(true);
 	SetSimulate(true);
 	SetParentBody(NULL);
 }

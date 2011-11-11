@@ -54,7 +54,7 @@ void World::BroadPhase()
 			Arbiter newArb(bi, bj);
 			ArbiterKey key(bi, bj);
 
-			if((int)newArb.contactList.size() > 0)
+			if((int)newArb.contactList.size() > 0 && newArb.bodyA->getCollidable() && newArb.bodyB->getCollidable())
 			{
 				// Call the callback function - :NOTE: Shouldn't be here, if the object gets deleted for example
 				callback(newArb.bodyA->GetOwner(), newArb.bodyB->GetOwner());
@@ -97,7 +97,11 @@ void World::Step(float dt)
 
 			if(b->GetMass() != 0)	
 			{
-				b->SetVelocity(b->GetVelocity() + dt * (Vector(0, GRAVITY, 0) + (b->GetInvMass()) * b->GetForce() * 10000));
+				if(b->GetGravityEffect())
+					b->SetVelocity(b->GetVelocity() + dt * (Vector(0, GRAVITY, 0) + (b->GetInvMass()) * b->GetForce() * 10000));
+				else
+					b->SetVelocity(b->GetVelocity() + b->GetInvMass() * b->GetForce() * 10000);
+
 				b->SetAngularVelocity(b->GetAngularVelocity() + dt * (b->GetInvInertia()) * b->GetTorque() * 1000);
 			}
 		}

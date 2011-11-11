@@ -36,7 +36,7 @@ PlayState::PlayState()
 
 	Enemy* enemy = new Enemy(300, 200, 32, 64);
 	enemy->setMaxDistance(100.0f);
-	enemy->setSpeed(100.0f);
+	enemy->setSpeed(0);
 	mLevel->addObject(enemy);
 }
 
