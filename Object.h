@@ -40,6 +40,7 @@ public:
 	int			getId();
 	float		getRotation();
 	RigidBody*	getBody();
+	Rect		getRect();
 	Level*		getLevel();
 	Object*		getOwner();
 	ObjectType	getType();

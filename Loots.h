@@ -19,7 +19,7 @@ public:
 	virtual void update(float dt);
 	virtual void draw();
 
-	virtual void equip(Player* player);
+	virtual void equip(Player* player);		// Gets called within the collided function
 
 	bool collided(Object* collider);
 private:

@@ -96,7 +96,8 @@ enum ObjectType
 	EMITTER,
 	PARTICLE_RICOCHET,
 	PARTICLE_BLOOD,
-	PARTICLE_FIRE
+	PARTICLE_FIRE,
+	LOOT
 };
 
 enum ObjectOwner

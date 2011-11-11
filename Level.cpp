@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Graphics.h"
 #include "DirectInput.h"
+#include "Enums.h"
 
 Level::Level()
 {
@@ -101,4 +102,22 @@ void Level::removeObject(Object* object)
 			mObjectList.erase(mObjectList.begin() + i);
 		}
 	}
+}
+
+Object* Level::findCollision(Rect rect, int id, ObjectType type)
+{
+	Rect objectRect = rect;
+	Object* collider = NULL;
+
+	for(int i = 0; i < mObjectList.size(); i++)	{
+		if(mObjectList[i]->getId() == id)
+			continue;
+
+		Rect testRect = mObjectList[i]->getRect();
+
+		if(objectRect.left < testRect.right && objectRect.right > testRect.left && objectRect.top < testRect.bottom && objectRect.bottom > testRect.top && mObjectList[i]->getType() == type)
+			return mObjectList[i];	
+	}
+
+	return collider;
 }

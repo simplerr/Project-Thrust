@@ -118,12 +118,12 @@ IDirect3DTexture9* Object::getTexture()
 
 int Object::getWidth()
 {
-	return 0;
+	return getBody()->getWidth();
 }
 
 int	Object::getHeight()
 {
-	return 0;
+	return getBody()->getHeight();
 }
 
 float Object::getRotation()
@@ -164,4 +164,9 @@ void Object::setOwner(Object* owner)
 Object*	Object::getOwner()
 {
 	return mOwner;
+}
+
+Rect Object::getRect()
+{
+	return getBody()->getShape()->getWorldRect();
 }

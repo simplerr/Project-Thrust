@@ -19,6 +19,7 @@ public:
 	void equipWeapon(Weapon* weapon);
 	void dropWeapon();
 	void updateWeapon();
+	void checkLoot();
 
 	bool collided(Object* collider);
 	void setFacingDirection(Direction direction);

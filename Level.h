@@ -16,6 +16,7 @@ public:
 	void draw();
 
 	void handleCollision(void* objA, void* objB);
+	Object* findCollision(Rect rect, int id, ObjectType type);
 
 	void addObject(Object* object);
 	void removeObject(Object* object);

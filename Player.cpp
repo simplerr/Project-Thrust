@@ -109,8 +109,13 @@ void Player::update(float dt)
 			mWeapon->attack();
 	}
 
+	// Drop the equipped weapon if the drop button was pressed
 	if(gDInput->keyPressed(DIK_G))
 		dropWeapon();
+
+	// Loot
+	if(gDInput->keyPressed(DIK_E))
+		checkLoot();
 
 	// Update the weapon position and rotation
 	updateWeapon();
@@ -202,30 +207,57 @@ void Player::setVelocity(float dx, float dy)
 	setVelocity(Vector(dx, dy));
 }
 
+void Player::checkLoot()
+{
+	Rect lootArea = getRect();
+	lootArea.bottom += 20;
+	lootArea.top -= 20;
+	lootArea.left -= 20;
+	lootArea.right += 20;
+
+	Object* lootObject = getLevel()->findCollision(lootArea, getId(), LOOT);
+
+	if(lootObject != NULL)
+	{
+		if(lootObject->getType() == LOOT)	{
+			Loot* loot = dynamic_cast<Loot*>(lootObject);
+			loot->equip(this);
+		}
+	}
+}
+
 void Player::equipWeapon(Weapon* weapon)
 {
+	// Remove the equipped weapon from the level (if there is any)
 	if(mWeapon != NULL)
 		getLevel()->removeObject(mWeapon);
 	
+	// Assign the new weapon to be equipped
 	mWeapon = weapon;
 	mWeapon->setLevel(getLevel());
 
+	// Find out if it needs to be flipped
 	if(mFaceDirection == LEFT)
 		mWeapon->setFlipped(true);
 
+	// Add the new weapon to the level
 	getLevel()->addObject(mWeapon);
 }
 
 void Player::dropWeapon()
 {
+	// Find out if there's any weapon to drop
 	if(mWeapon != NULL)
 	{
 		// Remove the equipped weapon from the level
 		getLevel()->removeObject(mWeapon);
 		mWeapon = NULL;
 
+		// Create the new loot object
 		SwordLoot* newLoot = new SwordLoot(getPosition().x, getPosition().y, 50, 50);
 		newLoot->setLevel(getLevel());
+
+		// Make it look good by a throwing effect
 		if(mFaceDirection == RIGHT)	{
 			newLoot->getBody()->move(50, -50);
 			newLoot->getBody()->ApplyForce(Vector(1, -1), newLoot->getPosition());
@@ -235,6 +267,7 @@ void Player::dropWeapon()
 			newLoot->getBody()->ApplyForce(Vector(-1, -1), newLoot->getPosition());
 		}
 
+		// Add the loot to the level
 		getLevel()->addObject(newLoot);
 	}
 }

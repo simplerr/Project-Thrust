@@ -53,13 +53,13 @@ bool Sword::collided(Object* collider)
 			float forceMagnitude = 5.0f;
 			float angle = getRotation();
 
-			//if(angle < 0.0f)
-			//	angle = PI - angle;
-			angle -= PI/2;
+			angle -= PI/2;	// Correctment, shouldn't be needed
 
+			// Impulse compnent calculation
 			float x = cosf(angle) * forceMagnitude;
 			float y = sinf(angle) * forceMagnitude;
 
+			// Apply the impulse
 			collider->getBody()->ApplyForce(Vector(x, y), collider->getPosition());
 		}
 
@@ -81,11 +81,12 @@ void Sword::attack(int attack)
 	// Support for different attacks
 	if(attack == 0)
 	{
-		// Currently attacking
+		// Reset the rotation if currently attacking
 		if(getAttacking())	{
 			restoreRotation();
 		}
 
+		// Start the attack
 		mElapsedTime = 0.0f;
 		setAttacking(true);
 	}

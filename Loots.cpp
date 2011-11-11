@@ -8,7 +8,7 @@
 Loot::Loot(float x, float y, int width, int height, string textureSource)
 	:	Object(x, y, width, height, textureSource)
 {
-	
+	setType(LOOT);
 }
 	
 Loot::~Loot()
@@ -33,14 +33,16 @@ void Loot::equip(Player* player)
 
 bool Loot::collided(Object* collider)
 {
+	// If the collider is a player we let it equip the loot
 	if(collider->getType() == PLAYER)	{
-		equip((Player*)collider);
-		return false;
+		//equip((Player*)collider);	// Cast to player
+		return false;	// To show that this object was deleted with in this function
 	}
 
+	// If the colliders owner is a player we let it equip the loot as well, for instance when the players sword hits the loot and not the player itself
 	if(collider->getOwner() != NULL)	{
 		if(collider->getOwner()->getType() == PLAYER)	{
-			equip((Player*)collider->getOwner());
+		//	equip((Player*)collider->getOwner());
 			return false;
 		}
 	}
@@ -69,6 +71,6 @@ void SwordLoot::equip(Player* player)
 	// Equip the player with the sword
 	player->equipWeapon(sword);
 
-	// The loot gets removed when equiped
+	// Remove the loot from the level
 	kill();
 }
