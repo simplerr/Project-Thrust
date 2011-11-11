@@ -50,7 +50,7 @@ bool Sword::collided(Object* collider)
 
 		// Apply impulse to the collided object
 		if(collider->getBody()->GetMass() != 0.0f && getAttacking())	{
-			float forceMagnitude = 5.0f;
+			float forceMagnitude = 1.0f;
 			float angle = getRotation();
 
 			angle -= PI/2;	// Correctment, shouldn't be needed

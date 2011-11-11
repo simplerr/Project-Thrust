@@ -8,7 +8,8 @@ Weapon::Weapon(float x, float y, int width, int height, string textureSource)
 	setAttacking(false);
 	setFlipped(false);
 	setOffset(Vector(0, 0));
-	setDamage(0.0f);
+	setDamage(50.0f);
+	setType(WEAPON);
 }
 
 Weapon::~Weapon()

@@ -26,6 +26,8 @@ public:
 	void setLevel(Level* level);
 	void setVelocity(Vector velocity);
 	void setVelocity(float dx, float dy);
+
+	void damage(float damage);
 private:
 	Animation*	mAnimation;
 	int			mHealth;

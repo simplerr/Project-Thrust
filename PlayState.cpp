@@ -4,6 +4,7 @@
 #include "Object.h"
 #include "Player.h"
 #include "Loots.h"
+#include "Enemy.h"
 
 PlayState::PlayState()
 {
@@ -28,10 +29,15 @@ PlayState::PlayState()
 	mLevel->addObject(object);
 
 	SwordLoot* loot = new SwordLoot(400, 300, 50, 50);
-	mLevel->addObject(loot);
+	//mLevel->addObject(loot);
 
 	SwordLoot* loot1 = new SwordLoot(600, 300, 50, 50);
 	mLevel->addObject(loot1);
+
+	Enemy* enemy = new Enemy(300, 200, 32, 64);
+	enemy->setMaxDistance(100.0f);
+	enemy->setSpeed(100.0f);
+	mLevel->addObject(enemy);
 }
 
 PlayState::~PlayState()

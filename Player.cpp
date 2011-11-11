@@ -21,9 +21,11 @@ Player::Player(float x, float y, int width, int height)
 	mAcceleration = 500.0f;
 	mMaxVelocity = 330.0f;
 	mFaceDirection = RIGHT;
+	mHealth = 100;
 	mInAir = true;
 	
 	// Set the type to PLAYER
+
 	setType(PLAYER);
 
 	// High friction
@@ -37,12 +39,6 @@ Player::Player(float x, float y, int width, int height)
 	mWeapon->setLifeTime(15.0f);
 	mWeapon->getBody()->getShape()->setRotationAxis(Vector(-5, 0));*/
 
-	/*mWeapon = new Sword(getPosition().x, getPosition().y);
-	mWeapon->setOffset(Vector(10, 0));
-	mWeapon->setRotationAxis(Vector(0, 10));
-	mWeapon->setStandardRotation(PI/5);
-	mWeapon->setOwner(this);*/
-
 	mWeapon = NULL;
 }
 	
@@ -53,6 +49,10 @@ Player::~Player()
 
 void Player::update(float dt)
 {
+	// Check health
+	if(mHealth <= 0)
+		showMsg("died!");
+
 	// Update the animation
 	mAnimation->animate(dt);
 
@@ -138,6 +138,10 @@ void Player::draw()
 	// Draw the weapon
 	if(mWeapon != NULL)
 		mWeapon->draw();
+
+	char buffer[256];
+	sprintf(buffer, "health: %i", mHealth);
+	gGraphics->drawText(buffer, 10, 400);
 }
 
 bool Player::collided(Object* collider)
@@ -209,17 +213,22 @@ void Player::setVelocity(float dx, float dy)
 
 void Player::checkLoot()
 {
+	// Calculate loot area
 	Rect lootArea = getRect();
 	lootArea.bottom += 20;
 	lootArea.top -= 20;
 	lootArea.left -= 20;
 	lootArea.right += 20;
 
+	// Find loot inside loot area
 	Object* lootObject = getLevel()->findCollision(lootArea, getId(), LOOT);
 
+	// If an object is found
 	if(lootObject != NULL)
 	{
+		// If the object is loot
 		if(lootObject->getType() == LOOT)	{
+			// Cast and call equip()
 			Loot* loot = dynamic_cast<Loot*>(lootObject);
 			loot->equip(this);
 		}
@@ -270,4 +279,9 @@ void Player::dropWeapon()
 		// Add the loot to the level
 		getLevel()->addObject(newLoot);
 	}
+}
+
+void Player::damage(float damage)
+{
+	mHealth -= damage;
 }

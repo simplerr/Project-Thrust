@@ -18,8 +18,7 @@ Graphics*			gGraphics = 0;
 DirectInput*		gDInput = 0;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance,
-				   PSTR cmdLine, int showCmd)
-{
+				   PSTR cmdLine, int showCmd){
 	//InitAllocCheck(ACOutput_XML); // ACOutput_XML
 
 	// Enable run-time memory check for debug builds.
