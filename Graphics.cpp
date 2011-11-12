@@ -303,7 +303,7 @@ void Graphics::drawRect(Rect Rect, bool solid, D3DCOLOR fillColor)
 	gd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
-void Graphics::drawTexture(IDirect3DTexture9 *texture, float x, float y, int width, int height, D3DCOLOR vertexColour, float rotate)
+void Graphics::drawTexture(IDirect3DTexture9 *texture, float x, float y, int width, int height, D3DCOLOR vertexColour, float rotate, bool flipped)
 {
 	Rect drawRect;
 	drawRect.left = x - width/2;
@@ -311,6 +311,15 @@ void Graphics::drawTexture(IDirect3DTexture9 *texture, float x, float y, int wid
 	drawRect.top = y - height/2;
 	drawRect.bottom = y + height/2;
 	
+	if(flipped)	{
+		if(drawRect.left != 0)
+			drawRect.bottom = drawRect.bottom;
+
+		float tmp = drawRect.left;
+		drawRect.left = drawRect.right;
+		drawRect.right = tmp;
+	}
+
 	gd3dDevice->SetVertexDeclaration(TextureVertex::Decl);
 	gd3dDevice->SetStreamSource(0, mVB_texture, 0, sizeof(TextureVertex));	
 

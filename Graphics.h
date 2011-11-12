@@ -20,7 +20,7 @@ public:
 	void drawRect(Rect rect, bool solid = true, D3DCOLOR fillColor = D3DCOLOR_ARGB( 155, 155, 000, 000 ));	
 	
 	/// Draws a textured rectangle - origin is top left
-	void drawTexture(IDirect3DTexture9 *texture, float x, float y, int width, int height, D3DCOLOR vertexColour = 0xFFFFFFFF, float rotate = 0.0f);
+	void drawTexture(IDirect3DTexture9 *texture, float x, float y, int width, int height, D3DCOLOR vertexColour = 0xFFFFFFFF, float rotate = 0.0f, bool flipped = false);
 	void drawTexture(IDirect3DTexture9 *texture, Rect rect, D3DCOLOR vertexColour = 0xFFFFFFFF, float rotate = 0.0f);
 
 	/// Draws a part from texture atlas

@@ -21,6 +21,8 @@ public:
 	void updateWeapon();
 	void checkLoot();
 
+	void updateHead();
+
 	bool collided(Object* collider);
 	void setFacingDirection(Direction direction);
 	void setLevel(Level* level);
@@ -31,11 +33,13 @@ public:
 private:
 	IDirect3DTexture9* mHeadTexture;
 	Animation*	mAnimation;
+	Direction	mFaceDirection;
 	int			mHealth;
 	float		mMaxVelocity;
 	float		mAcceleration;
-	Direction	mFaceDirection;
+	float		mHeadRotation;
 	bool		mInAir;
+	bool		mHeadFlipped;
 
 	Weapon*		mWeapon;
 };

@@ -19,6 +19,7 @@ Player::Player(float x, float y, int width, int height)
 
 	// Load head texture
 	mHeadTexture = gGraphics->loadTexture("imgs\\mario_head.bmp");
+	mHeadFlipped = false;
 
 	// Set member variables
 	mAcceleration = 500.0f;
@@ -26,6 +27,7 @@ Player::Player(float x, float y, int width, int height)
 	mFaceDirection = RIGHT;
 	mHealth = 100;
 	mInAir = true;
+	mHeadRotation = 0.0f;
 	
 	// Set the type to PLAYER
 	setType(PLAYER);
@@ -47,6 +49,7 @@ Player::Player(float x, float y, int width, int height)
 Player::~Player()
 {
 	delete mAnimation;
+	ReleaseCOM(mHeadTexture);
 }
 
 void Player::update(float dt)
@@ -57,6 +60,9 @@ void Player::update(float dt)
 
 	// Update the animation
 	mAnimation->animate(dt);
+
+	// Update the head rotation
+	updateHead();
 
 	// Update the weapon
 	if(mWeapon != NULL)
@@ -132,17 +138,21 @@ void Player::update(float dt)
 void Player::draw()
 {
 	// Draw the player with the right facing direction
-	if(mFaceDirection == LEFT)
-		gGraphics->drawTexturedShape(*getBody()->getShape(), getTexture(), &mAnimation->getSourceRect(), true); 
-	else
+	if(mFaceDirection == LEFT)	{
+		gGraphics->drawTexturedShape(*getBody()->getShape(), getTexture(), &mAnimation->getSourceRect(), true);
+		gGraphics->drawTexture(mHeadTexture, getPosition().x, getPosition().y - 20, 32, 32, 0xffffffff, mHeadRotation, mHeadFlipped);
+	}
+	else	{
 		gGraphics->drawTexturedShape(*getBody()->getShape(), getTexture(), &mAnimation->getSourceRect(), false);
+		gGraphics->drawTexture(mHeadTexture, getPosition().x, getPosition().y - 20, 32, 32, 0xffffffff, mHeadRotation, mHeadFlipped);
+	}
 	
 	// Draw the weapon
 	if(mWeapon != NULL)
 		mWeapon->draw();
 
 	char buffer[256];
-	sprintf(buffer, "health: %i", mHealth);
+	sprintf(buffer, "head rotation: %f", mHeadRotation * 57.3);
 	gGraphics->drawText(buffer, 10, 400);
 }
 
@@ -286,4 +296,41 @@ void Player::dropWeapon()
 void Player::damage(float damage)
 {
 	mHealth -= damage;
+}
+
+void Player::updateHead()
+{
+	// Get mouse position
+	Vector mousePos = gDInput->getCursorPos();
+
+	// Get distance to the mouse
+	float dx = mousePos.x - getPosition().x;
+	float dy = mousePos.y - getPosition().y - 20;
+
+	// Point head in mouse direction - atan2 to not be limited to tans 180 degree period
+	float rotation = atan2f(dy, dx);
+
+	/*static float realRotation = 0.0f;
+
+	if(gDInput->keyPressed(DIK_E))
+		realRotation += 0.5;
+	else if(gDInput->keyPressed(DIK_Q))
+		realRotation -= 0.5;
+
+	if(realRotation > 2*PI)
+		realRotation -= 2*PI;
+	else if(realRotation < 0)
+		realRotation = 2*PI + realRotation;
+	*/
+
+	//mHeadRotation = realRotation;
+
+	if(mHeadRotation > PI/2 || mHeadRotation < -PI/2)	{
+		mHeadFlipped = true;
+		mHeadRotation -= PI;
+	}
+	else	{
+		mHeadFlipped = false;
+		mHeadRotation += 2*PI;
+	}
 }
