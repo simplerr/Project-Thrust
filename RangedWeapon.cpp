@@ -27,7 +27,7 @@ void RangedWeapon::attack(int attack)
 	
 	// Set bullet properties
 	bullet->setOwner(getOwner());
-	bullet->getBody()->rotate(getRotation());
+	bullet->getBody()->Rotate(getRotation());
 	bullet->setSpeed(700);
 	bullet->setMaxDistance(mRange);
 	bullet->setElasticity(0.8f);

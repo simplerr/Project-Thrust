@@ -1,7 +1,7 @@
 #include "Enemy.h"
 #include "Graphics.h"
 #include "Player.h"
-#include "Sword.h"
+#include "MeleeWeapon.h"
 #include "ParticleEmitter.h"
 #include "Level.h"
 
@@ -80,9 +80,9 @@ void Enemy::draw()
 {
 	// Draws the animation with the correct facing direction
 	if(mSpeed >= 0)
-		gGraphics->drawTexturedShape(*getBody()->getShape(), getTexture(), &mAnimation->getSourceRect(), false);
+		gGraphics->drawTexturedShape(*getBody()->GetShape(), getTexture(), &mAnimation->getSourceRect(), false);
 	else if(mSpeed < 0)
-		gGraphics->drawTexturedShape(*getBody()->getShape(), getTexture(), &mAnimation->getSourceRect(), true);
+		gGraphics->drawTexturedShape(*getBody()->GetShape(), getTexture(), &mAnimation->getSourceRect(), true);
 
 	// :TODO: There should be a state for a static enemy texture
 }

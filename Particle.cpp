@@ -31,5 +31,5 @@ void Particle::update(float dt)
 	}
 
 	// Move the particle, not affected by anything
-	getBody()->move(getVelocity());
+	getBody()->Move(getVelocity());
 }

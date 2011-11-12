@@ -38,8 +38,8 @@ void Projectile::update(float dt)
 			mTravelled += dt * Mathematics::sqrt(velocity.x*velocity.x + velocity.y*velocity.y);
 
 			// Rotate
-			getBody()->getShape()->resetRotation();
-			getBody()->rotate(atan2f(velocity.y, velocity.x));
+			getBody()->GetShape()->resetRotation();
+			getBody()->Rotate(atan2f(velocity.y, velocity.x));
 		}
 		else
 			kill();
@@ -66,7 +66,7 @@ bool Projectile::collided(Object* collider)
 			mBounces--;
 
 			// Move the projectile out of collision
-			getBody()->move(-collision.pushX, -collision.pushY);
+			getBody()->Move(-collision.pushX, -collision.pushY);
 
 			// Kinda hacky code, dont remember the meaning of everything
 			float incomingAngle = atan2f(getVelocity().y, getVelocity().x);

@@ -16,8 +16,7 @@ ParticleEmitter::ParticleEmitter(float x, float y, float direction, int max, flo
 	setLifeTime(lifetime);
 
 	setParticleDimensions(10, 10);
-	getBody()->setCollidable(false);
-	getBody()->SetGravityEffect(false);
+	getBody()->SetCollidable(false);
 	mDeltaSum = 0;
 	mLifeSum = 0;
 	mEffectEnded = false;

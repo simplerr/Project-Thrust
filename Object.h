@@ -31,6 +31,7 @@ public:
 	void setTexture(string textureSource);
 	void setTexture(IDirect3DTexture9* texture);
 	void setOwner(Object* owner);
+	void setSimulate(bool simulate);
 	virtual void setLevel(Level* level);
 	void kill();
 
@@ -46,6 +47,7 @@ public:
 	Object*		getOwner();
 	ObjectType	getType();
 	bool		getAlive();
+	bool		getSimulate();
 
 	IDirect3DTexture9* getTexture();
 private:
@@ -55,6 +57,7 @@ private:
 	ObjectType	mType;
 	int			mId;
 	bool		mAlive;
+	bool		mSimulate;
 	IDirect3DTexture9* mTexture;
 
 };

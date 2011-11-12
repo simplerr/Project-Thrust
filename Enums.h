@@ -98,7 +98,8 @@ enum ObjectType
 	PARTICLE_RICOCHET,
 	PARTICLE_BLOOD,
 	PARTICLE_FIRE,
-	LOOT
+	LOOT,
+	CLOSE_RANGED
 };
 
 enum ObjectOwner

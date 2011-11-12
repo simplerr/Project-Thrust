@@ -34,7 +34,6 @@ public:
 	void Init();	
 	void Update(float dt);
 	void Step(float dt);
-	void Draw();
 	void BroadPhase();
 	void SetGravity(float gravity);
 

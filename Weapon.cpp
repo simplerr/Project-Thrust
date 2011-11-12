@@ -24,7 +24,7 @@ void Weapon::update(float dt)
 	
 void Weapon::draw()
 {
-	gGraphics->drawTexturedShape(*getBody()->getShape(), getTexture(), NULL, getFlipped());
+	gGraphics->drawTexturedShape(*getBody()->GetShape(), getTexture(), NULL, getFlipped());
 }
 
 void Weapon::setDamage(float damage)

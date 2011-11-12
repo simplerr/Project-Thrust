@@ -3,7 +3,7 @@
 #include "Enums.h"
 #include "Vector.h"
 #include "Graphics.h"
-#include "Sword.h"
+#include "MeleeWeapon.h"
 
 Loot::Loot(float x, float y, int width, int height, string textureSource)
 	:	Object(x, y, width, height, textureSource)
@@ -62,7 +62,7 @@ SwordLoot::~SwordLoot()
 void SwordLoot::equip(Player* player)
 {
 	// Create the sword
-	Sword* sword = new Sword(getPosition().x, getPosition().y);
+	MeleeWeapon* sword = new MeleeWeapon(getPosition().x, getPosition().y, 15, 53, "imgs\\sword.bmp");
 	sword->setOffset(Vector(10, 0));
 	sword->setRotationAxis(Vector(0, 10));
 	sword->setStandardRotation(PI/5);

@@ -54,10 +54,14 @@ void World::BroadPhase()
 			Arbiter newArb(bi, bj);
 			ArbiterKey key(bi, bj);
 
-			if((int)newArb.contactList.size() > 0 && newArb.bodyA->getCollidable() && newArb.bodyB->getCollidable())
+			if((int)newArb.contactList.size() > 0 && newArb.bodyA->GetCollidable() && newArb.bodyB->GetCollidable())	// :NOTE: Useful? Needed? Dun think so!
 			{
 				// Call the callback function - :NOTE: Shouldn't be here, if the object gets deleted for example
 				callback(newArb.bodyA->GetOwner(), newArb.bodyB->GetOwner());
+
+				// If one of the bodies shouldn't be simulated we skip the rest
+				if(!newArb.bodyA->GetSimulate() || !newArb.bodyB->GetSimulate())
+					continue;
 
 				ArbIter iter = arbiters.find(key);
 
@@ -97,7 +101,7 @@ void World::Step(float dt)
 
 			if(b->GetMass() != 0)	
 			{
-				if(b->GetGravityEffect())
+				if(b->GetSimulate())
 					b->SetVelocity(b->GetVelocity() + dt * (Vector(0, GRAVITY, 0) + (b->GetInvMass()) * b->GetForce() * 10000));
 				else
 					b->SetVelocity(b->GetVelocity() + b->GetInvMass() * b->GetForce() * 10000);
@@ -156,21 +160,6 @@ void World::Update(float dt)	// step() or evaluate()
 	Step(dt);
 }
 
-void World::Draw()
-{
-	// Loop throught and draw each object
-	for(int i = 0; i < mBodyList.size(); i++)
-	{
-		mBodyList[i]->draw();	//mBodyList[i]->drawDebug();
-	}
-
-	// :NOTE: Could be used in a "debug mode"
-	//// Number of bodies in the world
-	//char buffer[256];
-	//sprintf(buffer, "bodies: %i", mBodyList.size());
-	//gGraphics->drawText(buffer, 10, 140);
-}
-
 void World::Load(string source)
 {
 
@@ -193,12 +182,12 @@ void World::Remove(RigidBody* body)
 {
 	for(int i = 0; i < mBodyList.size(); i++)
 	{
-		if(mBodyList[i]->getID() == body->getID())	{
+		if(mBodyList[i]->GetId() == body->GetId())	{
 			// Find arbiters containing the deleted body
 			int d = 0;
 			for(ArbIter arb = arbiters.begin(); arb != arbiters.end(); arb++, d++)
 			{
-				if(arb->second.bodyA->getID() == body->getID() || arb->second.bodyB->getID() == body->getID())	{
+				if(arb->second.bodyA->GetId() == body->GetId() || arb->second.bodyB->GetId() == body->GetId())	{
 					// :NOTE: Hack solution, should be removed from the arbiter list instead!
 					arb->second.active = false;
 				}
@@ -212,7 +201,7 @@ RigidBody* World::GetBody(Vector mousePos)
 {
 	for(int i = 0; i < mBodyList.size(); i++)
 	{
-		if(PointInsideShape(gDInput->getCursorPos(), mBodyList[i]->getShape()))
+		if(PointInsideShape(gDInput->getCursorPos(), mBodyList[i]->GetShape()))
 		{						
 			return mBodyList[i];
 		}

@@ -11,6 +11,7 @@ Object::Object(float x, float y, int width, int height, std::string textureSourc
 
 	setType(PLATFORM);
 	setOwner(NULL);
+	setSimulate(true);
 }
 	
 Object::~Object()
@@ -26,7 +27,7 @@ void Object::update(float dt)
 	
 void Object::draw()
 {
-	gGraphics->drawTexturedShape(*getBody()->getShape(), mTexture);
+	gGraphics->drawTexturedShape(*getBody()->GetShape(), mTexture);
 }
 
 bool Object::collided(Object* collider)
@@ -57,7 +58,7 @@ void Object::setVelocity(float dx, float dy)
 void Object::setId(int id)
 {
 	mId = id;
-	mBody->setID(mId);
+	mBody->SetId(mId);
 }
 
 void Object::setType(ObjectType type)
@@ -67,7 +68,7 @@ void Object::setType(ObjectType type)
 
 void Object::setRotation(float rotation)
 {
-	getBody()->getShape()->resetRotation();
+	getBody()->GetShape()->resetRotation();
 	getBody()->Rotate(rotation);
 }
 
@@ -83,7 +84,7 @@ void Object::rotate(float rotate)
 
 void Object::setRotationAxis(Vector axis)
 {
-	getBody()->getShape()->setRotationAxis(axis);
+	getBody()->GetShape()->setRotationAxis(axis);
 }
 
 Vector Object::getPosition()
@@ -118,12 +119,12 @@ IDirect3DTexture9* Object::getTexture()
 
 int Object::getWidth()
 {
-	return getBody()->getWidth();
+	return getBody()->GetWidth();
 }
 
 int	Object::getHeight()
 {
-	return getBody()->getHeight();
+	return getBody()->GetHeight();
 }
 
 float Object::getRotation()
@@ -168,10 +169,20 @@ Object*	Object::getOwner()
 
 Rect Object::getRect()
 {
-	return getBody()->getShape()->getWorldRect();
+	return getBody()->GetShape()->getWorldRect();
 }
 
 void Object::setTexture(IDirect3DTexture9* texture)
 {
 	mTexture = texture;
+}
+
+void Object::setSimulate(bool simulate)
+{
+	mSimulate = simulate;
+}
+
+bool Object::getSimulate()
+{
+	return mSimulate;
 }

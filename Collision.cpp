@@ -13,8 +13,8 @@ extern std::ofstream fout;
 
 Collision polyCollision(RigidBody* bodyA, RigidBody* bodyB)
 {	
-	Shape* ShapeA = bodyA->getShape();
-	Shape* ShapeB = bodyB->getShape();
+	Shape* ShapeA = bodyA->GetShape();
+	Shape* ShapeB = bodyB->GetShape();
 
 	Collision collision;
 	collision.collision = false;

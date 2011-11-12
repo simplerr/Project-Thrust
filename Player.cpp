@@ -2,7 +2,7 @@
 #include "Graphics.h"
 #include "DirectInput.h"
 #include "Level.h"
-#include "Sword.h"
+#include "MeleeWeapon.h"
 #include "Weapon.h"
 #include "RangedWeapon.h"
 #include "Loots.h"
@@ -36,14 +36,15 @@ Player::Player(float x, float y, int width, int height)
 	getBody()->SetFriction(5.0f);
 
 	// Create and set the weapon attributes, the weapon will use this information when it creates projectiles
-	/*mWeapon = new RangedWeapon(getPosition().x + 20, getPosition().y, 64, 16, 10.0f, "imgs\\normal_gun.bmp");
-	mWeapon->setOwner(this);
-	mWeapon->setAllowedBounces(2);
-	mWeapon->setRange(2000);
-	mWeapon->setLifeTime(15.0f);
-	mWeapon->getBody()->getShape()->setRotationAxis(Vector(-5, 0));*/
+	RangedWeapon* weapon = new RangedWeapon(getPosition().x + 20, getPosition().y, 64, 16, 10.0f, "imgs\\normal_gun.bmp");
+	weapon->setOwner(this);
+	weapon->setAllowedBounces(2);
+	weapon->setRange(2000);
+	weapon->setLifeTime(15.0f);
+	weapon->getBody()->GetShape()->setRotationAxis(Vector(-5, 0));
+	mWeapon = weapon;
 
-	mWeapon = NULL;
+	//mWeapon = NULL;
 }
 	
 Player::~Player()
@@ -105,7 +106,7 @@ void Player::update(float dt)
 	// Jump if the player is on the ground
 	if(gDInput->keyDown(DIK_SPACE) && !mInAir)	{
 		setVelocity(getVelocity() + Vector(0, -500));
-		getBody()->move(0, -1);		// Move it out of collision (:HACK:)
+		getBody()->Move(0, -1);		// Move it out of collision (:HACK:)
 		mAnimation->setFrame(4);	// Set the jumping frame
 		mAnimation->pause();		// Pause the animation
 		mInAir = true;				// The player is now in the air
@@ -139,11 +140,11 @@ void Player::draw()
 {
 	// Draw the player with the right facing direction
 	if(mFaceDirection == LEFT)	{
-		gGraphics->drawTexturedShape(*getBody()->getShape(), getTexture(), &mAnimation->getSourceRect(), true);
+		gGraphics->drawTexturedShape(*getBody()->GetShape(), getTexture(), &mAnimation->getSourceRect(), true);
 		gGraphics->drawTexture(mHeadTexture, getPosition().x, getPosition().y - 20, 32, 32, 0xffffffff, mHeadRotation, mHeadFlipped);
 	}
 	else	{
-		gGraphics->drawTexturedShape(*getBody()->getShape(), getTexture(), &mAnimation->getSourceRect(), false);
+		gGraphics->drawTexturedShape(*getBody()->GetShape(), getTexture(), &mAnimation->getSourceRect(), false);
 		gGraphics->drawTexture(mHeadTexture, getPosition().x, getPosition().y - 20, 32, 32, 0xffffffff, mHeadRotation, mHeadFlipped);
 	}
 	
@@ -175,25 +176,39 @@ bool Player::collided(Object* collider)
 
 void Player::updateWeapon()
 {
-	/* Rotate it pointing at the mouse position */
-	//mWeapon->getBody()->getShape()->resetRotation();
-	// Get mouse position
-	//Vector mousePos = gDInput->getCursorPos();
-
-	// Get distance to it
-	//float dx = mousePos.x - mWeapon->getPosition().x;
-	//float dy = mousePos.y - mWeapon->getPosition().y;
-
-	// Point weapon in mouse direction - atan2 to not be limited to tans 180 degree period
-	//float rotation = atan2f(dy, dx);
-
-	//mWeapon->rotate(rotation);
-
-	/* Update the position 
-		- The position of the weapon is allways the same as the player + the offset asigned
-	*/
+		
 	if(mWeapon != NULL)
+	{
 		mWeapon->updatePosition(getPosition());
+		if(mWeapon->getType() == CLOSE_RANGED)
+		{
+			if(mWeapon != NULL)
+				mWeapon->updatePosition(getPosition());
+		}
+		else if(mWeapon->getType() == RANGED_WEAPON)
+		{
+			/* Rotate it pointing at the mouse position */
+			mWeapon->getBody()->GetShape()->resetRotation();
+			// Get mouse position
+			Vector mousePos = gDInput->getCursorPos();
+
+			// Get distance to it
+			float dx = mousePos.x - mWeapon->getPosition().x;
+			float dy = mousePos.y - mWeapon->getPosition().y;
+
+			// Point weapon in mouse direction - atan2 to not be limited to tans 180 degree period
+			float rotation = atan2f(dy, dx);
+
+			mWeapon->rotate(rotation);
+
+			/* Update the position 
+				- The position of the weapon is allways the same as the player + the offset asigned
+			*/
+		}
+	}
+
+
+
 }
 
 void Player::setFacingDirection(Direction direction)
@@ -280,11 +295,11 @@ void Player::dropWeapon()
 
 		// Make it look good by a throwing effect
 		if(mFaceDirection == RIGHT)	{
-			newLoot->getBody()->move(50, -50);
+			newLoot->getBody()->Move(50, -50);
 			newLoot->getBody()->ApplyForce(Vector(1, -1), newLoot->getPosition());
 		}
 		else if(mFaceDirection == LEFT)	{
-			newLoot->getBody()->move(-50, -50);
+			newLoot->getBody()->Move(-50, -50);
 			newLoot->getBody()->ApplyForce(Vector(-1, -1), newLoot->getPosition());
 		}
 
@@ -324,6 +339,8 @@ void Player::updateHead()
 	*/
 
 	//mHeadRotation = realRotation;
+	
+	mHeadRotation = rotation;
 
 	if(mHeadRotation > PI/2 || mHeadRotation < -PI/2)	{
 		mHeadFlipped = true;
