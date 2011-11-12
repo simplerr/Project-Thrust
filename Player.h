@@ -29,6 +29,7 @@ public:
 
 	void damage(float damage);
 private:
+	IDirect3DTexture9* mHeadTexture;
 	Animation*	mAnimation;
 	int			mHealth;
 	float		mMaxVelocity;

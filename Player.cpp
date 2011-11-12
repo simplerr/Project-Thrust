@@ -17,6 +17,9 @@ Player::Player(float x, float y, int width, int height)
 	mAnimation->pause();
 	mAnimation->setFrame(4);
 
+	// Load head texture
+	mHeadTexture = gGraphics->loadTexture("imgs\\mario_head.bmp");
+
 	// Set member variables
 	mAcceleration = 500.0f;
 	mMaxVelocity = 330.0f;
@@ -25,7 +28,6 @@ Player::Player(float x, float y, int width, int height)
 	mInAir = true;
 	
 	// Set the type to PLAYER
-
 	setType(PLAYER);
 
 	// High friction

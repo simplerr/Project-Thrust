@@ -5,6 +5,8 @@
 #include "ParticleEmitter.h"
 #include "Level.h"
 
+Collision polyCollision(RigidBody* bodyA, RigidBody* bodyB);
+
 Enemy::Enemy(float x, float y, int width, int height)
 	: Object(x, y, width, height, "imgs\\mario.bmp")
 {
@@ -21,6 +23,8 @@ Enemy::Enemy(float x, float y, int width, int height)
 
 	getBody()->SetFriction(10.0f);
 	//getBody()->SetFriction(0.0f);
+
+	mBloodEffect = NULL;
 }
 	
 Enemy::~Enemy()
@@ -30,6 +34,14 @@ Enemy::~Enemy()
 
 void Enemy::update(float dt)
 {
+	// If there is an active blood effect set it's origin to the enemies + offset
+	if(mBloodEffect != NULL)	{
+		if(mBloodEffect->effectEnded())
+			mBloodEffect = NULL;
+		else
+			mBloodEffect->setPosition(getPosition() + mEffectOffset);
+	}
+
 	// Update the attack timer
 	mCooldownTimer += dt;
 
@@ -58,8 +70,10 @@ void Enemy::update(float dt)
 		mAnimation->setFrame(0);
 
 	// Kill when no life
-	if(mHealth <= 0)
+	if(mHealth <= 0)	{
 		kill();	// Replace with mDead = true, to draw death animation etc....
+		//mBloodEffect->kill();	// Maybe shouldn't be here :NOTE:
+	}
 }
 	
 void Enemy::draw()
@@ -107,17 +121,24 @@ bool Enemy::collided(Object* collider)
 			// Deal damage to enemy
 			damage(weapon->getDamage());
 			
+			// Get collision information
+			Collision collision = polyCollision(getBody(), collider->getBody());
+			Vector effectPos = collision.contactList[0].pos;
+			Vector effectOffset = effectPos - getPosition();
+			
+			setEffectOffset(effectOffset);
+
 			// Add a particle blood effect
-			ParticleEmitter* emitter = new ParticleEmitter(getPosition().x, getPosition().y);
-			emitter->setDirection(0 -PI/2);	// :NOTE: -PI/2 to fix the angle 0 to be the right x axis
-			emitter->setParticleDimensions(8, 8);
-			emitter->setParticleVelocity(3.0f);
-			emitter->setInterval(.005);
-			emitter->setSpreadAngle(PI/4);
-			emitter->setMax(20);
-			emitter->setLength(50);
-			emitter->setLifeTime(0.3f);
-			getLevel()->addObject(emitter);
+			mBloodEffect = new ParticleEmitter(effectPos.x, effectPos.y);
+			mBloodEffect->setDirection(atan2f(-collision.normal.y, -collision.normal.y));	// :NOTE: -PI/2 to fix the angle 0 to be the right x axis
+			mBloodEffect->setParticleDimensions(6, 6);
+			mBloodEffect->setParticleVelocity(1.5f);
+			mBloodEffect->setInterval(.002);
+			mBloodEffect->setSpreadAngle(PI/4);
+			mBloodEffect->setMax(50);
+			mBloodEffect->setLength(50);
+			mBloodEffect->setLifeTime(0.3f);
+			getLevel()->addObject(mBloodEffect);
 		}
 	}
 
@@ -132,4 +153,9 @@ void Enemy::setAttackCooldown(float cooldown)
 void Enemy::damage(float damage)
 {
 	mHealth -= damage;
+}
+
+void Enemy::setEffectOffset(Vector offset)
+{
+	mEffectOffset = offset;
 }

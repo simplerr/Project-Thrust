@@ -67,7 +67,7 @@ void SwordLoot::equip(Player* player)
 	sword->setRotationAxis(Vector(0, 10));
 	sword->setStandardRotation(PI/5);
 	sword->setOwner(player);
-	sword->setDamage(50);
+	sword->setDamage(0);
 
 	// Equip the player with the sword
 	player->equipWeapon(sword);

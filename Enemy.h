@@ -4,6 +4,8 @@
 #include "Object.h"
 #include "Animation.h"
 
+class ParticleEmitter;
+
 class Enemy : public  Object
 {
 public:
@@ -16,12 +18,15 @@ public:
 	void setMaxDistance(float maxDistance);
 	void setSpeed(float speed);
 	void setAttackCooldown(float cooldown);
+	void setEffectOffset(Vector offset);
 
 	bool collided(Object* collider);
 
 	void damage(float damage);
 private:
-	Animation*	mAnimation;
+	Animation*			mAnimation;
+	ParticleEmitter*	mBloodEffect;
+	Vector		mEffectOffset;
 	float		mMaxDistance;
 	float		mSpeed;
 	float		mWalkedDistance;

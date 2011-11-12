@@ -20,6 +20,7 @@ ParticleEmitter::ParticleEmitter(float x, float y, float direction, int max, flo
 	getBody()->SetGravityEffect(false);
 	mDeltaSum = 0;
 	mLifeSum = 0;
+	mEffectEnded = false;
 	srand(time(0));
 }
 	
@@ -35,13 +36,20 @@ ParticleEmitter::~ParticleEmitter()
 
 void ParticleEmitter::update(float dt)
 {
+	// One iteration delay when it gets deleted, pointers pointing on it can be informed
+	if(mEffectEnded)
+		kill();
+
 	// Add and update particles
 	if(mLifeSum < mLifeTime)	
 	{
 		// Add new particle
 		if(mDeltaSum >= mInterval)	{
-			if(mParticleList.size() < mMaxParticles)
+			if(mParticleList.size() < mMaxParticles)	{
 				add();
+				add();
+				add();
+			}
 
 			mDeltaSum = 0;
 		}
@@ -67,8 +75,8 @@ void ParticleEmitter::update(float dt)
 
 		mParticleList.clear();
 
-		// Kill the emitter
-		kill();
+		// Kill the emitter in the next iteration
+		mEffectEnded = true;
 	}
 }
 	
@@ -83,6 +91,8 @@ void ParticleEmitter::add()
 	particle->setMaxDistance(mLength);
 	particle->setTexture("imgs\\blood_particle.bmp");
 	mParticleList.push_back(particle);
+
+	//showMsg("sad");
 }
 	
 void ParticleEmitter::draw()

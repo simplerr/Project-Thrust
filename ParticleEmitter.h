@@ -30,18 +30,21 @@ public:
 	void setLifeTime(float lifetime)		{mLifeTime = lifetime;}
 	void setParticleDimensions(float width, float height)	{mParticleWidth = width, mParticleHeight = height;}
 	void loadParticleTexture(string textureSource)	{mParticleTexture = gGraphics->loadTexture(textureSource);}
+
+	bool effectEnded()						{return mEffectEnded;}
 private:
 	typedef std::vector<Particle*>::iterator	iter;
 	std::vector<Particle*>						mParticleList;
 	IDirect3DTexture9*	mParticleTexture;
 	float		mParticleWidth, mParticleHeight;
 	float		mDirection, mLength;
-	int			mMaxParticles;
 	float		mParticleVelocity;
 	float		mScale;
 	float		mLifeTime, mInterval;
 	float		mDeltaSum, mLifeSum;
 	float		mSpreadAngle;
+	int			mMaxParticles;
+	bool		mEffectEnded;
 };
 
 #endif
