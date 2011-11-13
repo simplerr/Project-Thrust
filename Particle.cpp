@@ -8,6 +8,7 @@ Particle::Particle(float x, float y, int width, int height, float speed, float a
 	mMaxDistance = 100;
 	mTravelled = 0;
 	setVelocity(speed * cosf(angle), speed * sinf(angle));
+	setSimulate(false);
 
 	// Could test which type and load the correct texture
 }

@@ -111,7 +111,7 @@ bool Enemy::collided(Object* collider)
 		mCooldownTimer = 0.0f;
 	}
 	// Check if the enemy was attacked by a player
-	else if(collider->getType() == WEAPON && collider->getOwner()->getType() == PLAYER)
+	else if(collider->getType() == MELEE_WEAPON && collider->getOwner()->getType() == PLAYER)
 	{
 		// Cast
 		Weapon* weapon = (Weapon*) collider;

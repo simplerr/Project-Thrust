@@ -179,10 +179,10 @@ void Object::setTexture(IDirect3DTexture9* texture)
 
 void Object::setSimulate(bool simulate)
 {
-	mSimulate = simulate;
+	getBody()->SetSimulate(simulate);
 }
 
 bool Object::getSimulate()
 {
-	return mSimulate;
+	return getBody()->GetSimulate();
 }

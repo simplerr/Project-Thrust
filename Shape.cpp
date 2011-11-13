@@ -8,7 +8,6 @@ Shape::Shape()
 	mBoundingBox.bottom = 0;
 	mBoundingBox.top = 0;
 	mRotation = 0;
-	mDragPos = Vector(0, 0);
 
 	// Rotate around origin as standard
 	mRotationAxis = Vector(0, 0, 0);
@@ -56,55 +55,82 @@ Rect Shape::getWorldRect(void)
 	return r;
 }
 
+void Shape::setRotationAxis(Vector axis)	
+{
+	// Inverse the axis :NOTE: Weird
+	axis *= -1;
+
+	// Calculate the rotation from the rotationAxis
+	float rotation = atan2f(axis.y, axis.x);
+
+	//mRotationAxis = Vector(0, 0);
+
+	// Rotate around the origin (0,0) - this only moves the points and NOT the origin
+	rotate(rotation);
+
+	// Set the rotation axis
+	mRotationAxis = axis;
+}
+
+void Shape::move(float dx, float dy)
+{
+	mPosition.x += dx;
+	mPosition.y += dy;
+
+}
+
 void Shape::rotate(float rotation)
 {
-	// Rotate the shape with D3DXVec4Transform
+	// Setup variables and create the rotation matrix
 	D3DXMATRIX rotationMatrix;
 	D3DXVECTOR4 vector;
 	vector.z = 0;
 	vector.w = 1;
 	D3DXMatrixRotationZ(&rotationMatrix, rotation);
 
-	// So the bounding box will get updated properly
+	/* Calculate the new position on the origin based on the rotation 
+		- Rotating around an axis other than the origin makes  the origins position change
+		- Therefor this step is done
+		- mRotationAxis is the distance from the origin to the rotation axis
+	*/
+
+	// Get the rotation axis (local coordinates)
+	vector.x = mRotationAxis.x;
+	vector.y = mRotationAxis.y;
+
+	// Do the rotation
+	D3DXVec4Transform(&vector,  &vector, &rotationMatrix);
+
+	// Set the new position 
+	setOrigin(Vector(vector.x, vector.y) + (getOrigin() - mRotationAxis));
+
+	// Set the new rotation axis offset
+	mRotationAxis = Vector(vector.x, vector.y);
+
+	// For proper updating of the bounding box
 	resetBoundingBox();
 
-	// For each vertex
+	// Calculate each points new local position when they rotate around the axis (0,0)
 	for(int i = 0; i < pointList.size(); i++)	
 	{
-		vector.x = pointList[i].x - mRotationAxis.x;	// Specifies axis to rotate around (local coordinates)
-		vector.y = pointList[i].y - mRotationAxis.y;	// Specifies axis to rotate around (local coordinates)
+		vector.x = pointList[i].x;	
+		vector.y = pointList[i].y;
 
 		D3DXVec4Transform(&vector,  &vector, &rotationMatrix);
 
-		pointList[i].x = vector.x + mRotationAxis.x;
-		pointList[i].y = vector.y + mRotationAxis.y;
+		pointList[i].x = vector.x;
+		pointList[i].y = vector.y;
 
 		// Update the bounding box
 		updateBoundingBox(pointList[i]);
 	}
 
-	// For the drag pos
-	vector.x = mDragPos.x - mRotationAxis.x;
-	vector.y = mDragPos.y - mRotationAxis.y;
-
-	D3DXVec4Transform(&vector,  &vector, &rotationMatrix);
-
-	mDragPos.x = vector.x + mRotationAxis.x;
-	mDragPos.y = vector.y + mRotationAxis.y;
-
+	// Add to the rotation
 	mRotation += rotation;
+
+	// To avoid big numbers
 	if(mRotation > 2*PI)
 		mRotation = rotation;
-
-	// Calculate new order of points
-	/*for(int i = 0; i < pointList.size(); i++)
-	{
-		for(int j = 0; j < pointList.size(); j++)
-		{
-			if(pointList[j].x < pointList[i].x && pointList[j].y < pointList[i].y)
-				pointList[i] = pointList[j];
-		}
-	}*/
 }
 
 void Shape::resetRotation()
@@ -117,7 +143,7 @@ void Shape::updateBoundingBox(Vector point)
 	if(point.x < getLocalRect().left)
 		mBoundingBox.left = point.x;
 	else if(point.x > getLocalRect().right)
-		mBoundingBox.right =point.x;
+		mBoundingBox.right = point.x;
 
 	if(point.y < getLocalRect().top)
 		mBoundingBox.top = point.y;
@@ -141,16 +167,4 @@ void Shape::scale(float scalor)
 		pointList[i].y *= scalor;
 		updateBoundingBox(pointList[i]);
 	}
-}
-
-void Shape::flipHorizontal(void)
-{
-	/*for(int i = 0; i < pointList.size();i++)
-	{
-		// right of middle
-		if(pointList[i].x > aabb.right/2)	
-			pointList[i].x = pointList[i].x - 2*(pointList[i].x - (aabb.right/2));
-		else if(pointList[i].x < aabb.right/2)
-			pointList[i].x = pointList[i].x + 2*((aabb.right/2) - pointList[i].x);
-	}*/
 }

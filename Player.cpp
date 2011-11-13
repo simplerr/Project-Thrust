@@ -6,6 +6,7 @@
 #include "Weapon.h"
 #include "RangedWeapon.h"
 #include "Loots.h"
+#include "Fist.h"
 
 Collision polyCollision(RigidBody* bodyA, RigidBody* bodyB);
 
@@ -28,7 +29,8 @@ Player::Player(float x, float y, int width, int height)
 	mHealth = 100;
 	mInAir = true;
 	mHeadRotation = 0.0f;
-	
+	mWeapon = false;
+
 	// Set the type to PLAYER
 	setType(PLAYER);
 
@@ -36,13 +38,20 @@ Player::Player(float x, float y, int width, int height)
 	getBody()->SetFriction(5.0f);
 
 	// Create and set the weapon attributes, the weapon will use this information when it creates projectiles
-	RangedWeapon* weapon = new RangedWeapon(getPosition().x + 20, getPosition().y, 64, 16, 10.0f, "imgs\\normal_gun.bmp");
+	/*RangedWeapon* weapon = new RangedWeapon(getPosition().x + 20, getPosition().y, 64, 16, 10.0f, "imgs\\normal_gun.bmp");
 	weapon->setOwner(this);
 	weapon->setAllowedBounces(2);
 	weapon->setRange(2000);
 	weapon->setLifeTime(15.0f);
 	weapon->getBody()->GetShape()->setRotationAxis(Vector(-5, 0));
-	mWeapon = weapon;
+	mWeapon = weapon;*/
+
+	Fist* fist = new Fist(getPosition().x + 50, getPosition().y);
+	float h = fist->getHeight();
+	fist->setOffset(Vector(50, 0));
+	fist->setRotationAxis(getPosition() - fist->getPosition());
+	h = fist->getHeight();
+	//mWeapon = fist;
 
 	//mWeapon = NULL;
 }
@@ -66,8 +75,10 @@ void Player::update(float dt)
 	updateHead();
 
 	// Update the weapon
-	if(mWeapon != NULL)
+	if(mWeapon != NULL)	{
 		mWeapon->update(dt);
+		//mWeapon->updatePosition(getPosition());
+	}
 
 	/* Update the velocity */
 
@@ -126,9 +137,6 @@ void Player::update(float dt)
 	if(gDInput->keyPressed(DIK_E))
 		checkLoot();
 
-	// Update the weapon position and rotation
-	updateWeapon();
-
 	// Clamp velocity
 	if(getVelocity().x > mMaxVelocity)
 		setVelocity(mMaxVelocity, getVelocity().y);
@@ -172,43 +180,6 @@ bool Player::collided(Object* collider)
 	}
 
 	return true;
-}
-
-void Player::updateWeapon()
-{
-		
-	if(mWeapon != NULL)
-	{
-		mWeapon->updatePosition(getPosition());
-		if(mWeapon->getType() == CLOSE_RANGED)
-		{
-			if(mWeapon != NULL)
-				mWeapon->updatePosition(getPosition());
-		}
-		else if(mWeapon->getType() == RANGED_WEAPON)
-		{
-			/* Rotate it pointing at the mouse position */
-			mWeapon->getBody()->GetShape()->resetRotation();
-			// Get mouse position
-			Vector mousePos = gDInput->getCursorPos();
-
-			// Get distance to it
-			float dx = mousePos.x - mWeapon->getPosition().x;
-			float dy = mousePos.y - mWeapon->getPosition().y;
-
-			// Point weapon in mouse direction - atan2 to not be limited to tans 180 degree period
-			float rotation = atan2f(dy, dx);
-
-			mWeapon->rotate(rotation);
-
-			/* Update the position 
-				- The position of the weapon is allways the same as the player + the offset asigned
-			*/
-		}
-	}
-
-
-
 }
 
 void Player::setFacingDirection(Direction direction)

@@ -10,6 +10,7 @@ Weapon::Weapon(float x, float y, int width, int height, string textureSource)
 	setOffset(Vector(0, 0));
 	setDamage(50.0f);
 	setType(WEAPON);
+	setSimulate(false);
 }
 
 Weapon::~Weapon()

@@ -1,10 +1,11 @@
 #include "RangedWeapon.h"
 #include "Projectile.h"
 #include "Level.h"
+#include "DirectInput.h"
 //#include "ParticleEmitter.h"
 //#include "Particle.h"
 
-RangedWeapon::RangedWeapon(float x, float y, int width, int height, float damage, string textureSource)
+RangedWeapon::RangedWeapon(float x, float y, int width, int height, string textureSource)
 	:Weapon(x, y, width, height, textureSource)
 {
 	setAllowedBounces(0);
@@ -16,6 +17,25 @@ RangedWeapon::RangedWeapon(float x, float y, int width, int height, float damage
 RangedWeapon::~RangedWeapon()
 {
 
+}
+
+void RangedWeapon::update(float dt)
+{
+	/* Rotate it pointing at the mouse position */
+	getBody()->GetShape()->resetRotation();
+	// Get mouse position
+	Vector mousePos = gDInput->getCursorPos();
+	
+	// Get distance to it
+	float dx = mousePos.x - getPosition().x;
+	float dy = mousePos.y - getPosition().y;
+	
+	// Point weapon in mouse direction - atan2 to not be limited to tans 180 degree period
+	float rotation = atan2f(dy, dx);
+	
+	float w = getWidth();
+	rotate(rotation);
+	w = getWidth();
 }
 
 void RangedWeapon::attack(int attack)

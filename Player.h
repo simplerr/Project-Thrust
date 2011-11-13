@@ -18,7 +18,6 @@ public:
 
 	void equipWeapon(Weapon* weapon);
 	void dropWeapon();
-	void updateWeapon();
 	void checkLoot();
 
 	void updateHead();

@@ -55,7 +55,7 @@ bool Projectile::collided(Object* collider)
 	// :TODO: should depend on the speed and projectile type!!
 	float impulse = 2.5;
 
-	if(collider != getOwner())
+	if(collider != getOwner() && collider->getSimulate())
 		collider->getBody()->ApplyForce(Vector(collision.normal.x * impulse, collision.normal.y * impulse), collider->getPosition());
 
 	if(mElasticity)

@@ -64,10 +64,9 @@ public:
 	Shape();
 
 	void addPoint(Vector point);
-	void flipHorizontal(void);
 
 	/// Moves the origin
-	void move(float dx, float dy)	{mPosition.x += dx; mPosition.y += dy;}
+	void move(float dx, float dy);
 	
 	/// Scales by percent, ie scalor = 1.1 scales with 10%
 	void scale(float scalor);
@@ -82,8 +81,7 @@ public:
 	void resetRotation();
 	
 	void setOrigin(Vector position)		{mPosition = position;}
-	void setRotationAxis(Vector axis)	{mRotationAxis = axis;}
-	void setDragPos(Vector pos)			{mDragPos = pos;}
+	void setRotationAxis(Vector axis);	// Local coordinate
 
 	int		getHeight();
 	int		getWidth();
@@ -91,18 +89,18 @@ public:
 	Rect	getLocalRect(void)		{return mBoundingBox;}
 	Vector	getOrigin()				{return mPosition;}
 	Vector	GetPosition()			{return mPosition;}
-	Vector	getDragPos()			{return mDragPos;}
+	Vector	getRotationAxis()		{return mRotationAxis;}
 	int		getSides()				{return mSides;}
-	float	getRotation()			{return mRotation;}		// :NOTE: Doesn't give correct rotation, if you take mRotation - PI/2 (90dgs) then you get the correct
+	float	getRotation()			{return mRotation;}		// :NOTE: SOLVED???? Doesn't give correct rotation, if you take mRotation - PI/2 (90dgs) then you get the correct
 
 	// Makes it at a lot cleaner than having it private
-	std::vector<Vector> pointList;
+	std::vector<Vector> pointList;		// Local coordinates
+
 private:
-	Vector	mPosition;
-	Vector	mRotationAxis;
-	Vector	mDragPos;
+	Vector	mPosition;		// Global coordinate
+	Vector	mRotationAxis;	// Local coordinate
+	Rect	mBoundingBox;	// Local coordinate
 	int		mSides;
-	Rect	mBoundingBox;
-	float	mRotation;	
+	float	mRotation;
 };	// Class
 #endif

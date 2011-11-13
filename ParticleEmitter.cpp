@@ -14,6 +14,7 @@ ParticleEmitter::ParticleEmitter(float x, float y, float direction, int max, flo
 	setInterval(interval);
 	setSpreadAngle(spreadAngle);
 	setLifeTime(lifetime);
+	setSimulate(false);
 
 	setParticleDimensions(10, 10);
 	getBody()->SetCollidable(false);
