@@ -16,8 +16,9 @@ public:
 	virtual void draw();
 	virtual void attack(int attack = 0) = 0;
 	virtual bool collided(Object* collider);
+	virtual void updatePosition(Vector ownerPos);
 
-	void updatePosition(Vector ownerPos);
+	void pollAttack();
 	void restoreRotation();
 
 	void setAttacking(bool attacking);
@@ -25,16 +26,25 @@ public:
 	void setOffset(Vector offset);
 	void setStandardRotation(float standardRotation);
 	void setFlipped(bool flipped);
+	void setCooldown(float cooldown);
+	void setCooldownCounter(float count);
+
+	void incrementCooldownCounter(float dt);
 
 	bool	getAttacking();
 	bool	getFlipped();
 	float	getDamage();
+	Vector	getOffset();
+
+	bool	isReady();
 private:
 	Vector		mOffset;
 	bool		mFlipped;
-	bool		mAttacking;
+	bool		mAttacking;	// Not really what it says
 	float		mDamage;
 	float		mStandardRotation;
+	float		mCooldownCounter;
+	float		mCooldown;
 };
 
 #endif

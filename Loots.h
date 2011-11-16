@@ -35,4 +35,13 @@ public:
 private:
 };
 
+class FistLoot : public Loot
+{
+public:
+	FistLoot(float x, float y, int width, int height);
+	~FistLoot();
+
+	void equip(Player* player);
+};
+
 #endif

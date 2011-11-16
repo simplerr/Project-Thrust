@@ -50,6 +50,7 @@ Player::Player(float x, float y, int width, int height)
 	fist->setOffset(Vector(-50, 0));
 	fist->setRotationAxis(getPosition() - fist->getPosition());
 	fist->setParent(this);
+	fist->setCooldown(10.0f);
 	mWeapon = fist;
 }
 	
@@ -76,6 +77,7 @@ void Player::update(float dt)
 	// Update the weapon
 	if(mWeapon != NULL)	{
 		mWeapon->updatePosition(getPosition());
+		mWeapon->incrementCooldownCounter(dt);
 	}
 
 	/* Update the velocity */
@@ -85,8 +87,8 @@ void Player::update(float dt)
 		setVelocity(getVelocity() + Vector(-mAcceleration, 0));	
 		setFacingDirection(LEFT);
 
-		/*if(mWeapon != NULL)
-			mWeapon->setFlipped(true);*/
+		if(mWeapon != NULL)
+			mWeapon->setFlipped(true);
 
 		// If the player is on the ground, continue the animation
 		if(!mInAir)	
@@ -96,8 +98,8 @@ void Player::update(float dt)
 		setVelocity(getVelocity() + Vector(mAcceleration, 0));	
 		setFacingDirection(RIGHT);
 
-		/*if(mWeapon != NULL)
-			mWeapon->setFlipped(false);*/
+		if(mWeapon != NULL)
+			mWeapon->setFlipped(false);
 
 		// If the player is on the ground, continue the animation
 		if(!mInAir)	
@@ -124,7 +126,8 @@ void Player::update(float dt)
 	// Shooting with the left mouse button
 	if(gDInput->mouseButtonPressed(0))	{
 		if(mWeapon != NULL)
-			mWeapon->attack();
+			if(mWeapon->isReady())
+				mWeapon->pollAttack();
 	}
 
 	// Drop the equipped weapon if the drop button was pressed

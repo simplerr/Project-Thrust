@@ -4,6 +4,7 @@
 #include "Vector.h"
 #include "Graphics.h"
 #include "MeleeWeapon.h"
+#include "Fist.h"
 
 Loot::Loot(float x, float y, int width, int height, string textureSource)
 	:	Object(x, y, width, height, textureSource)
@@ -71,6 +72,32 @@ void SwordLoot::equip(Player* player)
 
 	// Equip the player with the sword
 	player->equipWeapon(sword);
+
+	// Remove the loot from the level
+	kill();
+}
+
+FistLoot::FistLoot(float x, float y, int width, int height)
+	:	Loot(x, y, width, height, "imgs\\fist_loot.bmp")
+{
+
+}
+	
+FistLoot::~FistLoot()
+{
+
+}
+
+void FistLoot::equip(Player* player)
+{
+	// Create the sword
+	Fist* fist = new Fist(getPosition().x + 50, getPosition().y);
+	fist->setOffset(Vector(-50, 0));
+	fist->setRotationAxis(getPosition() - fist->getPosition());
+	fist->setParent(player);
+
+	// Equip the player with the sword
+	player->equipWeapon(fist);
 
 	// Remove the loot from the level
 	kill();

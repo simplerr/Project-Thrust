@@ -39,8 +39,9 @@ void RangedWeapon::update(float dt)
 
 	// Get the delta rotation
 
-
 	rotate(rotation - getRotation());
+
+	incrementCooldownCounter(dt);
 
 	/*if(!getFlipped())	{
 		if(rotation > -PI/2 && rotation < PI/2)
@@ -73,7 +74,7 @@ void RangedWeapon::attack(int attack)
 	Projectile* bullet = new Projectile(getPosition().x + offsetX, getPosition().y + offsetY, 30, 15, "imgs\\bullet.bmp");
 	
 	// Set bullet properties
-	bullet->setParent(getParent());
+	bullet->setParent(this);	//getParent()
 	bullet->getBody()->Rotate(getRotation());
 	bullet->setSpeed(700);
 	bullet->setMaxDistance(mRange);
@@ -87,4 +88,10 @@ void RangedWeapon::attack(int attack)
 bool RangedWeapon::collided(Object* collider)
 {
 	return true;
+}
+
+void RangedWeapon::updatePosition(Vector ownerPos)
+{
+	// Set position at the owners + rotationAxis
+	setPosition(ownerPos + getBody()->GetShape()->getRotationAxis());
 }

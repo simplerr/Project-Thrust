@@ -11,6 +11,8 @@ Weapon::Weapon(float x, float y, int width, int height, string textureSource)
 	setDamage(50.0f);
 	setType(WEAPON);
 	setSimulate(false);
+	setCooldown(0.0f);
+	mCooldownCounter = 100.0f;
 }
 
 Weapon::~Weapon()
@@ -20,7 +22,7 @@ Weapon::~Weapon()
 
 void Weapon::update(float dt)
 {
-
+	mCooldownCounter += dt;
 }
 	
 void Weapon::draw()
@@ -49,10 +51,21 @@ void Weapon::setStandardRotation(float rotation)
 
 void Weapon::setFlipped(bool flipped)
 {
+	// :NOTE: Not like this for all weapons
 	if(flipped != mFlipped)
 		setRotation(-getRotation());
 
 	mFlipped = flipped;
+}
+
+void Weapon::pollAttack()
+{
+	// Check the cooldown is active
+	if(isReady())	{
+		// Attack and reset the cooldown counter
+		attack();
+		mCooldownCounter = 0.0f;
+	}
 }
 
 void Weapon::setOffset(Vector offset)
@@ -62,11 +75,7 @@ void Weapon::setOffset(Vector offset)
 
 void Weapon::updatePosition(Vector ownerPos)
 {
-	/*if(mFlipped)
-		setPosition(ownerPos - getBody()->GetShape()->getRotationAxis());
-	else*/
-	
-	setPosition(ownerPos + getBody()->GetShape()->getRotationAxis());
+	// RangedWeapon and MeleeWeapon does different things
 }
 
 void Weapon::setAttacking(bool attacking)
@@ -92,4 +101,33 @@ float Weapon::getDamage()
 bool Weapon::collided(Object* collider)
 {
 	return true;
+}
+
+Vector Weapon::getOffset()
+{
+	return mOffset;
+}
+
+bool Weapon::isReady()
+{
+	// Return true if the counter is over the cooldown
+	if(mCooldownCounter >= mCooldown)
+		return true;
+	else 
+		return false;
+}
+
+void Weapon::setCooldown(float cooldown)
+{
+	mCooldown = cooldown;
+}
+
+void Weapon::incrementCooldownCounter(float dt)
+{
+	mCooldownCounter += dt;
+}
+
+void Weapon::setCooldownCounter(float count)
+{
+	mCooldownCounter = count;
 }
