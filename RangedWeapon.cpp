@@ -83,3 +83,8 @@ void RangedWeapon::attack(int attack)
 	bullet->getBody()->SetMass(10000);
 	getLevel()->addObject(bullet);
 }
+
+bool RangedWeapon::collided(Object* collider)
+{
+	return true;
+}

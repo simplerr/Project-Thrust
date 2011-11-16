@@ -18,6 +18,7 @@ PlayState::PlayState()
 	// Create the player and add it to the level
 	mPlayer = new Player(600, 200, 32, 64);
 	mLevel->addObject(mPlayer);
+	mPlayer->init();
 
 	// Create the ground
 	Object* object = new Object(600, 750, 1200, 100);
@@ -34,7 +35,7 @@ PlayState::PlayState()
 	mLevel->addObject(object);
 
 	SwordLoot* loot = new SwordLoot(400, 300, 50, 50);
-	//mLevel->addObject(loot);
+	mLevel->addObject(loot);
 
 	SwordLoot* loot1 = new SwordLoot(600, 300, 50, 50);
 	mLevel->addObject(loot1);

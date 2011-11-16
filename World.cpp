@@ -48,43 +48,40 @@ void World::BroadPhase()
 		{
 			RigidBody* bj = mBodyList[j];
 
-			// Cases that will be ignored
-			if(bj->GetParentId() == bi->GetId() || bi->GetParentId() == bj->GetId())
-				continue;
-			else if(bj->GetParentId() == bi->GetParentId())
-				continue;
+			Arbiter		newArb(bi, bj);
+			ArbiterKey	key(bi, bj);
 
-			Arbiter newArb(bi, bj);
-			ArbiterKey key(bi, bj);
-
-			if((int)newArb.contactList.size() > 0 && newArb.bodyA->GetCollidable() && newArb.bodyB->GetCollidable())	// :NOTE: Useful? Needed? Dun think so!
-			{			
-				// Call the callback function - :NOTE: Shouldn't be here, if the object gets deleted for example
-				callback(newArb.bodyA->GetOwner(), newArb.bodyB->GetOwner());
-
-				// If one of the bodies shouldn't be simulated we skip the rest
+			// Check if there's any collision between the bodies
+			if((int)newArb.contactList.size() > 0)	{
+				// Don't add a collision if one of the objects isn't collidable
+				if(!newArb.bodyA->GetCollidable() || !newArb.bodyB->GetCollidable())
+					continue;
+				// or if the callback function returns false
+				if(!callback(newArb.bodyA->GetOwner(), newArb.bodyB->GetOwner()))
+					continue;
+				// or if one of the bodies isn't suppose to be simulated
 				if(!newArb.bodyA->GetSimulate() || !newArb.bodyB->GetSimulate())
 					continue;
-
+			}
+			
+			// Same as above - this to make it easier
+			if((int)newArb.contactList.size() > 0)
+			{			
 				ArbIter iter = arbiters.find(key);
 
 				// If the arbiter doesn't exist in the list we just add it
 				if(iter == arbiters.end())
 					arbiters.insert(ArbPair(key, newArb));
-				else	{// The arbiter already existed so we update it (iter->second is the mapped value, iter->first is the key value)
+				else	{
+					// The arbiter already existed so we update it (iter->second is the mapped value, iter->first is the key value)
 					iter->second.Update(newArb.contactList);
 				}
 			}
-			else	{// If there's no contact between the bodies then the arbiter gets removed
-
-				//Arbiter testArb(bi, bj);
+			else	{
+				// If there's no contact between the bodies then the arbiter gets removed
 				ArbIter iter = arbiters.find(key);
-
 				if(iter != arbiters.end())
 					arbiters.erase(key);
-				/* This gets runned when it shouldn't
-					probably the reason why the impulse Pn is 0 after each loop
-				*/
 			}
 		}
 	}

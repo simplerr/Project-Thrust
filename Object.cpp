@@ -12,6 +12,7 @@ Object::Object(float x, float y, int width, int height, std::string textureSourc
 	setType(PLATFORM);
 	setParent(NULL);
 	setSimulate(true);
+	setVisible(true);
 }
 	
 Object::~Object()
@@ -155,9 +156,6 @@ bool Object::getAlive()
 void Object::setParent(Object* parent)
 {
 	mParent = parent;
-
-	if(parent != NULL)
-		getBody()->SetParentId(parent->getId());
 }
 
 Object*	Object::getParent()
@@ -183,4 +181,19 @@ void Object::setSimulate(bool simulate)
 bool Object::getSimulate()
 {
 	return getBody()->GetSimulate();
+}
+
+bool Object::getVisible()
+{
+	return mVisible;
+}
+
+void Object::setVisible(bool visible)
+{
+	mVisible = visible;
+}
+
+void Object::childEvent(string eventMessage)
+{
+	
 }

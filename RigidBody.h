@@ -41,7 +41,6 @@ public:
 	void SetOwner(void* owner)					{mOwner = owner;}
 	void SetSimulate(bool simulate)				{mSimulate = simulate;}
 	void SetId(int id)							{mId = id;}
-	void SetParentId(int id)					{mParentId = id;}
 
 	// Get functions
 	Shape*	GetShape()			{return mShape;}	
@@ -49,7 +48,6 @@ public:
 	Vector	GetForce()			{return mForce;}
 	Vector	GetVelocity()		{return mVelocity;}	
 	int		GetId()				{return mId;}
-	int		GetParentId()		{return mParentId;}
 	float	GetRotation()		{return mShape->getRotation();}
 	float	GetTorque()			{return mTorque;}
 	float	GetAngularVelocity(){return mAngularVelocity;}
@@ -71,7 +69,6 @@ private:
 	bool		mCollidable;		// Needed? All rigids can collide? :NOTE:
 	bool		mSimulate;
 	int			mId;
-	int			mParentId;
 
 	// Physic members
 	Vector		mPosition;			// Position of center of mass (CM)

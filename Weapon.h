@@ -15,6 +15,7 @@ public:
 	virtual void update(float dt);
 	virtual void draw();
 	virtual void attack(int attack = 0) = 0;
+	virtual bool collided(Object* collider);
 
 	void updatePosition(Vector ownerPos);
 	void restoreRotation();

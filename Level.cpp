@@ -49,7 +49,8 @@ void Level::draw()
 	// Loop through and draw all the objects
 	for(int i = 0; i < mObjectList.size(); i++)
 	{
-		mObjectList[i]->draw();
+		if(mObjectList[i]->getVisible())
+			mObjectList[i]->draw();
 	}
 
 	char buffer[256];
@@ -57,7 +58,7 @@ void Level::draw()
 	gGraphics->drawText(buffer, 10, 300);
 }
 
-void Level::handleCollision(void* objA, void* objB)
+bool Level::handleCollision(void* objA, void* objB)
 {
 	Object* objectA;
 	Object* objectB;
@@ -66,9 +67,18 @@ void Level::handleCollision(void* objA, void* objB)
 	objectA = (Object*)objA;
 	objectB = (Object*)objB;
 
-	// Call the colide functions
+	if(objectA->getType() == PLAYER || objectB->getType() == PLAYER)
+		int asda = 1;
+
+	// Find out if the collision should be added to the simulation
+	if(objectA->getParent() == objectB->getParent() && objectA->getParent() != NULL)
+		return false;
+
+	// Call the collided functions
 	if(objectA->collided(objectB))	// Collided return false if objectB is deleted inside the function
 		objectB->collided(objectA);
+
+	return true;
 }
 
 void Level::addObject(Object* object)
@@ -79,8 +89,7 @@ void Level::addObject(Object* object)
 	// Set required attributes and add to the game object list
 	object->setId(idCounter);
 	object->setLevel(this);
-	if(object->getBody()->GetParentId() == -1)
-		object->getBody()->SetParentId(idCounter);
+
 	mObjectList.push_back(object);
 
 	// Add the objects body to the physic simulation world

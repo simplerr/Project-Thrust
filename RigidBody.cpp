@@ -21,7 +21,6 @@ RigidBody::RigidBody(float x, float y, int width, int height)
 	SetSimulate(true);
 	SetSimulate(true);
 	SetOwner(NULL);
-	SetParentId(-1);
 }
 	
 RigidBody::~RigidBody()

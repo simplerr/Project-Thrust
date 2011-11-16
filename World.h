@@ -54,10 +54,10 @@ public:
 	RotationMode GetRotationMode();
 
 	// Gets called when a collision occurs
-	boost::function<void(void* objA, void* objB)> callback;
+	boost::function<bool(void* objA, void* objB)> callback;
 
 	template <class T>
-	void connect(void(T::*_callback)(void* objA, void* objB), T* _object)	{
+	void connect(bool(T::*_callback)(void* objA, void* objB), T* _object)	{
 		callback = boost::bind(_callback, _object, _1, _2);
 	}
 

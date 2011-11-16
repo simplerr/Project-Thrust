@@ -15,7 +15,7 @@ public:
 	void update(float dt);
 	void draw();
 
-	void handleCollision(void* objA, void* objB);
+	bool handleCollision(void* objA, void* objB);
 	Object* findCollision(Rect rect, int id, ObjectType type);
 
 	void addObject(Object* object);

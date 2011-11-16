@@ -88,3 +88,8 @@ float Weapon::getDamage()
 {
 	return mDamage;
 }
+
+bool Weapon::collided(Object* collider)
+{
+	return true;
+}

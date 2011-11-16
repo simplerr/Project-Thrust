@@ -12,7 +12,8 @@ public:
 	~Projectile();
 
 	void update(float dt);
-	
+	void updateTravelled(float dt);
+
 	bool collided(Object* collider);
 
 	void setDamage(float damage)				{mDamage = damage;}
@@ -21,13 +22,16 @@ public:
 	void setElasticity(float elasticity)		{mElasticity = elasticity;}
 	void setLifeTime(float lifetime)			{mLifeTimer = lifetime;}
 	void setAllowedBounces(int allowedBounces)	{mBounces = allowedBounces;}
+	void setTravelledDistance(float travelled)	{mTravelled = travelled;}
 
+	float	getTravelled()						{return mTravelled;}
+	float	getMaxDistance()					{return mMaxDistance;}
 private:
 	float	mDamage;
 	float	mElasticity;
 	float	mLifeTimer;
-	int		mTravelled;
-	int		mMaxDistance;
+	float	mTravelled;
+	float	mMaxDistance;
 	int		mBounces;
 
 	// impact sounds

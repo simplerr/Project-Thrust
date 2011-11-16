@@ -59,12 +59,14 @@ Player::~Player()
 	ReleaseCOM(mHeadTexture);
 }
 
+void Player::init()
+{
+	if(mWeapon != NULL)
+		getLevel()->addObject(mWeapon);
+}
+
 void Player::update(float dt)
 {
-	// Check health
-	if(mHealth <= 0)
-		showMsg("died!");
-
 	// Update the animation
 	mAnimation->animate(dt);
 
@@ -73,7 +75,6 @@ void Player::update(float dt)
 
 	// Update the weapon
 	if(mWeapon != NULL)	{
-		mWeapon->update(dt);
 		mWeapon->updatePosition(getPosition());
 	}
 
@@ -152,10 +153,6 @@ void Player::draw()
 		gGraphics->drawTexturedShape(*getBody()->GetShape(), getTexture(), &mAnimation->getSourceRect(), false);
 		gGraphics->drawTexture(mHeadTexture, getPosition().x, getPosition().y - 20, 32, 32, 0xffffffff, mHeadRotation, mHeadFlipped);
 	}
-	
-	// Draw the weapon
-	if(mWeapon != NULL)
-		mWeapon->draw();
 
 	char buffer[256];
 	sprintf(buffer, "head rotation: %f", mHeadRotation * 57.3);
@@ -318,4 +315,10 @@ void Player::updateHead()
 		mHeadFlipped = false;
 		mHeadRotation += 2*PI;
 	}
+}
+
+void Player::childEvent(string eventMessage)
+{
+	if(eventMessage == "displayWeapon")
+		mWeapon->setVisible(true);
 }

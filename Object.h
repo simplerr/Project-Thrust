@@ -4,6 +4,8 @@
 #include <string>
 #include "RigidBody.h"
 
+using namespace std;
+
 class Level;
 
 class Object
@@ -14,6 +16,7 @@ public:
 
 	virtual void update(float dt);
 	virtual void draw();
+	virtual void childEvent(string eventMessage);
 
 	virtual bool collided(Object* collider);	// Collided return false if objectB is deleted inside the function
 
@@ -21,7 +24,8 @@ public:
 
 	virtual void setVelocity(Vector velocity);
 	virtual void setVelocity(float dx, float dy);
-
+	virtual void setLevel(Level* level);
+	
 	void setPosition(Vector pos);
 	void setPosition(float x, float y);
 	void setId(int id);
@@ -32,7 +36,7 @@ public:
 	void setTexture(IDirect3DTexture9* texture);
 	void setParent(Object* parent);
 	void setSimulate(bool simulate);
-	virtual void setLevel(Level* level);
+	void setVisible(bool visible);
 	void kill();
 
 	Vector		getPosition();
@@ -48,6 +52,7 @@ public:
 	ObjectType	getType();
 	bool		getAlive();
 	bool		getSimulate();
+	bool		getVisible();
 
 	IDirect3DTexture9* getTexture();
 private:
@@ -57,6 +62,7 @@ private:
 	ObjectType	mType;				// Type
 	int			mId;				// Id, same in mBody
 	bool		mAlive;				// Alive or dead
+	bool		mVisible;			// Drawed or not
 	IDirect3DTexture9* mTexture;	// Object texture
 
 };

@@ -13,8 +13,11 @@ public:
 	Player(float x, float y, int width, int height);
 	~Player();
 
+	void init();
 	void update(float dt);
 	void draw();
+
+	void childEvent(string eventMessage);
 
 	void equipWeapon(Weapon* weapon);
 	void dropWeapon();

@@ -15,6 +15,7 @@ public:
 	virtual void update(float dt);
 	virtual void draw();
 	virtual void attack(int attack = 0);
+	virtual bool collided(Object* collider);
 
 	void	setRange(int range)				{mRange = range;}
 	void	setAllowedBounces(int bounces)	{mAllowedBounces = bounces;}

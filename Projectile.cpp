@@ -34,11 +34,10 @@ void Projectile::update(float dt)
 			if(mLifeTimer < 0)
 				kill();
 
-			// Increment travelled distance
-			Vector velocity = getVelocity();
-			mTravelled += dt * Mathematics::sqrt(velocity.x*velocity.x + velocity.y*velocity.y);
+			updateTravelled(dt);
 
 			// Rotate
+			Vector velocity = getVelocity();
 			getBody()->GetShape()->resetRotation();
 			getBody()->Rotate(atan2f(velocity.y, velocity.x));
 		}
@@ -47,6 +46,13 @@ void Projectile::update(float dt)
 	}
 }
 	
+void Projectile::updateTravelled(float dt)
+{
+	// Increment travelled distance
+	Vector velocity = getVelocity();
+	mTravelled += dt * Mathematics::sqrt(velocity.x*velocity.x + velocity.y*velocity.y);
+}
+
 bool Projectile::collided(Object* collider)
 {
 	// Get information about the collision
