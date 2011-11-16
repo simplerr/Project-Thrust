@@ -50,8 +50,6 @@ public:
 	Vector	GetVelocity()		{return mVelocity;}	
 	int		GetId()				{return mId;}
 	int		GetParentId()		{return mParentId;}
-	int		GetWidth()			{return mShape->getWidth();}
-	int		GetHeight()			{return mShape->getHeight();}
 	float	GetRotation()		{return mShape->getRotation();}
 	float	GetTorque()			{return mTorque;}
 	float	GetAngularVelocity(){return mAngularVelocity;}
@@ -63,6 +61,8 @@ public:
 	bool	GetSimulate()		{return mSimulate;}
 	bool	GetCollidable()		{return mCollidable;}
 	void*	GetOwner()			{return mOwner;}
+	int		GetWidth(bool rotated = true)	{return mShape->getWidth(rotated);}
+	int		GetHeight(bool rotated = true)	{return mShape->getHeight(rotated);}
 
 private:
 	// General members

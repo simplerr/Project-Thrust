@@ -117,14 +117,14 @@ IDirect3DTexture9* Object::getTexture()
 	return mTexture;
 }
 
-int Object::getWidth()
+int Object::getWidth(bool rotated)
 {
-	return getBody()->GetWidth();
+	return getBody()->GetWidth(rotated);
 }
 
-int	Object::getHeight()
+int	Object::getHeight(bool rotated)
 {
-	return getBody()->GetHeight();
+	return getBody()->GetHeight(rotated);
 }
 
 float Object::getRotation()

@@ -32,14 +32,30 @@ void Shape::addPoint(Vector point)
 	pointList.push_back(point);
 }
 
-int Shape::getWidth()
+int Shape::getWidth(bool rotated)
 {
-	return mBoundingBox.right - mBoundingBox.left;
+	if(rotated)
+		return mBoundingBox.right - mBoundingBox.left;
+	else	{
+		float rotation = getRotation();
+		rotate(-rotation);
+		int width =  mBoundingBox.right - mBoundingBox.left;
+		rotate(rotation);
+		return width;
+	}
 }
 
-int	Shape::getHeight()
+int	Shape::getHeight(bool rotated)
 {
-	return mBoundingBox.bottom - mBoundingBox.top;
+	if(rotated)
+		return mBoundingBox.bottom - mBoundingBox.top;
+	else	{
+		float rotation = getRotation();
+		rotate(-rotation);
+		int height = mBoundingBox.bottom - mBoundingBox.top;
+		rotate(rotation);
+		return height;
+	}
 }
 
 

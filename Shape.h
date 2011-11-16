@@ -83,8 +83,8 @@ public:
 	void setOrigin(Vector position)		{mPosition = position;}
 	void setRotationAxis(Vector axis);	// Local coordinate
 
-	int		getHeight();
-	int		getWidth();
+	int		getHeight(bool rotated = true);
+	int		getWidth(bool rotated = true);
 	Rect	getWorldRect(void);
 	Rect	getLocalRect(void)		{return mBoundingBox;}
 	Vector	getOrigin()				{return mPosition;}

@@ -37,8 +37,8 @@ public:
 
 	Vector		getPosition();
 	Vector		getVelocity();
-	int			getWidth();
-	int			getHeight();
+	int			getWidth(bool rotated = true);
+	int			getHeight(bool rotated = true);
 	int			getId();
 	float		getRotation();
 	RigidBody*	getBody();
