@@ -79,6 +79,8 @@ void Level::addObject(Object* object)
 	// Set required attributes and add to the game object list
 	object->setId(idCounter);
 	object->setLevel(this);
+	if(object->getBody()->GetParentId() == -1)
+		object->getBody()->SetParentId(idCounter);
 	mObjectList.push_back(object);
 
 	// Add the objects body to the physic simulation world

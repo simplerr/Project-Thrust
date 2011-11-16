@@ -39,17 +39,17 @@ public:
 	void SetFriction(float friction)			{mFriction = friction;}
 	void SetInertia(float inertia)				{mInertiaTensor = inertia;}
 	void SetOwner(void* owner)					{mOwner = owner;}
-	void SetParentBody(RigidBody* body)			{mParentBody = body;}
 	void SetSimulate(bool simulate)				{mSimulate = simulate;}
 	void SetId(int id)							{mId = id;}
+	void SetParentId(int id)					{mParentId = id;}
 
 	// Get functions
-	RigidBody* GetParentBody()	{return mParentBody;}
 	Shape*	GetShape()			{return mShape;}	
 	Vector	GetPosition()		{return mShape->getOrigin();}
 	Vector	GetForce()			{return mForce;}
 	Vector	GetVelocity()		{return mVelocity;}	
 	int		GetId()				{return mId;}
+	int		GetParentId()		{return mParentId;}
 	int		GetWidth()			{return mShape->getWidth();}
 	int		GetHeight()			{return mShape->getHeight();}
 	float	GetRotation()		{return mShape->getRotation();}
@@ -67,11 +67,11 @@ public:
 private:
 	// General members
 	Shape*		mShape;
-	RigidBody*	mParentBody;		// :UGLY: :TODO: Should be replaced with an ID or smth....
 	void*		mOwner;
 	bool		mCollidable;		// Needed? All rigids can collide? :NOTE:
 	bool		mSimulate;
 	int			mId;
+	int			mParentId;
 
 	// Physic members
 	Vector		mPosition;			// Position of center of mass (CM)

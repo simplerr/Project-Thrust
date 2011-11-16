@@ -60,10 +60,8 @@ void Shape::setRotationAxis(Vector axis)
 	// Inverse the axis :NOTE: Weird
 	axis *= -1;
 
-	// Calculate the rotation from the rotationAxis
+	// Calculate the rotation from the rotation axis
 	float rotation = atan2f(axis.y, axis.x);
-
-	//mRotationAxis = Vector(0, 0);
 
 	// Rotate around the origin (0,0) - this only moves the points and NOT the origin
 	rotate(rotation);

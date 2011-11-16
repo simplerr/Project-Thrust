@@ -40,8 +40,8 @@ bool Loot::collided(Object* collider)
 	}
 
 	// If the colliders owner is a player we let it equip the loot as well, for instance when the players sword hits the loot and not the player itself
-	if(collider->getOwner() != NULL)	{
-		if(collider->getOwner()->getType() == PLAYER)	{
+	if(collider->getParent() != NULL)	{
+		if(collider->getParent()->getType() == PLAYER)	{
 		//	equip((Player*)collider->getOwner());
 			return false;
 		}
@@ -66,7 +66,7 @@ void SwordLoot::equip(Player* player)
 	sword->setOffset(Vector(10, 0));
 	sword->setRotationAxis(Vector(0, 10));
 	sword->setStandardRotation(PI/5);
-	sword->setOwner(player);
+	sword->setParent(player);
 	sword->setDamage(0);
 
 	// Equip the player with the sword

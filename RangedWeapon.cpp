@@ -2,6 +2,7 @@
 #include "Projectile.h"
 #include "Level.h"
 #include "DirectInput.h"
+#include "Graphics.h"
 //#include "ParticleEmitter.h"
 //#include "Particle.h"
 
@@ -23,19 +24,45 @@ void RangedWeapon::update(float dt)
 {
 	/* Rotate it pointing at the mouse position */
 	getBody()->GetShape()->resetRotation();
+
 	// Get mouse position
 	Vector mousePos = gDInput->getCursorPos();
 	
-	// Get distance to it
-	float dx = mousePos.x - getPosition().x;
-	float dy = mousePos.y - getPosition().y;
+	// Get distance to weapons rotation axis
+	float dx = mousePos.x - (getPosition().x - getBody()->GetShape()->getRotationAxis().x);
+	float dy = mousePos.y - (getPosition().y - getBody()->GetShape()->getRotationAxis().y);
 	
 	// Point weapon in mouse direction - atan2 to not be limited to tans 180 degree period
 	float rotation = atan2f(dy, dx);
 	
-	float w = getWidth();
-	rotate(rotation);
-	w = getWidth();
+	mRotation = rotation;
+
+	// Get the delta rotation
+
+
+	rotate(rotation - getRotation());
+
+	/*if(!getFlipped())	{
+		if(rotation > -PI/2 && rotation < PI/2)
+			rotate(rotation - getRotation());
+		else if(rotation < -PI/2)
+			rotate(getRotation() - PI/2);
+		else if(rotation > PI/2)
+			rotate(getRotation() + PI/2);
+	}*/
+	/*else	{
+		if(rotation < -PI/2 || rotation > PI/2)
+			rotate(rotation - getRotation());
+		else if(rotation > -PI/2)
+			rotate(getRotation() - PI/2);
+		else if(rotation < PI/2)
+			rotate(getRotation() + PI/2);
+	}*/
+}
+
+void RangedWeapon::draw()
+{
+	
 }
 
 void RangedWeapon::attack(int attack)
@@ -46,7 +73,7 @@ void RangedWeapon::attack(int attack)
 	Projectile* bullet = new Projectile(getPosition().x + offsetX, getPosition().y + offsetY, 30, 15, "imgs\\bullet.bmp");
 	
 	// Set bullet properties
-	bullet->setOwner(getOwner());
+	bullet->setParent(getParent());
 	bullet->getBody()->Rotate(getRotation());
 	bullet->setSpeed(700);
 	bullet->setMaxDistance(mRange);

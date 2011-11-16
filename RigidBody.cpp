@@ -20,7 +20,8 @@ RigidBody::RigidBody(float x, float y, int width, int height)
 	SetFriction(1.0f);
 	SetSimulate(true);
 	SetSimulate(true);
-	SetParentBody(NULL);
+	SetOwner(NULL);
+	SetParentId(-1);
 }
 	
 RigidBody::~RigidBody()

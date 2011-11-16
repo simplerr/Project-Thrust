@@ -30,7 +30,7 @@ public:
 	void setRotationAxis(Vector axis);
 	void setTexture(string textureSource);
 	void setTexture(IDirect3DTexture9* texture);
-	void setOwner(Object* owner);
+	void setParent(Object* parent);
 	void setSimulate(bool simulate);
 	virtual void setLevel(Level* level);
 	void kill();
@@ -44,21 +44,20 @@ public:
 	RigidBody*	getBody();
 	Rect		getRect();
 	Level*		getLevel();
-	Object*		getOwner();
+	Object*		getParent();
 	ObjectType	getType();
 	bool		getAlive();
 	bool		getSimulate();
 
 	IDirect3DTexture9* getTexture();
 private:
-	Level*		mLevel;
-	RigidBody*	mBody;
-	Object*		mOwner;
-	ObjectType	mType;
-	int			mId;
-	bool		mAlive;
-	bool		mSimulate;
-	IDirect3DTexture9* mTexture;
+	Level*		mLevel;				// The active level
+	RigidBody*	mBody;				// The body used for simulation
+	Object*		mParent;			// The parent, ex the player for a bullet
+	ObjectType	mType;				// Type
+	int			mId;				// Id, same in mBody
+	bool		mAlive;				// Alive or dead
+	IDirect3DTexture9* mTexture;	// Object texture
 
 };
 

@@ -13,6 +13,7 @@ public:
 	~RangedWeapon();
 
 	virtual void update(float dt);
+	virtual void draw();
 	virtual void attack(int attack = 0);
 
 	void	setRange(int range)				{mRange = range;}
@@ -28,6 +29,7 @@ private:
 	int		mLifeLen;
 	int		mRange;
 	int		mAllowedBounces;
+	float	mRotation;
 };
 
 #endif

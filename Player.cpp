@@ -29,7 +29,7 @@ Player::Player(float x, float y, int width, int height)
 	mHealth = 100;
 	mInAir = true;
 	mHeadRotation = 0.0f;
-	mWeapon = false;
+	mWeapon = NULL;
 
 	// Set the type to PLAYER
 	setType(PLAYER);
@@ -47,13 +47,10 @@ Player::Player(float x, float y, int width, int height)
 	mWeapon = weapon;*/
 
 	Fist* fist = new Fist(getPosition().x + 50, getPosition().y);
-	float h = fist->getHeight();
-	fist->setOffset(Vector(50, 0));
+	fist->setOffset(Vector(-50, 0));
 	fist->setRotationAxis(getPosition() - fist->getPosition());
-	h = fist->getHeight();
-	//mWeapon = fist;
-
-	//mWeapon = NULL;
+	fist->setParent(this);
+	mWeapon = fist;
 }
 	
 Player::~Player()
@@ -77,7 +74,7 @@ void Player::update(float dt)
 	// Update the weapon
 	if(mWeapon != NULL)	{
 		mWeapon->update(dt);
-		//mWeapon->updatePosition(getPosition());
+		mWeapon->updatePosition(getPosition());
 	}
 
 	/* Update the velocity */
@@ -87,8 +84,8 @@ void Player::update(float dt)
 		setVelocity(getVelocity() + Vector(-mAcceleration, 0));	
 		setFacingDirection(LEFT);
 
-		if(mWeapon != NULL)
-			mWeapon->setFlipped(true);
+		/*if(mWeapon != NULL)
+			mWeapon->setFlipped(true);*/
 
 		// If the player is on the ground, continue the animation
 		if(!mInAir)	
@@ -98,8 +95,8 @@ void Player::update(float dt)
 		setVelocity(getVelocity() + Vector(mAcceleration, 0));	
 		setFacingDirection(RIGHT);
 
-		if(mWeapon != NULL)
-			mWeapon->setFlipped(false);
+		/*if(mWeapon != NULL)
+			mWeapon->setFlipped(false);*/
 
 		// If the player is on the ground, continue the animation
 		if(!mInAir)	

@@ -10,7 +10,7 @@ Object::Object(float x, float y, int width, int height, std::string textureSourc
 	mTexture = gGraphics->loadTexture(textureSource);
 
 	setType(PLATFORM);
-	setOwner(NULL);
+	setParent(NULL);
 	setSimulate(true);
 }
 	
@@ -152,19 +152,17 @@ bool Object::getAlive()
 	return mAlive;
 }
 
-void Object::setOwner(Object* owner)
+void Object::setParent(Object* parent)
 {
-	mOwner = owner;
+	mParent = parent;
 
-	if(owner != NULL)
-		getBody()->SetParentBody(owner->getBody());
-	else
-		getBody()->SetParentBody(NULL);
+	if(parent != NULL)
+		getBody()->SetParentId(parent->getId());
 }
 
-Object*	Object::getOwner()
+Object*	Object::getParent()
 {
-	return mOwner;
+	return mParent;
 }
 
 Rect Object::getRect()

@@ -10,6 +10,7 @@ Projectile::Projectile(float x, float y, int width, int height, string textureSo
 	setDamage(10.0f);
 	setLifeTime(4.0f);
 	setAllowedBounces(0);
+	setType(PROJECTILE);
 }
 	
 Projectile::~Projectile()
@@ -55,12 +56,12 @@ bool Projectile::collided(Object* collider)
 	// :TODO: should depend on the speed and projectile type!!
 	float impulse = 2.5;
 
-	if(collider != getOwner() && collider->getSimulate())
+	if(collider != getParent() && collider->getSimulate())
 		collider->getBody()->ApplyForce(Vector(collision.normal.x * impulse, collision.normal.y * impulse), collider->getPosition());
 
 	if(mElasticity)
 	{
-		if((collider == getOwner() && mTravelled > 30) || collider != getOwner())
+		if((collider == getParent() && mTravelled > 30) || collider != getParent())
 		{
 			// Bounce counting
 			mBounces--;
@@ -104,14 +105,4 @@ void Projectile::setSpeed(float speed)
 	// Gets called when the projectile is created
 	// Calculate the vector velocity depending on the rotation and the scalar speed
 	setVelocity(Vector(speed * cosf(getBody()->GetRotation()), speed * sinf(getBody()->GetRotation())));
-}
-
-void Projectile::setOwner(Object* owner)
-{
-	mOwner = owner;
-}
-
-Object* Projectile::getOwner()
-{
-	return mOwner;
 }

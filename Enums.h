@@ -99,7 +99,8 @@ enum ObjectType
 	PARTICLE_FIRE,
 	LOOT,
 	MELEE_WEAPON,
-	RANGED_WEAPON
+	RANGED_WEAPON,
+	PROJECTILE
 };
 
 enum ObjectOwner

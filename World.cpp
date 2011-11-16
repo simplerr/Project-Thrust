@@ -48,14 +48,17 @@ void World::BroadPhase()
 		{
 			RigidBody* bj = mBodyList[j];
 
-			if(bj->GetParentBody() == bi || bi->GetParentBody() == bj)
+			// Cases that will be ignored
+			if(bj->GetParentId() == bi->GetId() || bi->GetParentId() == bj->GetId())
+				continue;
+			else if(bj->GetParentId() == bi->GetParentId())
 				continue;
 
 			Arbiter newArb(bi, bj);
 			ArbiterKey key(bi, bj);
 
 			if((int)newArb.contactList.size() > 0 && newArb.bodyA->GetCollidable() && newArb.bodyB->GetCollidable())	// :NOTE: Useful? Needed? Dun think so!
-			{
+			{			
 				// Call the callback function - :NOTE: Shouldn't be here, if the object gets deleted for example
 				callback(newArb.bodyA->GetOwner(), newArb.bodyB->GetOwner());
 

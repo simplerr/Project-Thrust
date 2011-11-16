@@ -62,10 +62,11 @@ void Weapon::setOffset(Vector offset)
 
 void Weapon::updatePosition(Vector ownerPos)
 {
-	if(mFlipped)
-		setPosition(ownerPos - mOffset);
-	else
-		setPosition(ownerPos + mOffset);
+	/*if(mFlipped)
+		setPosition(ownerPos - getBody()->GetShape()->getRotationAxis());
+	else*/
+	
+	setPosition(ownerPos + getBody()->GetShape()->getRotationAxis());
 }
 
 void Weapon::setAttacking(bool attacking)
