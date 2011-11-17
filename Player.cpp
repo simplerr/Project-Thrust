@@ -322,6 +322,5 @@ void Player::updateHead()
 
 void Player::childEvent(string eventMessage)
 {
-	if(eventMessage == "displayWeapon")
-		mWeapon->setVisible(true);
+	
 }

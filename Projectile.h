@@ -21,7 +21,7 @@ public:
 	void setSpeed(float speed);
 	void setElasticity(float elasticity)		{mElasticity = elasticity;}
 	void setLifeTime(float lifetime)			{mLifeTimer = lifetime;}
-	void setAllowedBounces(int allowedBounces)	{mBounces = allowedBounces;}
+	void setAllowedBounces(int allowedBounces)	{mAllowedBounces = allowedBounces;}
 	void setTravelledDistance(float travelled)	{mTravelled = travelled;}
 
 	float	getTravelled()						{return mTravelled;}
@@ -32,6 +32,7 @@ private:
 	float	mLifeTimer;
 	float	mTravelled;
 	float	mMaxDistance;
+	int		mAllowedBounces;
 	int		mBounces;
 
 	// impact sounds

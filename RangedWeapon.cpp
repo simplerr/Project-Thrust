@@ -63,14 +63,14 @@ void RangedWeapon::update(float dt)
 
 void RangedWeapon::draw()
 {
-	
+	Object::draw();
 }
 
 void RangedWeapon::attack(int attack)
 {
 	// Calculate where to spawn the projectile
-	float offsetX = - 10 + 40*cosf(getRotation());
-	float offsetY = - 5 + 40*sinf(getRotation());
+	float offsetX = - 10 + 50*cosf(getRotation());
+	float offsetY = - 5 + 50*sinf(getRotation());
 	Projectile* bullet = new Projectile(getPosition().x + offsetX, getPosition().y + offsetY, 30, 15, "imgs\\bullet.bmp");
 	
 	// Set bullet properties

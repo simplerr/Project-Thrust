@@ -11,6 +11,7 @@ Projectile::Projectile(float x, float y, int width, int height, string textureSo
 	setLifeTime(4.0f);
 	setAllowedBounces(0);
 	setType(PROJECTILE);
+	mBounces = 0;
 }
 	
 Projectile::~Projectile()
@@ -21,7 +22,7 @@ Projectile::~Projectile()
 void Projectile::update(float dt)
 {
 	// Kill if bounced more than allowed
-	if(mBounces < 0)
+	if(mBounces >= mAllowedBounces)
 		kill();
 	else
 	{
@@ -70,7 +71,7 @@ bool Projectile::collided(Object* collider)
 		if((collider == getParent() && mTravelled > 30) || collider != getParent())
 		{
 			// Bounce counting
-			mBounces--;
+			mBounces++;
 
 			// Move the projectile out of collision
 			getBody()->Move(-collision.pushX, -collision.pushY);

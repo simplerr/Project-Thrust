@@ -43,6 +43,9 @@ PlayState::PlayState()
 	FistLoot* fistLoot = new FistLoot(200, 200, 50,  50);
 	mLevel->addObject(fistLoot);
 
+	RocketLoot* rocketLoot = new RocketLoot(500, 300, 50, 50);
+	mLevel->addObject(rocketLoot);
+
 	Enemy* enemy = new Enemy(300, 200, 32, 64);
 	enemy->setMaxDistance(100.0f);
 	enemy->setSpeed(0);

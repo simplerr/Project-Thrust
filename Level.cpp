@@ -67,9 +67,6 @@ bool Level::handleCollision(void* objA, void* objB)
 	objectA = (Object*)objA;
 	objectB = (Object*)objB;
 
-	if(objectA->getType() == PLAYER || objectB->getType() == PLAYER)
-		int asda = 1;
-
 	// Find out if the collision should be added to the simulation
 	if(objectA->getParent() == objectB->getParent() && objectA->getParent() != NULL)
 		return false;

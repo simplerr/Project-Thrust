@@ -44,4 +44,14 @@ public:
 	void equip(Player* player);
 };
 
+class RocketLoot : public Loot
+{
+public:
+	RocketLoot(float x, float y, int width, int height);
+	~RocketLoot();
+
+	void equip(Player* player);
+};
+
+
 #endif
