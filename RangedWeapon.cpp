@@ -3,8 +3,7 @@
 #include "Level.h"
 #include "DirectInput.h"
 #include "Graphics.h"
-//#include "ParticleEmitter.h"
-//#include "Particle.h"
+#include "ObjectData.h"
 
 RangedWeapon::RangedWeapon(float x, float y, int width, int height, string textureSource)
 	:Weapon(x, y, width, height, textureSource)
@@ -13,6 +12,12 @@ RangedWeapon::RangedWeapon(float x, float y, int width, int height, string textu
 	setType(RANGED_WEAPON);
 	setRange(200);
 	setLifeTime(5.0f);
+}
+
+RangedWeapon::RangedWeapon(ObjectData* data, float x, float y)
+	: Weapon(data, x, y)
+{
+
 }
 
 RangedWeapon::~RangedWeapon()
@@ -35,10 +40,8 @@ void RangedWeapon::update(float dt)
 	// Point weapon in mouse direction - atan2 to not be limited to tans 180 degree period
 	float rotation = atan2f(dy, dx);
 	
-	mRotation = rotation;
 
 	// Get the delta rotation
-
 	rotate(rotation - getRotation());
 
 	incrementCooldownCounter(dt);
@@ -63,7 +66,7 @@ void RangedWeapon::update(float dt)
 
 void RangedWeapon::draw()
 {
-	Object::draw();
+	Weapon::draw();
 }
 
 void RangedWeapon::attack(int attack)

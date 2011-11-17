@@ -4,7 +4,9 @@
 #include "World.h"
 #include "Vector.h"
 
+class ObjectLoader;
 class Object;
+class ObjectData;
 
 class Level
 {
@@ -20,9 +22,12 @@ public:
 
 	void addObject(Object* object);
 	void removeObject(Object* object);
+
+	ObjectData* loadObjectData(string objectName);
 private:
-	World* mWorld;
 	std::vector<Object*> mObjectList;
+	World* mWorld;
+	ObjectLoader* mObjectLoader;
 };
 
 #endif

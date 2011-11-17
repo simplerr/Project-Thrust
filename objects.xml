@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Objects>
+  <BasicBox>
+    <Width>105</Width>
+    <Height>51</Height>
+    <Texture>imgs\\floortile.bmp</Texture>
+  </BasicBox>
+
+  <RetardBox>
+    <Width>50</Width>
+    <Height>100</Height>
+    <Texture>imgs\\bkgd.bmp</Texture>
+  </RetardBox>
+  
+  <RangedWeapon>
+    <Width>100</Width>
+    <Height>20</Height>
+    <Texture>imgs\\crate.bmp</Texture>
+    <Damage>50</Damage>
+    <Cooldown>1.0f</Cooldown>
+    <Rotation>3.14</Rotation>
+  </RangedWeapon>
+
+  <MeleeWeapon>
+
+  </MeleeWeapon>
+
+  <Fist>
+
+  </Fist>
+</Objects>
+
+

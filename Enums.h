@@ -100,7 +100,8 @@ enum ObjectType
 	LOOT,
 	MELEE_WEAPON,
 	RANGED_WEAPON,
-	PROJECTILE
+	PROJECTILE,
+	FIST
 };
 
 enum ObjectOwner

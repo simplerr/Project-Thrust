@@ -4,6 +4,8 @@
 #include "Graphics.h"
 #include "DirectInput.h"
 #include "Enums.h"
+#include "ObjectLoader.h"
+#include "ObjectData.h"
 
 Level::Level()
 {
@@ -14,12 +16,19 @@ Level::Level()
 
 	// Connect the callback to the function to call every time there is a collision between two bodies
 	mWorld->connect(&Level::handleCollision, this);	
+
+	// Create the object loader
+	mObjectLoader = new ObjectLoader();
+	mObjectLoader->setFile("objects.xml");
 }
 	
 Level::~Level()
 {
 	// Delete the level
 	delete mWorld;
+
+	// Delete the object loader
+	delete mObjectLoader;
 }
 
 void Level::update(float dt)
@@ -58,6 +67,24 @@ void Level::draw()
 	gGraphics->drawText(buffer, 10, 300);
 }
 
+void Level::addObject(Object* object)
+{
+	// Id counter
+	static int idCounter = 0;
+
+	// Set required attributes and add to the game object list
+	object->setId(idCounter);
+	object->setLevel(this);
+
+	mObjectList.push_back(object);
+
+	// Add the objects body to the physic simulation world
+	mWorld->Add(object->getBody());
+
+	// Increment the static id counter
+	idCounter++;
+}
+
 bool Level::handleCollision(void* objA, void* objB)
 {
 	Object* objectA;
@@ -76,24 +103,6 @@ bool Level::handleCollision(void* objA, void* objB)
 		objectB->collided(objectA);
 
 	return true;
-}
-
-void Level::addObject(Object* object)
-{
-	// Id counter
-	static int idCounter = 0;
-
-	// Set required attributes and add to the game object list
-	object->setId(idCounter);
-	object->setLevel(this);
-
-	mObjectList.push_back(object);
-
-	// Add the objects body to the physic simulation world
-	mWorld->Add(object->getBody());
-
-	// Increment the static id counter
-	idCounter++;
 }
 
 void Level::removeObject(Object* object)
@@ -128,4 +137,9 @@ Object* Level::findCollision(Rect rect, int id, ObjectType type)
 	}
 
 	return collider;
+}
+
+ObjectData* Level::loadObjectData(string objectName)
+{
+	return  mObjectLoader->getData(objectName);
 }

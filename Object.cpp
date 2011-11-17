@@ -1,6 +1,7 @@
 #include "Object.h"
 #include "Graphics.h"
 #include "Level.h"
+#include "ObjectData.h"
 
 Object::Object(float x, float y, int width, int height, std::string textureSource)
 {
@@ -15,6 +16,22 @@ Object::Object(float x, float y, int width, int height, std::string textureSourc
 	setVisible(true);
 }
 	
+Object::Object(ObjectData* data, float x, float y)
+{
+	int width = data->getValueDouble("Width");
+	int height = data->getValueDouble("Height");
+	string texture = data->getValueString("Texture");
+
+	mBody = new RigidBody(x, y, width, height);
+	mBody->SetOwner(this);
+	mTexture = gGraphics->loadTexture(texture);
+
+	setType(PLATFORM);
+	setParent(NULL);
+	setSimulate(true);
+	setVisible(true);
+}
+
 Object::~Object()
 {
 	// Don't delete mBody, mWorld in Level does it
@@ -197,3 +214,17 @@ void Object::childEvent(string eventMessage)
 {
 	
 }
+
+void Object::loadData(ObjectData data)
+{
+	
+}
+
+//
+//ObjectData data = getLevel()->loadObjectData("Weapon");
+//Object* object = new Object(data, x, y);
+//
+//Object::Object(Level* level, float x, float y)
+//{
+//	ObjectData data = level->loadObjectData("Weapon");
+//}

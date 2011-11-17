@@ -29,6 +29,7 @@ void FlyingFist::update(float dt)
 	if(getTravelled() > getMaxDistance()*2 && mTurned)
 	{
 		kill();
+		// :TODO: Fix if the parent dissapears
 		getParent()->childEvent("displayWeapon");
 	}
 }

@@ -10,6 +10,7 @@ Fist::Fist(float x, float y)
 {
 	//setSimulate(false);
 	mSecondTexture = gGraphics->loadTexture("imgs\\fist.bmp");
+	setType(FIST);
 	mAttackDelay = 0.07f;
 	mCounter = 0.0f;
 	mAttacking = false;

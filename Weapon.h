@@ -10,6 +10,7 @@ class Weapon : public Object
 {
 public:
 	Weapon(float x, float y, int width, int height, string textureSource);
+	Weapon(ObjectData* data, float x, float y);
 	~Weapon();
 
 	virtual void update(float dt);

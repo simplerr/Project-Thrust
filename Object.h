@@ -6,19 +6,24 @@
 
 using namespace std;
 
+class ObjectData;
 class Level;
 
 class Object
 {
 public:
 	Object(float x, float y, int width, int height, std::string textureSource = "imgs\\crate.bmp");
+	Object(ObjectData* data, float x, float y);
 	virtual ~Object();
 
 	virtual void update(float dt);
 	virtual void draw();
+	virtual void loadData(ObjectData data);
 	virtual void childEvent(string eventMessage);
 
 	virtual bool collided(Object* collider);	// Collided return false if objectB is deleted inside the function
+
+	void initBody(float x, float y);
 
 	void rotate(float rotate);
 

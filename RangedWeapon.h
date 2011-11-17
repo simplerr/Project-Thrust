@@ -5,11 +5,13 @@
 #include "enums.h"
 
 class Level;
+class ObjectData;
 
 class RangedWeapon : public Weapon
 {
 public:
 	RangedWeapon(float x, float y, int width, int height, string textureSource);
+	RangedWeapon(ObjectData* data, float x, float y);
 	~RangedWeapon();
 
 	virtual void update(float dt);
@@ -31,7 +33,6 @@ private:
 	int		mLifeLen;
 	int		mRange;
 	int		mAllowedBounces;
-	float	mRotation;
 };
 
 #endif

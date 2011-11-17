@@ -1,5 +1,6 @@
 #include "Weapon.h"
 #include "Graphics.h"
+#include "ObjectData.h"
 
 Weapon::Weapon(float x, float y, int width, int height, string textureSource)
 	: Object(x, y, width, height, textureSource)
@@ -12,6 +13,25 @@ Weapon::Weapon(float x, float y, int width, int height, string textureSource)
 	setType(WEAPON);
 	setSimulate(false);
 	setCooldown(0.0f);
+	mCooldownCounter = 100.0f;
+}
+
+Weapon::Weapon(ObjectData* data, float x, float y)
+	: Object(data, x, y)
+{
+	float damage = data->getValueDouble("Damage");
+	float cooldown = data->getValueDouble("Cooldown");
+	float standardRotation = data->getValueDouble("Rotation");
+
+	setDamage(damage);
+	setCooldown(cooldown);
+	setStandardRotation(standardRotation);
+
+	setAttacking(false);
+	setFlipped(false);
+	setOffset(Vector(0, 0));
+	setType(WEAPON);
+	setSimulate(false);
 	mCooldownCounter = 100.0f;
 }
 
@@ -28,6 +48,10 @@ void Weapon::update(float dt)
 void Weapon::draw()
 {
 	gGraphics->drawTexturedShape(*getBody()->GetShape(), getTexture(), NULL, getFlipped());
+
+	char buffer[256];
+	sprintf(buffer, "dmg: %f", getDamage());
+	gGraphics->drawText(buffer, 10, 400);
 }
 
 void Weapon::setDamage(float damage)

@@ -6,6 +6,8 @@
 #include "Loots.h"
 #include "Enemy.h"
 #include "DirectInput.h"
+#include "ObjectData.h"
+#include "RangedWeapon.h"
 
 PlayState::PlayState()
 {
@@ -29,6 +31,14 @@ PlayState::PlayState()
 	object = new Object(800, 600, 100, 500);
 	object->getBody()->SetMass(0);
 	mLevel->addObject(object);
+
+	ObjectData* data = mLevel->loadObjectData("RetardBox");
+	object = new Object(data, 200, 200);
+	mLevel->addObject(object);
+
+	ObjectData* data2 = mLevel->loadObjectData("RangedWeapon");
+	RangedWeapon* weapon = new RangedWeapon(data2, 100, 100);
+	mLevel->addObject(weapon);
 
 	object = new Object(300, 300, 100, 100);
 	object->setSimulate(false);
