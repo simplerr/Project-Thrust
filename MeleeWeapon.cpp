@@ -1,17 +1,28 @@
 #include "MeleeWeapon.h"
 #include "Graphics.h"
 #include "Weapon.h"
+#include "ObjectData.h"
 
 Collision polyCollision(RigidBody* bodyA, RigidBody* bodyB);
 
 MeleeWeapon::MeleeWeapon(float x, float y, int width, int height, string textureSource)
 	: Weapon(x, y, width, height, textureSource)
 {
+	// Init default variables
 	setType(MELEE_WEAPON);
 	mAttackTime = 0.15f;
 	mElapsedTime = 0.0f;
 }
 	
+MeleeWeapon::MeleeWeapon(ObjectData* data, float x, float y)
+	: Weapon(data, x, y)
+{
+	// Get data 
+	float attackTime = data->getValueDouble("AttackTime");
+
+	mAttackTime = attackTime;
+}
+
 MeleeWeapon::~MeleeWeapon()
 {
 
@@ -102,4 +113,13 @@ void MeleeWeapon::updatePosition(Vector ownerPos)
 		setPosition(ownerPos - getOffset());
 	else
 		setPosition(ownerPos + getOffset());
+}
+
+void MeleeWeapon::setFlipped(bool flipped)
+{
+	// :NOTE: Not like this for all weapons
+	if(flipped != getFlipped())
+		setRotation(-getRotation());
+
+	Weapon::setFlipped(flipped);
 }

@@ -31,6 +31,8 @@ public:
 	void setVelocity(Vector velocity);
 	void setVelocity(float dx, float dy);
 
+	Direction getFacingDirection();
+
 	void damage(float damage);
 private:
 	IDirect3DTexture9* mHeadTexture;

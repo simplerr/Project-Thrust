@@ -3,20 +3,19 @@
 
 ObjectData::ObjectData(TiXmlElement* element)
 {
+	// Set the element
 	mElement = element;
-
-	string s = element->Value();
-	s = mElement->Value();
 }
 	
 ObjectData::~ObjectData()
 {
 	// Gives weird Assembler error, but it might need to be deleted :NOTE:
-	//delete mElement;
+	// delete mElement;
 }
 
 double ObjectData::getValueDouble(string name)
 {
+	// Gets the value of the element "name" in double type
 	TiXmlDocument doc("objects.xml");
 	doc.LoadFile();
 
@@ -32,6 +31,7 @@ double ObjectData::getValueDouble(string name)
 	
 string ObjectData::getValueString(string name)
 {
+	// Gets the value of the element "name" in string type
 	TiXmlElement* attribute = mElement->FirstChildElement(name.c_str());
 	if(attribute)
 		return string(attribute->GetText());
@@ -41,5 +41,6 @@ string ObjectData::getValueString(string name)
 
 string ObjectData::getType()
 {
+	// Returns the type, ie : <Object type="this>....</Object>
 	return string(mElement->FirstAttribute()->Value());
 }

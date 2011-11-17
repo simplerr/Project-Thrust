@@ -37,21 +37,7 @@ Player::Player(float x, float y, int width, int height)
 	// High friction
 	getBody()->SetFriction(5.0f);
 
-	// Create and set the weapon attributes, the weapon will use this information when it creates projectiles
-	/*RangedWeapon* weapon = new RangedWeapon(getPosition().x + 20, getPosition().y, 64, 16, 10.0f, "imgs\\normal_gun.bmp");
-	weapon->setOwner(this);
-	weapon->setAllowedBounces(2);
-	weapon->setRange(2000);
-	weapon->setLifeTime(15.0f);
-	weapon->getBody()->GetShape()->setRotationAxis(Vector(-5, 0));
-	mWeapon = weapon;*/
-
-	Fist* fist = new Fist(getPosition().x + 50, getPosition().y);
-	fist->setOffset(Vector(-50, 0));
-	fist->setRotationAxis(getPosition() - fist->getPosition());
-	fist->setParent(this);
-	fist->setCooldown(10.0f);
-	mWeapon = fist;
+	//Fist* fist = new Fist(getPosition().x + 50, getPosition().y);	
 }
 	
 Player::~Player()
@@ -62,6 +48,16 @@ Player::~Player()
 
 void Player::init()
 {
+	// Create and equip a Fist weapon
+	/*ObjectData* data = getLevel()->loadObjectData("Fist");
+	Fist* fist = new Fist(data, getPosition().x + 50, getPosition().y);
+	fist->setOffset(Vector(-50, 0));
+	fist->setRotationAxis(getPosition() - fist->getPosition());
+	fist->setParent(this);
+	fist->setCooldown(10.0f);
+
+	mWeapon = fist;*/
+
 	if(mWeapon != NULL)
 		getLevel()->addObject(mWeapon);
 }
@@ -323,4 +319,9 @@ void Player::updateHead()
 void Player::childEvent(string eventMessage)
 {
 	
+}
+
+Direction Player::getFacingDirection()
+{
+	return mFaceDirection;
 }

@@ -1,34 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <Objects>
+  <!--Fist-->
+  <Fist>
+    <Width>22</Width>
+    <Height>22</Height>
+    <Texture>imgs\\fist.bmp</Texture>
+    <Damage>50</Damage>
+    <Cooldown>10.0f</Cooldown>
+    <Rotation>0</Rotation>
+    <Lifetime>6.0f</Lifetime>
+    <Bounces>10</Bounces>
+    <Range>200</Range>
+  </Fist>
+
+  <!--RangedWeapon-->
+  <RangedWeapon>
+    <Width>100</Width>
+    <Height>20</Height>
+    <Texture>imgs\\normal_gun.bmp</Texture>
+    <Damage>50</Damage>
+    <Cooldown>1.0f</Cooldown>
+    <Rotation>3.14</Rotation>
+    <Lifetime>6.0f</Lifetime>
+    <Bounces>3</Bounces>
+    <Range>200</Range>
+    <Projectile>FlyingFist</Projectile>
+  </RangedWeapon>
+
+  <!--Sword-->
+  <Sword>
+    <Width>15</Width>
+    <Height>53</Height>
+    <Texture>imgs\\sword.bmp</Texture>
+    <Damage>50</Damage>
+    <Cooldown>0.0f</Cooldown>
+    <Rotation>0.8</Rotation>
+    <AttackTime>0.15f</AttackTime>
+  </Sword>
+
+
+  <!--Standard objects-->
   <BasicBox>
     <Width>105</Width>
     <Height>51</Height>
     <Texture>imgs\\floortile.bmp</Texture>
   </BasicBox>
-
-  <RetardBox>
-    <Width>50</Width>
-    <Height>100</Height>
-    <Texture>imgs\\bkgd.bmp</Texture>
-  </RetardBox>
-  
-  <RangedWeapon>
-    <Width>100</Width>
-    <Height>20</Height>
-    <Texture>imgs\\crate.bmp</Texture>
-    <Damage>50</Damage>
-    <Cooldown>1.0f</Cooldown>
-    <Rotation>3.14</Rotation>
-  </RangedWeapon>
-
-  <MeleeWeapon>
-
-  </MeleeWeapon>
-
-  <Fist>
-
-  </Fist>
 </Objects>
 
 

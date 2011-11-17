@@ -8,6 +8,7 @@
 RangedWeapon::RangedWeapon(float x, float y, int width, int height, string textureSource)
 	:Weapon(x, y, width, height, textureSource)
 {
+	// Init defaults
 	setAllowedBounces(0);
 	setType(RANGED_WEAPON);
 	setRange(200);
@@ -17,7 +18,15 @@ RangedWeapon::RangedWeapon(float x, float y, int width, int height, string textu
 RangedWeapon::RangedWeapon(ObjectData* data, float x, float y)
 	: Weapon(data, x, y)
 {
+	// Get data from the XML element
+	int bounces = data->getValueDouble("Bounces");
+	int range = data->getValueDouble("Range");
+	float lifeTime = data->getValueDouble("Lifetime");
 
+	// Set the data
+	setAllowedBounces(bounces);
+	setRange(range);
+	setLifeTime(lifeTime);
 }
 
 RangedWeapon::~RangedWeapon()
@@ -66,7 +75,7 @@ void RangedWeapon::update(float dt)
 
 void RangedWeapon::draw()
 {
-	Weapon::draw();
+	gGraphics->drawTexturedShape(*getBody()->GetShape(), getTexture(), NULL, false);
 }
 
 void RangedWeapon::attack(int attack)
@@ -97,4 +106,9 @@ void RangedWeapon::updatePosition(Vector ownerPos)
 {
 	// Set position at the owners + rotationAxis
 	setPosition(ownerPos + getBody()->GetShape()->getRotationAxis());
+}
+
+void RangedWeapon::setFlipped(bool flipped)
+{
+	Weapon::setFlipped(flipped);
 }

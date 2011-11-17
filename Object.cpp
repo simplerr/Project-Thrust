@@ -10,22 +10,28 @@ Object::Object(float x, float y, int width, int height, std::string textureSourc
 
 	mTexture = gGraphics->loadTexture(textureSource);
 
-	setType(PLATFORM);
-	setParent(NULL);
-	setSimulate(true);
-	setVisible(true);
+	// Init defaults
+	initDefaults();
 }
 	
 Object::Object(ObjectData* data, float x, float y)
 {
+	// Get data from the XML element
 	int width = data->getValueDouble("Width");
 	int height = data->getValueDouble("Height");
 	string texture = data->getValueString("Texture");
 
+	// Set the data
 	mBody = new RigidBody(x, y, width, height);
 	mBody->SetOwner(this);
 	mTexture = gGraphics->loadTexture(texture);
 
+	// Init defaults
+	initDefaults();
+}
+
+void Object::initDefaults()
+{
 	setType(PLATFORM);
 	setParent(NULL);
 	setSimulate(true);
@@ -219,12 +225,3 @@ void Object::loadData(ObjectData data)
 {
 	
 }
-
-//
-//ObjectData data = getLevel()->loadObjectData("Weapon");
-//Object* object = new Object(data, x, y);
-//
-//Object::Object(Level* level, float x, float y)
-//{
-//	ObjectData data = level->loadObjectData("Weapon");
-//}

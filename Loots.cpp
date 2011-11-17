@@ -5,6 +5,8 @@
 #include "Graphics.h"
 #include "MeleeWeapon.h"
 #include "Fist.h"
+#include "Level.h"
+#include "ObjectData.h"
 
 Loot::Loot(float x, float y, int width, int height, string textureSource)
 	:	Object(x, y, width, height, textureSource)
@@ -63,12 +65,15 @@ SwordLoot::~SwordLoot()
 void SwordLoot::equip(Player* player)
 {
 	// Create the sword
-	MeleeWeapon* sword = new MeleeWeapon(getPosition().x, getPosition().y, 15, 53, "imgs\\sword.bmp");
-	sword->setOffset(Vector(10, 0));
-	sword->setRotationAxis(Vector(0, 10));
-	sword->setStandardRotation(PI/5);
+	ObjectData* data = getLevel()->loadObjectData("Sword");
+	MeleeWeapon* sword = new MeleeWeapon(data, getPosition().x, getPosition().y);
+	sword->setOffset(Vector(20, 0));
+	sword->setRotationAxis(Vector(0, 10));	// :NOTE: Seems buggy
+
+	// :NOTE: MeleeWeapons doesn't use the rotation axis the same way as ranged weapons
+	// This fix below is ugly
+	sword->setRotation(0);		
 	sword->setParent(player);
-	sword->setDamage(0);
 
 	// Equip the player with the sword
 	player->equipWeapon(sword);

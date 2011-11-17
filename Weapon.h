@@ -18,15 +18,16 @@ public:
 	virtual void attack(int attack = 0) = 0;
 	virtual bool collided(Object* collider);
 	virtual void updatePosition(Vector ownerPos);
+	virtual void setFlipped(bool flipped);
 
 	void pollAttack();
 	void restoreRotation();
+	void initDefaults();
 
 	void setAttacking(bool attacking);
 	void setDamage(float damage);
 	void setOffset(Vector offset);
 	void setStandardRotation(float standardRotation);
-	void setFlipped(bool flipped);
 	void setCooldown(float cooldown);
 	void setCooldownCounter(float count);
 

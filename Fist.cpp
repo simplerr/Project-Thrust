@@ -4,18 +4,32 @@
 #include "Level.h"
 #include "Graphics.h"
 #include "FlyingFist.h"
+#include "ObjectData.h"
 
 Fist::Fist(float x, float y)
 	: RangedWeapon(x, y, 22, 22, "imgs\\fist.bmp")
 {
-	//setSimulate(false);
+	// Init the default attributes
+	initDefaults();
+}
+	
+Fist::Fist(ObjectData* data, float x, float y)
+	: RangedWeapon(data, x, y)
+{
+	// Init the default attributes
+	initDefaults();
+}
+
+void Fist::initDefaults()
+{
+	// Init the default attributes 
 	mSecondTexture = gGraphics->loadTexture("imgs\\fist.bmp");
 	setType(FIST);
 	mAttackDelay = 0.07f;
 	mCounter = 0.0f;
 	mAttacking = false;
 }
-	
+
 Fist::~Fist()
 {
 	ReleaseCOM(mSecondTexture);
@@ -24,8 +38,10 @@ Fist::~Fist()
 	
 void Fist::update(float dt)
 {
+	// Update rotation and cooldown counter
 	RangedWeapon::update(dt);
 
+	// :TODO:
 	if(mAttacking)
 	{
 		mCounter += dt;

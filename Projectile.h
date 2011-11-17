@@ -16,6 +16,8 @@ public:
 
 	bool collided(Object* collider);
 
+	void initDefaults();
+
 	void setDamage(float damage)				{mDamage = damage;}
 	void setMaxDistance(float maxDistance)		{mMaxDistance = maxDistance;}
 	void setSpeed(float speed);

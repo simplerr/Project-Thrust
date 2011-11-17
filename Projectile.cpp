@@ -5,6 +5,13 @@ Collision polyCollision(RigidBody* bodyA, RigidBody* bodyB);
 Projectile::Projectile(float x, float y, int width, int height, string textureSource)
 	: Object(x, y, width, height, textureSource)
 {
+	// Init the default attributes
+	initDefaults();
+}
+	
+void Projectile::initDefaults()
+{
+	// Init the default attributes 
 	mTravelled = 0.0f;
 	setMaxDistance(300.0f);
 	setDamage(10.0f);
@@ -13,7 +20,7 @@ Projectile::Projectile(float x, float y, int width, int height, string textureSo
 	setType(PROJECTILE);
 	mBounces = 0;
 }
-	
+
 Projectile::~Projectile()
 {
 

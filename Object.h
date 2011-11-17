@@ -20,6 +20,7 @@ public:
 	virtual void draw();
 	virtual void loadData(ObjectData data);
 	virtual void childEvent(string eventMessage);
+	virtual void initDefaults();
 
 	virtual bool collided(Object* collider);	// Collided return false if objectB is deleted inside the function
 

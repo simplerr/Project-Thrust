@@ -32,14 +32,6 @@ PlayState::PlayState()
 	object->getBody()->SetMass(0);
 	mLevel->addObject(object);
 
-	ObjectData* data = mLevel->loadObjectData("RetardBox");
-	object = new Object(data, 200, 200);
-	mLevel->addObject(object);
-
-	ObjectData* data2 = mLevel->loadObjectData("RangedWeapon");
-	RangedWeapon* weapon = new RangedWeapon(data2, 100, 100);
-	mLevel->addObject(weapon);
-
 	object = new Object(300, 300, 100, 100);
 	object->setSimulate(false);
 	mLevel->addObject(object);

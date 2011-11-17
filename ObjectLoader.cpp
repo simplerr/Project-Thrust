@@ -14,19 +14,21 @@ ObjectLoader::~ObjectLoader()
 
 void ObjectLoader::setFile(string fileName)
 {
+	// Set XML file and create the Tiny XML document object
 	mFile = fileName;
 	mXmlFile = TiXmlDocument(fileName.c_str());
+
+	// Important to load the file!
 	mXmlFile.LoadFile();
 }
 
 ObjectData* ObjectLoader::getData(string objectName)
 {
+	// Get the data for the object with the name "objectName"
 	TiXmlElement* root = mXmlFile.FirstChildElement();
-
-	string s = root->Value();
-
 	TiXmlElement* dataElement = root->FirstChildElement(objectName.c_str());
 
+	// :NOTE: Possibly memory leak
 	ObjectData* data = new ObjectData(dataElement);
 	return data;
 }

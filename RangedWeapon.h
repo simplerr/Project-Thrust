@@ -19,6 +19,7 @@ public:
 	virtual void attack(int attack = 0);
 	virtual bool collided(Object* collider);
 	void updatePosition(Vector ownerPos);
+	void setFlipped(bool flipped);
 
 	void	setRange(int range)				{mRange = range;}
 	void	setAllowedBounces(int bounces)	{mAllowedBounces = bounces;}
