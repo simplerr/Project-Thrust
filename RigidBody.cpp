@@ -19,8 +19,8 @@ RigidBody::RigidBody(float x, float y, int width, int height)
 	SetTorque(Vector(0, 0, 0));
 	SetFriction(1.0f);
 	SetSimulate(true);
-	SetSimulate(true);
 	SetOwner(NULL);
+	
 }
 	
 RigidBody::~RigidBody()

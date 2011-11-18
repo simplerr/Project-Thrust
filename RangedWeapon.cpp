@@ -4,6 +4,7 @@
 #include "DirectInput.h"
 #include "Graphics.h"
 #include "ObjectData.h"
+#include "Grenade.h"
 
 RangedWeapon::RangedWeapon(float x, float y, int width, int height, string textureSource)
 	:Weapon(x, y, width, height, textureSource)
@@ -94,7 +95,13 @@ void RangedWeapon::attack(int attack)
 	bullet->setAllowedBounces(mAllowedBounces);
 	bullet->setLifeTime(mLifeTime);
 	bullet->getBody()->SetMass(10000);
-	getLevel()->addObject(bullet);
+	//getLevel()->addObject(bullet);
+
+	Grenade* grenade = new Grenade(getPosition().x + offsetX, getPosition().y + offsetY, 32, 32);
+	grenade->rotate(getRotation());
+	grenade->setSpeed(700.0f);
+	grenade->setTimer(0.5f);
+	getLevel()->addObject(grenade);
 }
 
 bool RangedWeapon::collided(Object* collider)

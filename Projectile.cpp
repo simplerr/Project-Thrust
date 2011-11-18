@@ -9,6 +9,12 @@ Projectile::Projectile(float x, float y, int width, int height, string textureSo
 	initDefaults();
 }
 	
+Projectile::Projectile(ObjectData* data, float x, float y)
+	: Object(data, x, y)
+{
+
+}
+
 void Projectile::initDefaults()
 {
 	// Init the default attributes 

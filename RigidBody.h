@@ -28,7 +28,7 @@ public:
 
 	// Set functions
 	void SetCollidable(bool collides)			{mCollidable = collides;}
-	void SetPosition(Vector position)			{mPosition = position; mShape->setOrigin(position);}		// :TODO: mShape also needs to update
+	void SetPosition(Vector position)			{mShape->setOrigin(position);}		// :TODO: mShape also needs to update
 	void SetVelocity(Vector velocity)			{mVelocity = velocity;}
 	void SetVelocity(float x, float y)			{mVelocity = Vector(x, y, 0);}
 	void SetAngularVelocity(float velocity)		{mAngularVelocity = velocity;}
@@ -71,7 +71,7 @@ private:
 	int			mId;
 
 	// Physic members
-	Vector		mPosition;			// Position of center of mass (CM)
+	//Vector		mPosition;			// Position of center of mass (CM)
 	Vector		mVelocity;
 	Vector		mForce;
 	float		mTorque;

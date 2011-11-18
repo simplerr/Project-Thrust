@@ -101,7 +101,8 @@ enum ObjectType
 	MELEE_WEAPON,
 	RANGED_WEAPON,
 	PROJECTILE,
-	FIST
+	FIST,
+	PARTICLE
 };
 
 enum ObjectOwner

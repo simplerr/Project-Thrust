@@ -5,17 +5,20 @@
 
 Object::Object(float x, float y, int width, int height, std::string textureSource)
 {
+	// Init defaults
+	initDefaults();
+
 	mBody = new RigidBody(x, y, width, height);
 	mBody->SetOwner(this);
 
-	mTexture = gGraphics->loadTexture(textureSource);
-
-	// Init defaults
-	initDefaults();
+	mTexture = gGraphics->loadTexture(textureSource);	
 }
 	
 Object::Object(ObjectData* data, float x, float y)
 {
+	// Init defaults
+	initDefaults();
+
 	// Get data from the XML element
 	int width = data->getValueDouble("Width");
 	int height = data->getValueDouble("Height");
@@ -25,17 +28,14 @@ Object::Object(ObjectData* data, float x, float y)
 	mBody = new RigidBody(x, y, width, height);
 	mBody->SetOwner(this);
 	mTexture = gGraphics->loadTexture(texture);
-
-	// Init defaults
-	initDefaults();
 }
 
 void Object::initDefaults()
 {
 	setType(PLATFORM);
 	setParent(NULL);
-	setSimulate(true);
 	setVisible(true);
+	setRectCollision(false);
 }
 
 Object::~Object()
@@ -224,4 +224,14 @@ void Object::childEvent(string eventMessage)
 void Object::loadData(ObjectData data)
 {
 	
+}
+
+bool Object::isRectCollision()
+{
+	return mRectCollision;
+}
+
+void Object::setRectCollision(bool rectCollision)
+{
+	mRectCollision = rectCollision;
 }

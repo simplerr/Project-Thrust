@@ -43,6 +43,7 @@ public:
 	void setParent(Object* parent);
 	void setSimulate(bool simulate);
 	void setVisible(bool visible);
+	void setRectCollision(bool rectCollision);
 	void kill();
 
 	Vector		getPosition();
@@ -59,6 +60,8 @@ public:
 	bool		getAlive();
 	bool		getSimulate();
 	bool		getVisible();
+	
+	bool		isRectCollision();
 
 	IDirect3DTexture9* getTexture();
 private:
@@ -69,8 +72,8 @@ private:
 	int			mId;				// Id, same in mBody
 	bool		mAlive;				// Alive or dead
 	bool		mVisible;			// Drawed or not
+	bool		mRectCollision;
 	IDirect3DTexture9* mTexture;	// Object texture
-
 };
 
 #endif

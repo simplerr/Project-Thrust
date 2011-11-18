@@ -5,16 +5,19 @@
 #include "Object.h"
 #include "enums.h"
 
+#include "ObjectData.h"
+
 class Projectile : public Object
 {
 public:
 	Projectile(float x, float y, int width, int height, string textureSource);
+	Projectile(ObjectData* data, float x, float y);
 	~Projectile();
 
-	void update(float dt);
+	virtual void update(float dt);
 	void updateTravelled(float dt);
 
-	bool collided(Object* collider);
+	virtual bool collided(Object* collider);
 
 	void initDefaults();
 

@@ -23,11 +23,13 @@ public:
 	void addObject(Object* object);
 	void removeObject(Object* object);
 
+	void checkRectCollisions();
+
 	ObjectData* loadObjectData(string objectName);
 private:
-	std::vector<Object*> mObjectList;
-	World* mWorld;
-	ObjectLoader* mObjectLoader;
+	std::vector<Object*>	mObjectList;
+	ObjectLoader*			mObjectLoader;
+	World*					mWorld;
 };
 
 #endif

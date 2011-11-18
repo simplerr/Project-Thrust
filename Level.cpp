@@ -36,6 +36,8 @@ void Level::update(float dt)
 	// Update the physic simulation
 	mWorld->Update(dt);
 
+	checkRectCollisions();
+
 	// Loop through and update the game objects
 	for(int i = 0; i < mObjectList.size(); i++)
 	{
@@ -50,6 +52,36 @@ void Level::update(float dt)
 	if(gDInput->mouseButtonPressed(1))	{
 		Object* object = new Object(gDInput->getCursorPos().x, gDInput->getCursorPos().y, 100, 100);
 		addObject(object);
+	}
+}
+
+void Level::checkRectCollisions()
+{
+	for(int i = 0; i < mObjectList.size(); i++)
+	{
+		Object* objectA = mObjectList[i];
+		Rect rectA = objectA->getRect();
+		for(int j = i; j < mObjectList.size(); j++)
+		{
+			Object* objectB = mObjectList[j];
+
+			if(!objectB->isRectCollision() && !objectA->isRectCollision())
+				continue;
+
+			if(!objectA->getAlive() || !objectB->getAlive())
+				continue;
+
+			Rect rectB = objectB->getRect();
+
+			if((objectA->getType() == PARTICLE && objectB->getType() != PARTICLE) || (objectA->getType() != PARTICLE && objectB->getType() == PARTICLE))
+			{
+				if(objectA != objectB && objectA != objectB->getParent() && objectB != objectA->getParent())
+				{
+					if(rectA.left < rectB.right && rectA.right > rectB.left && rectA.top < rectB.bottom && rectA.bottom > rectB.top)
+						handleCollision(objectA, objectB);
+				}
+			}
+		}
 	}
 }
 
@@ -79,7 +111,8 @@ void Level::addObject(Object* object)
 	mObjectList.push_back(object);
 
 	// Add the objects body to the physic simulation world
-	mWorld->Add(object->getBody());
+	if(!object->isRectCollision())
+		mWorld->Add(object->getBody());
 
 	// Increment the static id counter
 	idCounter++;

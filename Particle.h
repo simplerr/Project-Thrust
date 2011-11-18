@@ -11,6 +11,7 @@ public:
 	~Particle();
 
 	void update(float dt);
+	void draw();
 
 	void setMaxDistance(float distance)	{mMaxDistance = distance;}
 
