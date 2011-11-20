@@ -18,7 +18,6 @@ public:
 	void draw();
 	void attack(int attack = 0);
 
-
 	void setFlipped(bool flipped);
 	void updatePosition(Vector ownerPos);
 

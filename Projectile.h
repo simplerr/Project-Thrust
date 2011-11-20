@@ -31,12 +31,14 @@ public:
 
 	float	getTravelled()						{return mTravelled;}
 	float	getMaxDistance()					{return mMaxDistance;}
+	float	getSpeed()							{return mSpeed;}
 private:
 	float	mDamage;
 	float	mElasticity;
 	float	mLifeTimer;
 	float	mTravelled;
 	float	mMaxDistance;
+	float	mSpeed;
 	int		mAllowedBounces;
 	int		mBounces;
 

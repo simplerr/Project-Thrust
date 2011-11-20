@@ -7,6 +7,7 @@
 class ObjectLoader;
 class Object;
 class ObjectData;
+class Particle;
 
 class Level
 {
@@ -23,11 +24,14 @@ public:
 	void addObject(Object* object);
 	void removeObject(Object* object);
 
-	void checkRectCollisions();
+	void updateParticles(float dt);
+	void addParticle(Particle* particle);
+	void removeParticle(Particle* particle);
 
-	ObjectData* loadObjectData(string objectName);
+	ObjectData* loadObjectData(string objectClass, string type = "Standard");
 private:
 	std::vector<Object*>	mObjectList;
+	std::vector<Particle*>	mParticleList;
 	ObjectLoader*			mObjectLoader;
 	World*					mWorld;
 };

@@ -21,7 +21,9 @@ public:
 	void setInterval(float interval);
 	void setCreationRadius(float radius);
 	void setLifetime(float lifetime);
+	void setMaxParticles(int maxParticles);
 private:
+	float	mRotation;
 	float	mRotatingSpeed;
 	float	mRange;
 	float	mParticleSpeed;
@@ -29,6 +31,9 @@ private:
 	float	mCounter;
 	float	mCreationRadius;
 	float	mLifetime;
+
+	int		mParticlesCreated;
+	int		mMaxParticles;
 	int		mParticlesPerFrame;
 	Vector	mPartilceDimensions;
 	string	mParticleTextureSource;

@@ -35,7 +35,6 @@ void Object::initDefaults()
 	setType(PLATFORM);
 	setParent(NULL);
 	setVisible(true);
-	setRectCollision(false);
 }
 
 Object::~Object()
@@ -224,14 +223,4 @@ void Object::childEvent(string eventMessage)
 void Object::loadData(ObjectData data)
 {
 	
-}
-
-bool Object::isRectCollision()
-{
-	return mRectCollision;
-}
-
-void Object::setRectCollision(bool rectCollision)
-{
-	mRectCollision = rectCollision;
 }

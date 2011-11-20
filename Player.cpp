@@ -23,19 +23,22 @@ Player::Player(float x, float y, int width, int height)
 	mHeadFlipped = false;
 
 	// Set member variables
-	mAcceleration = 500.0f;
-	mMaxVelocity = 330.0f;
+	mAcceleration = 1.20f;
+	mMaxVelocity = 250.0f;
 	mFaceDirection = RIGHT;
 	mHealth = 100;
 	mInAir = true;
 	mHeadRotation = 0.0f;
 	mWeapon = NULL;
+	mStunned = false;
+	mStunnedCounter = 0.0f;
 
 	// Set the type to PLAYER
 	setType(PLAYER);
 
 	// High friction
-	getBody()->SetFriction(5.0f);
+	//getBody()->SetFriction(5.0f);
+	getBody()->SetFriction(0.8);
 
 	//Fist* fist = new Fist(getPosition().x + 50, getPosition().y);	
 }
@@ -64,6 +67,11 @@ void Player::init()
 
 void Player::update(float dt)
 {
+	if(mStunnedCounter > 0.0f)
+		mStunnedCounter -= dt;
+	else
+		mStunned = false;
+
 	// Update the animation
 	mAnimation->animate(dt);
 
@@ -79,8 +87,9 @@ void Player::update(float dt)
 	/* Update the velocity */
 
 	// Strafing sideways
-	if(gDInput->keyDown(DIK_A))	{	// Left
-		setVelocity(getVelocity() + Vector(-mAcceleration, 0));	
+	if(gDInput->keyDown(DIK_A) && !mStunned)	{	// Left
+		getBody()->ApplyForce(Vector(-mAcceleration, 0), getPosition());
+		//setVelocity(getVelocity() + Vector(-mAcceleration, 0));	
 		setFacingDirection(LEFT);
 
 		if(mWeapon != NULL)
@@ -90,8 +99,9 @@ void Player::update(float dt)
 		if(!mInAir)	
 			mAnimation->resume();
 	}
-	else if(gDInput->keyDown(DIK_D))	{	// Right
-		setVelocity(getVelocity() + Vector(mAcceleration, 0));	
+	else if(gDInput->keyDown(DIK_D) && !mStunned)	{	// Right
+		getBody()->ApplyForce(Vector(mAcceleration, 0), getPosition());
+		//setVelocity(getVelocity() + Vector(mAcceleration, 0));	
 		setFacingDirection(RIGHT);
 
 		if(mWeapon != NULL)
@@ -170,6 +180,11 @@ bool Player::collided(Object* collider)
   			mInAir = false;
 			mAnimation->setFrame(0);
 		}
+	}
+
+	if(collider->getType() == PARTICLE)	{
+		mStunned = true;
+		mStunnedCounter = 0.30f;
 	}
 
 	return true;

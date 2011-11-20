@@ -7,15 +7,14 @@ Grenade::Grenade(float x, float y, int width, int height)
 {
 	// Two seconds timer as default
 	mTimer = 2.0f;
-	mExplosionTime = 2.0f;
 }
 	
 Grenade::Grenade(ObjectData* data, float x, float y)
 	: Projectile(data, x, y)
 {
-	// Two seconds timer as default
-	mTimer = 2.0f;
-	mExplosionTime = 2.0f;
+	float timer = data->getValueDouble("Timer");
+
+	setTimer(timer);
 }
 	
 Grenade::~Grenade()
@@ -31,7 +30,8 @@ void Grenade::update(float dt)
 	{
 		// Create the explosion particles
 		RotatingEmitter* emitter = new RotatingEmitter(getPosition().x, getPosition().y);
-		emitter->setParticleTexture("imgs\\explosion_particle.bmp");
+		emitter->setParticleTexture("imgs\\explosion_particle.bmp");		
+		emitter->setParticleSpeed(300.0f),
 		emitter->setSimulate(false);
 		getLevel()->addObject(emitter);
 		kill();	
@@ -51,9 +51,4 @@ bool Grenade::collided(Object*  collider)
 void Grenade::setTimer(float timer)
 {
 	mTimer = timer;
-}
-	
-void Grenade::setExplosionTime(float time)
-{
-	mExplosionTime = time;
 }

@@ -10,24 +10,23 @@ RangedWeapon::RangedWeapon(float x, float y, int width, int height, string textu
 	:Weapon(x, y, width, height, textureSource)
 {
 	// Init defaults
-	setAllowedBounces(0);
 	setType(RANGED_WEAPON);
 	setRange(200);
-	setLifeTime(5.0f);
+	setProjectile("Projectile", "Standard");
 }
 
 RangedWeapon::RangedWeapon(ObjectData* data, float x, float y)
 	: Weapon(data, x, y)
 {
 	// Get data from the XML element
-	int bounces = data->getValueDouble("Bounces");
 	int range = data->getValueDouble("Range");
-	float lifeTime = data->getValueDouble("Lifetime");
+	string projectileClass = data->getValueString("Projectile");
+	string projectileType = data->getValueString("ProjectileType");
 
 	// Set the data
-	setAllowedBounces(bounces);
+	setProjectile(projectileClass, projectileType);
 	setRange(range);
-	setLifeTime(lifeTime);
+	setType(RANGED_WEAPON);
 }
 
 RangedWeapon::~RangedWeapon()
@@ -82,30 +81,29 @@ void RangedWeapon::draw()
 void RangedWeapon::attack(int attack)
 {
 	// Calculate where to spawn the projectile
-	float offsetX = - 10 + 50*cosf(getRotation());
-	float offsetY = - 5 + 50*sinf(getRotation());
-	Projectile* bullet = new Projectile(getPosition().x + offsetX, getPosition().y + offsetY, 30, 15, "imgs\\bullet.bmp");
-	
-	// Set bullet properties
-	bullet->setParent(this);	//getParent()
-	bullet->getBody()->Rotate(getRotation());
-	bullet->setSpeed(700);
-	bullet->setMaxDistance(mRange);
-	bullet->setElasticity(0.8f);
-	bullet->setAllowedBounces(mAllowedBounces);
-	bullet->setLifeTime(mLifeTime);
-	bullet->getBody()->SetMass(10000);
-	//getLevel()->addObject(bullet);
+	float offsetX = - 10 + 60*cosf(getRotation());
+	float offsetY = - 5 + 60*sinf(getRotation());
+	ObjectData* data = getLevel()->loadObjectData(mProjectileClass, mProjectileType);
 
-	Grenade* grenade = new Grenade(getPosition().x + offsetX, getPosition().y + offsetY, 32, 32);
-	grenade->rotate(getRotation());
-	grenade->setSpeed(700.0f);
-	grenade->setTimer(0.5f);
-	getLevel()->addObject(grenade);
+	Projectile* projectile;
+
+	if(mProjectileClass == "Projectile")
+		projectile = new Projectile(data, getPosition().x + offsetX, getPosition().y + offsetY);
+	else if(mProjectileClass == "Grenade")
+		projectile = new Grenade(data, getPosition().x + offsetX, getPosition().y + offsetY);
+
+	projectile->setParent(this);
+	projectile->rotate(getRotation());
+	projectile->setMaxDistance(mRange);
+	projectile->setSpeed(projectile->getSpeed());	// Required because the speed gets set in the ctor, when the rotation is 0
+
+	getLevel()->addObject(projectile);
 }
 
 bool RangedWeapon::collided(Object* collider)
 {
+	getParent()->collided(collider);
+
 	return true;
 }
 
@@ -118,4 +116,10 @@ void RangedWeapon::updatePosition(Vector ownerPos)
 void RangedWeapon::setFlipped(bool flipped)
 {
 	Weapon::setFlipped(flipped);
+}
+
+void RangedWeapon::setProjectile(string projectileClass, string type)
+{
+	mProjectileClass = projectileClass;
+	mProjectileType = type;
 }

@@ -23,7 +23,6 @@ Fist::Fist(ObjectData* data, float x, float y)
 void Fist::initDefaults()
 {
 	// Init the default attributes 
-	mSecondTexture = gGraphics->loadTexture("imgs\\fist.bmp");
 	setType(FIST);
 	mAttackDelay = 0.07f;
 	mCounter = 0.0f;
@@ -32,7 +31,7 @@ void Fist::initDefaults()
 
 Fist::~Fist()
 {
-	ReleaseCOM(mSecondTexture);
+
 }
 
 	
@@ -56,13 +55,13 @@ void Fist::update(float dt)
 			rotate(-0.45);
 	
 			// Set bullet properties
+			// :TODO:
 			bullet->setParent(this);
 			bullet->getBody()->Rotate(getRotation());
 			bullet->setSpeed(400);
 			bullet->setMaxDistance(getRange());
 			bullet->setElasticity(0.8f);
-			bullet->setAllowedBounces(getAllowedBounces());
-			bullet->setLifeTime(getLifeTime());
+			bullet->setAllowedBounces(1);
 			bullet->setSimulate(false);
 			getLevel()->addObject(bullet);
 
@@ -88,13 +87,13 @@ void Fist::attack(int attack)
 	FlyingFist* bullet = new FlyingFist(getPosition().x + offsetX, getPosition().y + offsetY, getWidth(false), getHeight(false));
 	
 	// Set bullet properties
-	bullet->setParent(this);	//
+	// :TODO:
+	bullet->setParent(this);
 	bullet->getBody()->Rotate(getRotation());
 	bullet->setSpeed(400);
 	bullet->setMaxDistance(getRange());
 	bullet->setElasticity(0.8f);
-	bullet->setAllowedBounces(getAllowedBounces());
-	bullet->setLifeTime(getLifeTime());
+	bullet->setAllowedBounces(1);
 	bullet->setSimulate(false);
 	getLevel()->addObject(bullet);
 

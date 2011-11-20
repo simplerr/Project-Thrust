@@ -18,10 +18,8 @@ public:
 	bool collided(Object*  collider);
 
 	void setTimer(float timer);
-	void setExplosionTime(float time);
 private:
 	float mTimer;
-	float mExplosionTime;
 };
 
 #endif

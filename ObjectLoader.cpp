@@ -22,11 +22,19 @@ void ObjectLoader::setFile(string fileName)
 	mXmlFile.LoadFile();
 }
 
-ObjectData* ObjectLoader::getData(string objectName)
+ObjectData* ObjectLoader::getData(string objectClass, string type)
 {
 	// Get the data for the object with the name "objectName"
 	TiXmlElement* root = mXmlFile.FirstChildElement();
-	TiXmlElement* dataElement = root->FirstChildElement(objectName.c_str());
+	TiXmlElement* dataElement = root->FirstChildElement(objectClass.c_str());
+
+	while(dataElement)
+	{
+		if(strcmp(dataElement->FirstAttribute()->Value(), type.c_str()) == 0)
+			break;
+
+		dataElement = dataElement->NextSiblingElement(objectClass.c_str());
+	}
 
 	// :NOTE: Possibly memory leak
 	ObjectData* data = new ObjectData(dataElement);

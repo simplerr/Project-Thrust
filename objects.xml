@@ -1,8 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <Objects>
+  <!--Ranged weapons-->
+  <RangedWeapon type="Standard">
+    <Width>80</Width>
+    <Height>20</Height>
+    <Texture>imgs\\normal_gun.bmp</Texture>
+    <Damage>50</Damage>
+    <Cooldown>0.3f</Cooldown>
+    <Rotation>3.14</Rotation> 
+    <Range>200</Range>
+    <Projectile>Projectile</Projectile>
+    <ProjectileType>Standard</ProjectileType>
+  </RangedWeapon>
+
+  <RangedWeapon type="GrenadeLauncher">
+    <Width>80</Width>
+    <Height>20</Height>
+    <Texture>imgs\\normal_gun.bmp</Texture>
+    <Cooldown>1.0f</Cooldown>
+    <Rotation>3.14</Rotation>
+    <Damage>50</Damage>
+    <Range>20</Range>
+    <Projectile>Grenade</Projectile>
+    <ProjectileType>Standard</ProjectileType>
+  </RangedWeapon>
+
+  <!--Melee Weapons-->
+  <MeleeWeapon type="Sword">
+    <Width>15</Width>
+    <Height>53</Height>
+    <Texture>imgs\\sword.bmp</Texture>
+    <Damage>1337</Damage>
+    <Cooldown>0.0f</Cooldown>
+    <Rotation>0.8</Rotation>
+    <AttackTime>0.15f</AttackTime>
+  </MeleeWeapon>
+
+  <Grenade type="Standard">
+    <Width>32</Width>
+    <Height>32</Height>
+    <Timer>0.4f</Timer>
+    <Damage>100</Damage>
+    <Bounces>2</Bounces>
+    <Speed>700</Speed>
+    <Elasticity>1</Elasticity>
+    <Texture>imgs\\grenade.bmp</Texture>
+  </Grenade>
+
+  <Projectile type="Standard">
+    <Width>32</Width>
+    <Height>16</Height>
+    <Damage>100</Damage>
+    <Bounces>4</Bounces>
+    <Speed>700</Speed>
+    <Elasticity>0.5f</Elasticity>
+    <Texture>imgs\\bullet.bmp</Texture>
+  </Projectile>
+  
   <!--Fist-->
-  <Fist>
+  <Fist type="Standard">
     <Width>22</Width>
     <Height>22</Height>
     <Texture>imgs\\fist.bmp</Texture>
@@ -13,32 +70,6 @@
     <Bounces>10</Bounces>
     <Range>200</Range>
   </Fist>
-
-  <!--RangedWeapon-->
-  <RangedWeapon>
-    <Width>100</Width>
-    <Height>20</Height>
-    <Texture>imgs\\normal_gun.bmp</Texture>
-    <Damage>50</Damage>
-    <Cooldown>1.0f</Cooldown>
-    <Rotation>3.14</Rotation>
-    <Lifetime>6.0f</Lifetime>
-    <Bounces>3</Bounces>
-    <Range>200</Range>
-    <Projectile>FlyingFist</Projectile>
-  </RangedWeapon>
-
-  <!--Sword-->
-  <Sword>
-    <Width>15</Width>
-    <Height>53</Height>
-    <Texture>imgs\\sword.bmp</Texture>
-    <Damage>50</Damage>
-    <Cooldown>0.0f</Cooldown>
-    <Rotation>0.8</Rotation>
-    <AttackTime>0.15f</AttackTime>
-  </Sword>
-
 
   <!--Standard objects-->
   <BasicBox>

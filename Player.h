@@ -45,6 +45,9 @@ private:
 	bool		mInAir;
 	bool		mHeadFlipped;
 
+	bool		mStunned;
+	float		mStunnedCounter;
+
 	Weapon*		mWeapon;
 };
 

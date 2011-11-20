@@ -18,6 +18,7 @@ RigidBody::RigidBody(float x, float y, int width, int height)
 	SetForce(Vector(0, 0, 0));
 	SetTorque(Vector(0, 0, 0));
 	SetFriction(1.0f);
+	SetFriction(0.5f),
 	SetSimulate(true);
 	SetOwner(NULL);
 	

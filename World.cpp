@@ -21,8 +21,9 @@ World::World() : SMALL_NEGATIVE(-1E-10), SMALL_POSITIVE(1E-10)
 {
 	mCollisionPoint = Vector(500, 500,0 );
 	SetGravity(500.0f);
-	Unpause();
+	SetIterations(10);
 	SetRotationMode(ROTATION);
+	Unpause();
 }
 	
 World::~World()
@@ -120,7 +121,7 @@ void World::Step(float dt)
 
 		// Perform iterations
 		// :TODO: fix iteration variable
-		for(int i = 0; i < 50; i++)
+		for(int i = 0; i < mIterations; i++)
 		{
 			for(ArbIter arb = arbiters.begin(); arb != arbiters.end(); arb++)
 			{
@@ -254,4 +255,9 @@ void World::ClearWorld()
 	}
 	
 	mBodyList.clear();*/
+}
+
+void World::SetIterations(int iterations)
+{
+	mIterations = iterations;
 }

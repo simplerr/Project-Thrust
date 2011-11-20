@@ -30,7 +30,8 @@ void FlyingFist::update(float dt)
 	{
 		kill();
 		// :TODO: Fix if the parent dissapears
-		getParent()->childEvent("displayWeapon");
+		if(getParent() != NULL)
+			getParent()->childEvent("displayWeapon");
 	}
 }
 

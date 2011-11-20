@@ -12,7 +12,18 @@ Projectile::Projectile(float x, float y, int width, int height, string textureSo
 Projectile::Projectile(ObjectData* data, float x, float y)
 	: Object(data, x, y)
 {
+	// Init the default attributes
+	initDefaults();
 
+	float damage = data->getValueDouble("Damage");
+	int bounces = data->getValueDouble("Bounces");
+	float speed = data->getValueDouble("Speed");
+	float elasticity = data->getValueDouble("Elasticity");
+
+	setDamage(damage);
+	setAllowedBounces(bounces);
+	setSpeed(speed);
+	setElasticity(elasticity);	
 }
 
 void Projectile::initDefaults()
@@ -25,6 +36,7 @@ void Projectile::initDefaults()
 	setAllowedBounces(0);
 	setType(PROJECTILE);
 	mBounces = 0;
+	mSpeed = 0.0f;
 }
 
 Projectile::~Projectile()
@@ -125,4 +137,5 @@ void Projectile::setSpeed(float speed)
 	// Gets called when the projectile is created
 	// Calculate the vector velocity depending on the rotation and the scalar speed
 	setVelocity(Vector(speed * cosf(getBody()->GetRotation()), speed * sinf(getBody()->GetRotation())));
+	mSpeed = speed;
 }

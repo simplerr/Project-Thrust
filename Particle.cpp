@@ -1,6 +1,8 @@
 #include "Particle.h"
 #include "Graphics.h"
 
+Collision polyCollision(RigidBody* bodyA, RigidBody* bodyB);
+
 Particle::Particle(float x, float y, int width, int height, float speed, float angle)
 	:Object(x, y, width, height)
 {
@@ -9,7 +11,6 @@ Particle::Particle(float x, float y, int width, int height, float speed, float a
 	mTravelled = 0;
 	setVelocity(speed * cosf(angle), speed * sinf(angle));
 	setSimulate(false);
-	setRectCollision(true);
 	setType(PARTICLE);
 
 	// Could test which type and load the correct texture
@@ -42,7 +43,30 @@ void Particle::update(float dt)
 
 void Particle::draw()
 {
-	gGraphics->drawRect(getRect());
-	Rect rect = getRect();
 	Object::draw();
+}
+
+bool Particle::collided(Object* collider)
+{
+	Collision collision = polyCollision(this->getBody(), collider->getBody());
+	float impulse = 5.0f;
+
+	float x = collider->getPosition().x - getPosition().x;
+	float y = collider->getPosition().y - getPosition().y;
+	float angle = atan2f(y, x);
+
+	x = cosf(angle) * impulse;
+	y = sinf(angle) * impulse;
+
+	// :NOTE: Todo! Other weapon types must also be checked!!
+	if(collider->getType() == RANGED_WEAPON)	{
+		collider->getParent()->getBody()->ApplyForce(Vector(x, y), collider->getPosition());
+	}
+	else
+		if(collider != getParent() && collider->getSimulate())
+			collider->getBody()->ApplyForce(Vector(x, y), collider->getPosition());
+
+	kill();
+
+	return true;
 }

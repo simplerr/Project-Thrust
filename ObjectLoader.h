@@ -15,7 +15,7 @@ public:
 	ObjectLoader();
 	~ObjectLoader();
 
-	ObjectData* getData(string objectName);
+	ObjectData* getData(string objectClass, string type);
 	void setFile(string fileName);
 private:
 	TiXmlDocument mXmlFile;

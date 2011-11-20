@@ -50,6 +50,7 @@ public:
 	void Unpause();
 	bool GetPaused();
 
+	void SetIterations(int iterations);
 	void SetRotationMode(RotationMode mode);
 	RotationMode GetRotationMode();
 
@@ -71,6 +72,8 @@ private:
 
 	const double SMALL_NEGATIVE;
 	const double SMALL_POSITIVE;
+
+	int mIterations;
 
 	bool mPaused;
 	RotationMode mRotationMode;

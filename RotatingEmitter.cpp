@@ -7,10 +7,11 @@ RotatingEmitter::RotatingEmitter(float x, float y)
 {
 	setRotatingSpeed(PI/10);
 	setRange(200.0f);
-	setParticlesPerFrame(20);
-	setInterval(0.5f);
+	setParticlesPerFrame(4);
+	setInterval(0.0f);
 	setCreationRadius(50.0f);
-	setLifetime(0.5f);
+	setLifetime(1.0f);
+	setMaxParticles(20);
 
 	setParticleSpeed(200.0f);
 	setParticleTexture("imgs\\bullet.bmp");
@@ -19,6 +20,8 @@ RotatingEmitter::RotatingEmitter(float x, float y)
 	setVisible(false);
 
 	mCounter = 0.5f;
+	mRotation = 0.0f;
+	mParticlesCreated = 0;
 }
 	
 RotatingEmitter::~RotatingEmitter()
@@ -36,26 +39,25 @@ void RotatingEmitter::update(float dt)
 		// Create new particle
 		for(int i = 0; i <  mParticlesPerFrame; i++)
 		{
-			rotate(mRotatingSpeed);
+			mRotation += mRotatingSpeed;
+			//rotate(mRotatingSpeed);
 
-			float x = cosf(getRotation()) * mCreationRadius;
-			float y = sinf(getRotation()) * mCreationRadius;
+			//float x = cosf(getRotation()) * mCreationRadius;
+			//float y = sinf(getRotation()) * mCreationRadius;
 
-			Particle* particle = new Particle(getPosition().x , getPosition().y, mPartilceDimensions.x, mPartilceDimensions.y, mParticleSpeed, getRotation());
-
-			//Particle* particle = new Particle(getPosition().x + cosf(getRotation()) * mCreationRadius, getPosition().y + sinf(getRotation()) * mCreationRadius,
-			//								  mPartilceDimensions.x, mPartilceDimensions.y, mParticleSpeed, getRotation());
+			Particle* particle = new Particle(getPosition().x , getPosition().y, mPartilceDimensions.x, mPartilceDimensions.y, mParticleSpeed, mRotation);
 
 			particle->setMaxDistance(mRange);
 			particle->setSimulate(false);
 			particle->setParent(this);
-			getLevel()->addObject(particle);
+			getLevel()->addParticle(particle);
+			mParticlesCreated++;
 		}
 
 		mCounter = 0.0f;
 	}
 
-	if(mLifetime <= 0)
+	if(mLifetime <= 0 || mParticlesCreated >= mMaxParticles)
 		kill();
 }
 	
@@ -102,5 +104,10 @@ void RotatingEmitter::setCreationRadius(float radius)
 void RotatingEmitter::setLifetime(float lifetime)
 {
 	mLifetime = lifetime;
+}
+
+void RotatingEmitter::setMaxParticles(int maxParticles)
+{
+	mMaxParticles = maxParticles;
 }
 

@@ -22,7 +22,6 @@ public:
 	void childEvent(string eventMessage);
 	bool collided(Object* collider);
 private:
-	IDirect3DTexture9* mSecondTexture;
 	float	mAttackDelay;
 	float	mCounter;
 	bool	mAttacking;

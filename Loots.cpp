@@ -65,7 +65,7 @@ SwordLoot::~SwordLoot()
 void SwordLoot::equip(Player* player)
 {
 	// Create the sword
-	ObjectData* data = getLevel()->loadObjectData("Sword");
+	ObjectData* data = getLevel()->loadObjectData("MeleeWeapon", "Sword");
 	MeleeWeapon* sword = new MeleeWeapon(data, getPosition().x, getPosition().y);
 	sword->setOffset(Vector(20, 0));
 	sword->setRotationAxis(Vector(0, 10));	// :NOTE: Seems buggy
@@ -122,15 +122,13 @@ RocketLoot::~RocketLoot()
 void RocketLoot::equip(Player* player)
 {
 	// Create the rocket
-	RangedWeapon* weapon = new RangedWeapon(getPosition().x + 20, getPosition().y, 64, 16, "imgs\\normal_gun.bmp");
-	weapon->setParent(this);
+	ObjectData* data = getLevel()->loadObjectData("RangedWeapon", "GrenadeLauncher");
+	RangedWeapon* weapon = new RangedWeapon(data, getPosition().x + 20, getPosition().y);
+	weapon->setParent(player);
 	weapon->setVisible(true);
-	weapon->setAllowedBounces(3);
-	weapon->setRange(2000);
-	weapon->setLifeTime(15.0f);
 	weapon->getBody()->GetShape()->setRotationAxis(Vector(-5, 0));
 
-	// Equip the player with the sword
+	// Equip the player
 	player->equipWeapon(weapon);
 
 	// Remove the loot from the level
