@@ -130,10 +130,14 @@ void Player::update(float dt)
 	}
 
 	// Shooting with the left mouse button
-	if(gDInput->mouseButtonPressed(0))	{
-		if(mWeapon != NULL)
-			if(mWeapon->isReady())
-				mWeapon->pollAttack();
+	if(gDInput->mouseButtonDown(0))	{
+		if(mWeapon != NULL)	{
+			if(mWeapon->isReady())	{
+				mWeapon->attack();
+				mWeapon->setCooldownCounter(0.0f);
+				mWeapon->setAttacking(true);
+			}
+		}
 	}
 
 	// Drop the equipped weapon if the drop button was pressed

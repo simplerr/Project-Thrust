@@ -48,7 +48,6 @@ void RangedWeapon::update(float dt)
 	
 	// Point weapon in mouse direction - atan2 to not be limited to tans 180 degree period
 	float rotation = atan2f(dy, dx);
-	
 
 	// Get the delta rotation
 	rotate(rotation - getRotation());

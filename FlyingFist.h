@@ -3,10 +3,13 @@
 
 #include "Projectile.h"
 
+class ObjectData;
+
 class FlyingFist : public Projectile
 {
 public:
 	FlyingFist(float x, float y, int width, int height);
+	FlyingFist(ObjectData* data, float x, float y);
 	~FlyingFist();
 
 	void update(float dt);

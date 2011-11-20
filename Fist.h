@@ -21,10 +21,15 @@ public:
 
 	void childEvent(string eventMessage);
 	bool collided(Object* collider);
+
+	void spawnSecondFist();
+
+	bool isReady();
 private:
 	float	mAttackDelay;
 	float	mCounter;
-	bool	mAttacking;
+	bool	mWaiting;	// True if waiting on the second projectile
+	bool	mHandleChildEvent;
 };
 
 #endif

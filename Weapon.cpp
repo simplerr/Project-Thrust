@@ -25,6 +25,7 @@ Weapon::Weapon(ObjectData* data, float x, float y)
 	setCooldown(cooldown);
 	setStandardRotation(standardRotation);
 	setFlipped(false);
+	setAttacking(false);
 }
 
 void Weapon::initDefaults()
@@ -87,6 +88,7 @@ void Weapon::pollAttack()
 		// Attack and reset the cooldown counter
 		attack();
 		mCooldownCounter = 0.0f;
+		setAttacking(true);
 	}
 }
 

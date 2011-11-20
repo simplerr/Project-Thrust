@@ -26,7 +26,8 @@ void Fist::initDefaults()
 	setType(FIST);
 	mAttackDelay = 0.07f;
 	mCounter = 0.0f;
-	mAttacking = false;
+	mWaiting = false;
+	mHandleChildEvent = false;
 }
 
 Fist::~Fist()
@@ -41,33 +42,17 @@ void Fist::update(float dt)
 	RangedWeapon::update(dt);
 
 	// :TODO:
-	if(mAttacking)
+	if(mWaiting)
 	{
 		mCounter += dt;
 
 		if(mCounter >= mAttackDelay)
 		{
-			float offsetX = 40*cosf(getRotation());
-			float offsetY = 40*sinf(getRotation());
-
-			rotate(0.45);
-			FlyingFist* bullet = new FlyingFist(getPosition().x + offsetX, getPosition().y + offsetY, getWidth(false), getHeight(false));
-			rotate(-0.45);
-	
-			// Set bullet properties
-			// :TODO:
-			bullet->setParent(this);
-			bullet->getBody()->Rotate(getRotation());
-			bullet->setSpeed(400);
-			bullet->setMaxDistance(getRange());
-			bullet->setElasticity(0.8f);
-			bullet->setAllowedBounces(1);
-			bullet->setSimulate(false);
-			getLevel()->addObject(bullet);
-
+			spawnSecondFist();
+			
 			mCounter = 0.0f;
-			mAttacking = false;
 			setVisible(false);
+			mWaiting = false;
 		}
 	}
 }
@@ -82,35 +67,76 @@ void Fist::draw()
 
 void Fist::attack(int attack)
 {	
+
 	float offsetX = 40*cosf(getRotation());
 	float offsetY = 40*sinf(getRotation());
-	FlyingFist* bullet = new FlyingFist(getPosition().x + offsetX, getPosition().y + offsetY, getWidth(false), getHeight(false));
+	ObjectData* data = getLevel()->loadObjectData("FlyingFist", "Standard");
+	FlyingFist* bullet = new FlyingFist(data, getPosition().x + offsetX, getPosition().y + offsetY);
+	//FlyingFist* bullet = new FlyingFist(getPosition().x + offsetX, getPosition().y + offsetY, getWidth(false), getHeight(false));
 	
 	// Set bullet properties
-	// :TODO:
 	bullet->setParent(this);
 	bullet->getBody()->Rotate(getRotation());
-	bullet->setSpeed(400);
+	bullet->setSpeed(bullet->getSpeed());	// Important to set the speed after rotating
 	bullet->setMaxDistance(getRange());
-	bullet->setElasticity(0.8f);
-	bullet->setAllowedBounces(1);
-	bullet->setSimulate(false);
 	getLevel()->addObject(bullet);
 
-	mAttacking = true;
+	mWaiting = true;
+	mHandleChildEvent = false;
+	// :TODO:
+	
+	//bullet->setSpeed(400);
+	//bullet->setElasticity(0.8f);
+	//bullet->setAllowedBounces(1);
+	
+}
+
+void Fist::spawnSecondFist()
+{
+	float offsetX = 40 * cosf(getRotation());
+	float offsetY = 40 * sinf(getRotation());
+
+	rotate(0.45);
+	ObjectData* data = getLevel()->loadObjectData("FlyingFist", "Standard");
+	FlyingFist* bullet = new FlyingFist(data, getPosition().x + offsetX, getPosition().y + offsetY);
+
+	//FlyingFist* bullet = new FlyingFist(getPosition().x + offsetX, getPosition().y + offsetY, getWidth(false), getHeight(false));
+	rotate(-0.45);
+
+	// Set bullet properties
+	bullet->setParent(this);
+	bullet->getBody()->Rotate(getRotation());
+	bullet->setSpeed(bullet->getSpeed());
+	bullet->setMaxDistance(getRange());
+	getLevel()->addObject(bullet);
+
+	// :TODO:
+	
+	//bullet->setSpeed(400);
+	
+	//bullet->setElasticity(0.8f);
+	//bullet->setAllowedBounces(1);
 }
 
 bool Fist::collided(Object* collider)
 {
-	int asda = 1;
 
 	return true;
 }
 
+bool Fist::isReady()
+{
+	return !getAttacking();
+}
+
 void Fist::childEvent(string eventMessage)
 {
-	if(eventMessage == "displayWeapon")	{
+	if(!mHandleChildEvent)
+		mHandleChildEvent = true;
+	else if(eventMessage == "displayWeapon" && mHandleChildEvent)	{
 		setCooldownCounter(100000);	// :HACK: :>
 		setVisible(true);
+		setAttacking(false);
+		mHandleChildEvent = false;
 	}
 }

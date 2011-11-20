@@ -38,7 +38,7 @@ public:
 	float	getDamage();
 	Vector	getOffset();
 
-	bool	isReady();
+	virtual bool isReady();
 private:
 	Vector		mOffset;
 	bool		mFlipped;
