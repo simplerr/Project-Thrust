@@ -20,7 +20,6 @@ public:
 	virtual void updatePosition(Vector ownerPos);
 	virtual void setFlipped(bool flipped);
 
-	void pollAttack();
 	void restoreRotation();
 	void initDefaults();
 

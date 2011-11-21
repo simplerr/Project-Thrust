@@ -224,3 +224,8 @@ void Object::loadData(ObjectData data)
 {
 	
 }
+
+Object* Object::getGrandParent()
+{
+	return getParent()->getParent();
+}

@@ -81,17 +81,6 @@ void Weapon::setFlipped(bool flipped)
 	mFlipped = flipped;
 }
 
-void Weapon::pollAttack()
-{
-	// Check the cooldown is active
-	if(isReady())	{
-		// Attack and reset the cooldown counter
-		attack();
-		mCooldownCounter = 0.0f;
-		setAttacking(true);
-	}
-}
-
 void Weapon::setOffset(Vector offset)
 {
 	mOffset = offset;

@@ -55,6 +55,7 @@ public:
 	Rect		getRect();
 	Level*		getLevel();
 	Object*		getParent();
+	Object*		getGrandParent();
 	ObjectType	getType();
 	bool		getAlive();
 	bool		getSimulate();

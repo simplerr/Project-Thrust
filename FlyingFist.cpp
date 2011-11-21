@@ -63,7 +63,7 @@ void FlyingFist::update(float dt)
 bool FlyingFist::collided(Object* collider)
 {
 	// Kill if collides with Fist weapon on it's way back to it
-	if(mTurned && collider == getParent())	{
+	if(mTurned && (collider == getParent() || collider == getGrandParent()))	{
 		kill();
 		getParent()->childEvent("displayWeapon");
 	}
@@ -79,7 +79,7 @@ bool FlyingFist::collided(Object* collider)
 	Collision collision = polyCollision(getBody(), collider->getBody());
 	
 	// Apply impulse to collider
-	if(collider != getParent() && collider->getSimulate())
+	if(collider != getParent() && collider->getSimulate() && collider != getGrandParent())
 		collider->getBody()->ApplyForce(Vector(collision.normal.x * 2.5, collision.normal.y * 2.5), collider->getPosition());
 
 	return true;
