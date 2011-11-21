@@ -1,6 +1,7 @@
 #include "RotatingEmitter.h"
 #include "Particle.h"
 #include "Level.h"
+#include "ExplosionParticle.h"
 
 RotatingEmitter::RotatingEmitter(float x, float y)
 	:Object(x, y, 10, 10)
@@ -34,33 +35,52 @@ void RotatingEmitter::update(float dt)
 	mCounter += dt;
 	mLifetime -= dt;
 
-	if(mCounter >= mInterval)
+	if(mCounter >= mInterval && mParticlesCreated < mMaxParticles)
 	{
 		// Create new particle
 		for(int i = 0; i <  mParticlesPerFrame; i++)
-		{
-			mRotation += mRotatingSpeed;
-			//rotate(mRotatingSpeed);
-
-			//float x = cosf(getRotation()) * mCreationRadius;
-			//float y = sinf(getRotation()) * mCreationRadius;
-
-			Particle* particle = new Particle(getPosition().x , getPosition().y, mPartilceDimensions.x, mPartilceDimensions.y, mParticleSpeed, mRotation);
-
-			particle->setMaxDistance(mRange);
-			particle->setSimulate(false);
-			particle->setParent(this);
-			getLevel()->addParticle(particle);
-			mParticlesCreated++;
-		}
+			addParticle();
 
 		mCounter = 0.0f;
 	}
 
-	if(mLifetime <= 0 || mParticlesCreated >= mMaxParticles)
+	if(mLifetime <= 0)// || mParticlesCreated >= mMaxParticles)
 		kill();
 }
 	
+void RotatingEmitter::addParticle()
+{
+	mRotation += mRotatingSpeed;
+	//rotate(mRotatingSpeed);
+	
+	//float x = cosf(getRotation()) * mCreationRadius;
+	//float y = sinf(getRotation()) * mCreationRadius;
+	
+	ExplosionParticle* particle = new ExplosionParticle(getPosition().x , getPosition().y, mPartilceDimensions.x, mPartilceDimensions.y, mParticleSpeed, mRotation);
+
+	particle->setMaxDistance(mRange);
+	particle->setSimulate(false);
+	particle->setParent(this);
+	getLevel()->addParticle(particle);
+	mParticlesCreated++;	
+}
+
+void RotatingEmitter::addException(Object* object)
+{
+	mExceptionList.push_back(object);
+}
+
+bool RotatingEmitter::isException(Object* object)
+{
+	for(int i = 0; i < mExceptionList.size(); i++)
+	{
+		if(mExceptionList[i] == object)
+			return true;
+	}
+
+	return false;
+}
+
 void RotatingEmitter::setParticlesPerFrame(int speed)
 {
 	mParticlesPerFrame = speed;

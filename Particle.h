@@ -14,7 +14,7 @@ public:
 	void draw();
 
 	void setMaxDistance(float distance)	{mMaxDistance = distance;}
-	bool collided(Object* collider);
+	virtual bool collided(Object* collider);
 
 private:
 	Vector			mStartPos;

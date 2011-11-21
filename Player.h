@@ -34,6 +34,8 @@ public:
 	Direction getFacingDirection();
 
 	void damage(float damage);
+
+	Weapon* getWeapon();
 private:
 	IDirect3DTexture9* mHeadTexture;
 	Animation*	mAnimation;

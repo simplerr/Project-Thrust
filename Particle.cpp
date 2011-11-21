@@ -48,24 +48,6 @@ void Particle::draw()
 
 bool Particle::collided(Object* collider)
 {
-	Collision collision = polyCollision(this->getBody(), collider->getBody());
-	float impulse = 5.0f;
-
-	float x = collider->getPosition().x - getPosition().x;
-	float y = collider->getPosition().y - getPosition().y;
-	float angle = atan2f(y, x);
-
-	x = cosf(angle) * impulse;
-	y = sinf(angle) * impulse;
-
-	// :NOTE: Todo! Other weapon types must also be checked!!
-	if(collider->getType() == RANGED_WEAPON)	{
-		collider->getParent()->getBody()->ApplyForce(Vector(x, y), collider->getPosition());
-	}
-	else
-		if(collider != getParent() && collider->getSimulate())
-			collider->getBody()->ApplyForce(Vector(x, y), collider->getPosition());
-
 	kill();
 
 	return true;

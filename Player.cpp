@@ -38,7 +38,7 @@ Player::Player(float x, float y, int width, int height)
 
 	// High friction
 	//getBody()->SetFriction(5.0f);
-	getBody()->SetFriction(0.8);
+	//getBody()->SetFriction(0.8);
 
 	//Fist* fist = new Fist(getPosition().x + 50, getPosition().y);	
 }
@@ -343,4 +343,9 @@ void Player::childEvent(string eventMessage)
 Direction Player::getFacingDirection()
 {
 	return mFaceDirection;
+}
+
+Weapon* Player::getWeapon()
+{
+	return mWeapon;
 }

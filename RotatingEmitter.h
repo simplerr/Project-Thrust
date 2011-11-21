@@ -3,6 +3,8 @@
 
 #include "Object.h"
 
+class ExplosionParticle;
+
 class RotatingEmitter : public Object
 {
 public:
@@ -11,6 +13,9 @@ public:
 
 	void update(float dt);
 	
+	void addParticle();
+
+	void addException(Object* object);
 	void setParticlesPerFrame(int speed);
 	void setRotatingSpeed(float speed);
 	void setRange(float range);
@@ -22,7 +27,11 @@ public:
 	void setCreationRadius(float radius);
 	void setLifetime(float lifetime);
 	void setMaxParticles(int maxParticles);
+
+	bool isException(Object* object);
 private:
+	std::vector<Object*> mExceptionList;
+
 	float	mRotation;
 	float	mRotatingSpeed;
 	float	mRange;

@@ -31,7 +31,7 @@ void Grenade::update(float dt)
 		// Create the explosion particles
 		RotatingEmitter* emitter = new RotatingEmitter(getPosition().x, getPosition().y);
 		emitter->setParticleTexture("imgs\\explosion_particle.bmp");		
-		emitter->setParticleSpeed(300.0f),
+		emitter->setParticleSpeed(900.0f),
 		emitter->setSimulate(false);
 		getLevel()->addObject(emitter);
 		kill();	

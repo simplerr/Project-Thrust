@@ -69,7 +69,7 @@ private:
 	ObjectType	mType;				// Type
 	int			mId;				// Id, same in mBody
 	bool		mAlive;				// Alive or dead
-	bool		mVisible;			// Drawed or not
+	bool		mVisible;			// Drawn or not
 	IDirect3DTexture9* mTexture;	// Object texture
 };
 
