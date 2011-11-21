@@ -21,6 +21,7 @@ public:
 	virtual void loadData(ObjectData data);
 	virtual void childEvent(string eventMessage);
 	virtual void initDefaults();
+	virtual void applyForce(Vector force);
 
 	virtual bool collided(Object* collider);	// Collided return false if objectB is deleted inside the function
 
@@ -43,6 +44,7 @@ public:
 	void setParent(Object* parent);
 	void setSimulate(bool simulate);
 	void setVisible(bool visible);
+	void setCollidable(bool collides);
 	void kill();
 
 	Vector		getPosition();

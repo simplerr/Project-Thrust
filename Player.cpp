@@ -38,7 +38,7 @@ Player::Player(float x, float y, int width, int height)
 
 	// High friction
 	//getBody()->SetFriction(5.0f);
-	//getBody()->SetFriction(0.8);
+	getBody()->SetFriction(1.8);
 
 	//Fist* fist = new Fist(getPosition().x + 50, getPosition().y);	
 }
@@ -87,9 +87,8 @@ void Player::update(float dt)
 	/* Update the velocity */
 
 	// Strafing sideways
-	if(gDInput->keyDown(DIK_A) && !mStunned)	{	// Left
+	if(gDInput->keyDown(DIK_A) && !mStunned && getVelocity().x > -mMaxVelocity)	{	// Left
 		getBody()->ApplyForce(Vector(-mAcceleration, 0), getPosition());
-		//setVelocity(getVelocity() + Vector(-mAcceleration, 0));	
 		setFacingDirection(LEFT);
 
 		if(mWeapon != NULL)
@@ -99,9 +98,8 @@ void Player::update(float dt)
 		if(!mInAir)	
 			mAnimation->resume();
 	}
-	else if(gDInput->keyDown(DIK_D) && !mStunned)	{	// Right
+	else if(gDInput->keyDown(DIK_D) && !mStunned && getVelocity().x < mMaxVelocity)	{	// Right
 		getBody()->ApplyForce(Vector(mAcceleration, 0), getPosition());
-		//setVelocity(getVelocity() + Vector(mAcceleration, 0));	
 		setFacingDirection(RIGHT);
 
 		if(mWeapon != NULL)
@@ -147,12 +145,6 @@ void Player::update(float dt)
 	// Loot
 	if(gDInput->keyPressed(DIK_E))
 		checkLoot();
-
-	// Clamp velocity
-	if(getVelocity().x > mMaxVelocity)
-		setVelocity(mMaxVelocity, getVelocity().y);
-	else if(getVelocity().x < -mMaxVelocity)
-		setVelocity(-mMaxVelocity, getVelocity().y);
 }
 	
 void Player::draw()
@@ -217,7 +209,7 @@ void Player::setVelocity(Vector velocity)
 
 	// Set the weapons velocity so it works correctly when collididing with bodies
 	if(mWeapon != NULL)
-		mWeapon->setVelocity(velocity);
+		mWeapon->setVelocity(velocity.x, velocity.y);
 }
 
 void Player::setVelocity(float dx, float dy)

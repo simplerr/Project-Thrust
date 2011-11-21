@@ -11,7 +11,7 @@ RotatingEmitter::RotatingEmitter(float x, float y)
 	setParticlesPerFrame(4);
 	setInterval(0.0f);
 	setCreationRadius(50.0f);
-	setLifetime(1.0f);
+	setLifetime(2.0f);	// :TODO: Shouldn't use a static time
 	setMaxParticles(20);
 
 	setParticleSpeed(200.0f);
@@ -19,7 +19,8 @@ RotatingEmitter::RotatingEmitter(float x, float y)
 	setParticleDimensions(6, 6);
 
 	setVisible(false);
-
+	setCollidable(false);
+	
 	mCounter = 0.5f;
 	mRotation = 0.0f;
 	mParticlesCreated = 0;

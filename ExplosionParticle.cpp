@@ -33,22 +33,31 @@ bool ExplosionParticle::collided(Object* collider)
 	if(!explosion->isException(collider))
 	{
 		Collision collision = polyCollision(this->getBody(), collider->getBody());
-		float impulse = 2.50f;
 
-		float x = collider->getPosition().x - getPosition().x;
-		float y = collider->getPosition().y - getPosition().y;
+		float impulse = 2.50f;
+		float x = collider->getPosition().x - getParent()->getPosition().x;
+		float y = collider->getPosition().y - getParent()->getPosition().y;
+
+		// Special case when collider is a weapon, it's owners (players) position is then used instead
+		if(collider->getParent() != NULL)	{
+			if(collider->getParent()->getType() == PLAYER)	{
+				float x = collider->getParent()->getPosition().x - getParent()->getPosition().x;
+				float y = collider->getParent()->getPosition().y - getParent()->getPosition().y;
+			}
+		}
+		
+		// Angle between collider and the explosion source (parent)
 		float angle = atan2f(y, x);
 
+		// Get the force components in x and y direction
 		x = cosf(angle) * impulse;
 		y = sinf(angle) * impulse;
 
-		// :NOTE: Todo! Other weapon types must also be checked!!
-		if(collider->getType() == RANGED_WEAPON)	{
-			collider->getParent()->getBody()->ApplyForce(Vector(x, y), collider->getPosition());
-		}
-		else
-			if(collider != getParent() && collider->getSimulate())
-				collider->getBody()->ApplyForce(Vector(x, y), collider->getPosition());
+		// Make the object be properly affected by the explosion
+		collider->setVelocity(Vector(0, 0));
+
+		// Apply force (can be overridden, weapons does for example set the owners [players] force, the same with the one above)
+		collider->applyForce(Vector(x, y));
 
 		// Add new exception to the explosion
 		explosion->addException(collider);

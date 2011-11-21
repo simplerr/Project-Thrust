@@ -78,6 +78,11 @@ void Object::setVelocity(float dx, float dy)
 	getBody()->SetVelocity(Vector(dx, dy));
 }
 
+void Object::setCollidable(bool collides)
+{
+	getBody()->SetCollidable(collides);
+}
+
 void Object::setId(int id)
 {
 	mId = id;
@@ -125,7 +130,7 @@ int Object::getId()
 	return mId;
 }
 
-RigidBody*	Object::getBody()
+RigidBody* Object::getBody()
 {
 	return mBody;
 }
@@ -228,4 +233,9 @@ void Object::loadData(ObjectData data)
 Object* Object::getGrandParent()
 {
 	return getParent()->getParent();
+}
+
+void Object::applyForce(Vector force)
+{
+	getBody()->ApplyForce(force, getPosition());
 }

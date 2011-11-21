@@ -57,6 +57,23 @@ void Weapon::draw()
 	gGraphics->drawTexturedShape(*getBody()->GetShape(), getTexture(), NULL, getFlipped());
 }
 
+void Weapon::applyForce(Vector impulse)
+{
+	if(getParent() != NULL)
+		getParent()->applyForce(impulse);
+}
+
+void Weapon::setVelocity(Vector velocity)
+{
+	if(getParent() != NULL)
+		getParent()->setVelocity(velocity);
+}
+
+void Weapon::setVelocity(float dx, float dy)
+{
+	Object::setVelocity(dx, dy);
+}
+
 void Weapon::setDamage(float damage)
 {
 	mDamage = damage;

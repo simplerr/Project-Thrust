@@ -19,10 +19,13 @@ public:
 	virtual bool collided(Object* collider);
 	virtual void updatePosition(Vector ownerPos);
 	virtual void setFlipped(bool flipped);
+	void applyForce(Vector impulse);
 
 	void restoreRotation();
 	void initDefaults();
 
+	void setVelocity(Vector velocity);			// Also sets the owner (players) velocity
+	void setVelocity(float dx, float dy);		// Just sets the weapons velocity
 	void setAttacking(bool attacking);
 	void setDamage(float damage);
 	void setOffset(Vector offset);
