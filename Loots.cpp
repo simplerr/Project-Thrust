@@ -39,16 +39,18 @@ bool Loot::collided(Object* collider)
 	// If the collider is a player we let it equip the loot
 	if(collider->getType() == PLAYER)	{
 		//equip((Player*)collider);	// Cast to player
-		return false;	// To show that this object was deleted with in this function
+		//return false;	// To show that this object was deleted with in this function
 	}
 
 	// If the colliders owner is a player we let it equip the loot as well, for instance when the players sword hits the loot and not the player itself
 	if(collider->getParent() != NULL)	{
 		if(collider->getParent()->getType() == PLAYER)	{
 		//	equip((Player*)collider->getOwner());
-			return false;
+		//	return false;
 		}
 	}
+
+	return true;
 }
 
 SwordLoot::SwordLoot(float x, float y, int width, int height)

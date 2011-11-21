@@ -33,7 +33,7 @@ bool ExplosionParticle::collided(Object* collider)
 	if(!explosion->isException(collider))
 	{
 		Collision collision = polyCollision(this->getBody(), collider->getBody());
-		float impulse = 4.0f;
+		float impulse = 2.50f;
 
 		float x = collider->getPosition().x - getPosition().x;
 		float y = collider->getPosition().y - getPosition().y;

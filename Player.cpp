@@ -180,9 +180,13 @@ bool Player::collided(Object* collider)
 	// True if the player is on the ground
 	// Needs to check the y velocity because the objects can still be inside each other, but on their way of separating, might take 2-4 frames for them to be 100% separated
 	if(collision.pushY < 0 && getVelocity().y > 0)	{
-		if(mInAir)	{
-  			mInAir = false;
-			mAnimation->setFrame(0);
+		// Test of collided with self or the weapon :NOTE: Check against itself shouldn't be needed
+		if(collider != this && collider->getParent() != this)
+		{
+ 			if(mInAir)	{	
+   				mInAir = false;
+				mAnimation->setFrame(0);
+			}
 		}
 	}
 

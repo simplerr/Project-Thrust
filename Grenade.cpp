@@ -45,6 +45,8 @@ void Grenade::draw()
 	
 bool Grenade::collided(Object*  collider)
 {
+	Projectile::collided(collider);
+
 	return true;
 }
 

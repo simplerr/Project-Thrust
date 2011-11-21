@@ -146,6 +146,9 @@ bool Level::handleCollision(void* objA, void* objB)
 	if(objectA->getParent() == objectB->getParent() && objectA->getParent() != NULL)
 		return false;
 
+	if(objectA == objectB)
+		return false;
+
 	// Call the collided functions
 	if(objectA->collided(objectB))	// Collided return false if objectB is deleted inside the function
 		objectB->collided(objectA);

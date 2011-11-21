@@ -44,7 +44,7 @@
     <Damage>100</Damage>
     <Bounces>2</Bounces>
     <Speed>700</Speed>
-    <Elasticity>1</Elasticity>
+    <Elasticity>.6</Elasticity>
     <Texture>imgs\\grenade.bmp</Texture>
   </Grenade>
 
