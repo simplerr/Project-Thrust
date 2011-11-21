@@ -28,7 +28,7 @@ public:
 	void addParticle(Particle* particle);
 	void removeParticle(Particle* particle);
 
-	ObjectData* loadObjectData(string objectClass, string type = "Standard");
+	ObjectData* loadObjectData(string name);
 private:
 	std::vector<Object*>	mObjectList;
 	std::vector<Particle*>	mParticleList;

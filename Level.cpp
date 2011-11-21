@@ -215,7 +215,7 @@ Object* Level::findCollision(Rect rect, int id, ObjectType type)
 	return collider;
 }
 
-ObjectData* Level::loadObjectData(string objectClass, string type)
+ObjectData* Level::loadObjectData(string name)
 {
-	return mObjectLoader->getData(objectClass, type);
+	return mObjectLoader->getData(name);
 }

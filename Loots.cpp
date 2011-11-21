@@ -65,7 +65,7 @@ SwordLoot::~SwordLoot()
 void SwordLoot::equip(Player* player)
 {
 	// Create the sword
-	ObjectData* data = getLevel()->loadObjectData("MeleeWeapon", "Sword");
+	ObjectData* data = getLevel()->loadObjectData("Sword");
 	MeleeWeapon* sword = new MeleeWeapon(data, getPosition().x, getPosition().y);
 	sword->setOffset(Vector(20, 0));
 	sword->setRotationAxis(Vector(0, 10));	// :NOTE: Seems buggy
@@ -122,7 +122,7 @@ RocketLoot::~RocketLoot()
 void RocketLoot::equip(Player* player)
 {
 	// Create the rocket
-	ObjectData* data = getLevel()->loadObjectData("RangedWeapon", "GrenadeLauncher");
+	ObjectData* data = getLevel()->loadObjectData("GrenadeLauncher");
 	RangedWeapon* weapon = new RangedWeapon(data, getPosition().x + 20, getPosition().y);
 	weapon->setParent(player);
 	weapon->setVisible(true);

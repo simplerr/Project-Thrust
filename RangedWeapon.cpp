@@ -12,7 +12,7 @@ RangedWeapon::RangedWeapon(float x, float y, int width, int height, string textu
 	// Init defaults
 	setType(RANGED_WEAPON);
 	setRange(200);
-	setProjectile("Projectile", "Standard");
+	setProjectile("Projectile");
 }
 
 RangedWeapon::RangedWeapon(ObjectData* data, float x, float y)
@@ -20,11 +20,10 @@ RangedWeapon::RangedWeapon(ObjectData* data, float x, float y)
 {
 	// Get data from the XML element
 	int range = data->getValueDouble("Range");
-	string projectileClass = data->getValueString("Projectile");
-	string projectileType = data->getValueString("ProjectileType");
+	string projectileName = data->getValueString("Projectile");
 
 	// Set the data
-	setProjectile(projectileClass, projectileType);
+	setProjectile(projectileName);
 	setRange(range);
 	setType(RANGED_WEAPON);
 }
@@ -82,13 +81,13 @@ void RangedWeapon::attack(int attack)
 	// Calculate where to spawn the projectile
 	float offsetX = - 10 + 60*cosf(getRotation());
 	float offsetY = - 5 + 60*sinf(getRotation());
-	ObjectData* data = getLevel()->loadObjectData(mProjectileClass, mProjectileType);
+	ObjectData* data = getLevel()->loadObjectData(mProjectileName);
 
 	Projectile* projectile;
 
-	if(mProjectileClass == "Projectile")
+	if(mProjectileName == "Projectile")
 		projectile = new Projectile(data, getPosition().x + offsetX, getPosition().y + offsetY);
-	else if(mProjectileClass == "Grenade")
+	else if(mProjectileName == "Grenade")
 		projectile = new Grenade(data, getPosition().x + offsetX, getPosition().y + offsetY);
 
 	projectile->setParent(this);
@@ -117,8 +116,7 @@ void RangedWeapon::setFlipped(bool flipped)
 	Weapon::setFlipped(flipped);
 }
 
-void RangedWeapon::setProjectile(string projectileClass, string type)
+void RangedWeapon::setProjectile(string name)
 {
-	mProjectileClass = projectileClass;
-	mProjectileType = type;
+	mProjectileName = name;
 }

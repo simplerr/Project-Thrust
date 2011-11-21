@@ -2,7 +2,7 @@
 
 <Objects>
   <!--Ranged weapons-->
-  <RangedWeapon type="Standard">
+  <RangedWeapon>
     <Width>80</Width>
     <Height>20</Height>
     <Texture>imgs\\normal_gun.bmp</Texture>
@@ -14,7 +14,7 @@
     <ProjectileType>Standard</ProjectileType>
   </RangedWeapon>
 
-  <RangedWeapon type="GrenadeLauncher">
+  <GrenadeLauncher>
     <Width>80</Width>
     <Height>20</Height>
     <Texture>imgs\\normal_gun.bmp</Texture>
@@ -24,10 +24,10 @@
     <Range>20</Range>
     <Projectile>Grenade</Projectile>
     <ProjectileType>Standard</ProjectileType>
-  </RangedWeapon>
+  </GrenadeLauncher>
 
   <!--Melee Weapons-->
-  <MeleeWeapon type="Sword">
+  <Sword>
     <Width>15</Width>
     <Height>53</Height>
     <Texture>imgs\\sword.bmp</Texture>
@@ -35,9 +35,9 @@
     <Cooldown>0.4f</Cooldown>
     <Rotation>0.8</Rotation>
     <AttackTime>0.15f</AttackTime>
-  </MeleeWeapon>
+  </Sword>
 
-  <Grenade type="Standard">
+  <Grenade>
     <Width>32</Width>
     <Height>32</Height>
     <Timer>0.4f</Timer>
@@ -48,7 +48,7 @@
     <Texture>imgs\\grenade.bmp</Texture>
   </Grenade>
 
-  <Projectile type="Standard">
+  <Projectile>
     <Width>32</Width>
     <Height>16</Height>
     <Damage>100</Damage>
@@ -58,7 +58,7 @@
     <Texture>imgs\\bullet.bmp</Texture>
   </Projectile>
 
-  <FlyingFist type="Standard">
+  <FlyingFist>
     <Width>22</Width>
     <Height>22</Height>
     <Damage>100</Damage>
@@ -69,7 +69,7 @@
   </FlyingFist>
   
   <!--Fist-->
-  <Fist type="Standard">
+  <Fist>
     <Width>22</Width>
     <Height>22</Height>
     <Texture>imgs\\fist.bmp</Texture>

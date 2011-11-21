@@ -69,7 +69,7 @@ void Fist::attack(int attack)
 
 	float offsetX = 40*cosf(getRotation());
 	float offsetY = 40*sinf(getRotation());
-	ObjectData* data = getLevel()->loadObjectData("FlyingFist", "Standard");
+	ObjectData* data = getLevel()->loadObjectData("FlyingFist");
 	FlyingFist* bullet = new FlyingFist(data, getPosition().x + offsetX, getPosition().y + offsetY);
 	
 	// Set bullet properties
@@ -89,7 +89,7 @@ void Fist::spawnSecondFist()
 	float offsetY = 40 * sinf(getRotation());
 
 	rotate(0.45);
-	ObjectData* data = getLevel()->loadObjectData("FlyingFist", "Standard");
+	ObjectData* data = getLevel()->loadObjectData("FlyingFist");
 	FlyingFist* bullet = new FlyingFist(data, getPosition().x + offsetX, getPosition().y + offsetY);
 	rotate(-0.45);
 

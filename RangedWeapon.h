@@ -21,7 +21,7 @@ public:
 	virtual void	draw();
 	virtual void	attack(int attack = 0);
 	virtual bool	collided(Object* collider);
-	void			setProjectile(string projectileClass, string type);
+	void			setProjectile(string name);
 	void			updatePosition(Vector ownerPos);
 	void			setFlipped(bool flipped);
 
@@ -31,8 +31,7 @@ public:
 
 private:
 	int		mRange;
-	string  mProjectileClass;
-	string	mProjectileType;
+	string  mProjectileName;
 };
 
 #endif
