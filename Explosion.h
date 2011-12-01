@@ -1,15 +1,15 @@
-#ifndef ROTATINGEMITTER_H
-#define ROTATINGEMITTER_H
+#ifndef Explosion_H
+#define Explosion_H
 
 #include "Object.h"
 
 class ExplosionParticle;
 
-class RotatingEmitter : public Object
+class Explosion : public Object
 {
 public:
-	RotatingEmitter(float x, float y);
-	~RotatingEmitter();
+	Explosion(float x, float y);
+	~Explosion();
 
 	void update(float dt);
 	

@@ -30,10 +30,10 @@
   <Sword>
     <Width>15</Width>
     <Height>53</Height>
-    <Texture>imgs\\sword.bmp</Texture>
+    <Texture>imgs\\simple_sword.bmp</Texture>
     <Damage>1337</Damage>
     <Cooldown>0.4f</Cooldown>
-    <Rotation>0.8</Rotation>
+    <Rotation>0.0</Rotation>
     <AttackTime>0.15f</AttackTime>
   </Sword>
 
@@ -65,14 +65,14 @@
     <Bounces>1</Bounces>
     <Speed>400</Speed>
     <Elasticity>0.8f</Elasticity>
-    <Texture>imgs\\fist.bmp</Texture>
+    <Texture>imgs\\simple_fist.bmp</Texture>
   </FlyingFist>
   
   <!--Fist-->
   <Fist>
     <Width>22</Width>
     <Height>22</Height>
-    <Texture>imgs\\fist.bmp</Texture>
+    <Texture>imgs\\simple_fist.bmp</Texture>
     <Damage>50</Damage>
     <Cooldown>10.0f</Cooldown>
     <Rotation>0</Rotation>

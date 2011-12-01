@@ -210,9 +210,9 @@ float DirectInput::getCursorY(void)
 
 void DirectInput::drawCursorPos(void)
 {
-	//char buffer[256];
-	//sprintf(buffer, "Mouse x: %.2f\nMouse y: %.2f", getCursorX(), getCursorY(), mouseDX(), mouseDY());
-	//gGraphics->drawText(buffer, 10, 400); 
+	char buffer[256];
+	sprintf(buffer, "Mouse x: %.2f\nMouse y: %.2f", getCursorX(), getCursorY(), mouseDX(), mouseDY());
+	gGraphics->drawText(buffer, 10, 500); 
 }
 
 void DirectInput::drawCursor(void)

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Animations>
+  <!--NOTE: All animations must start with a keyframe where all attributes are defined-->
+  <!--NOTE: Having all the attributes in the last keyframe is also recommended-->
+  <SwordAnimation>
+    <Length>0.4</Length>
+    
+    <Keyframe time="0.0">
+      <Rotation>0</Rotation>
+      <X>0</X>
+      <Y>0</Y>
+    </Keyframe>
+  
+    <Keyframe time="0.5">
+      <Rotation>-.7</Rotation>
+      <X>0</X>
+      <Y>-20</Y>
+    </Keyframe>
+
+    <Keyframe time="0.85">
+      <Rotation>2.3</Rotation>
+      <X>20</X>
+      <Y>20</Y>
+    </Keyframe>
+
+    <Keyframe time="1.0">
+      <Rotation>0</Rotation>
+      <X>0</X>
+      <Y>0</Y>
+    </Keyframe>
+  </SwordAnimation>
+</Animations>

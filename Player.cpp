@@ -11,12 +11,12 @@
 Collision polyCollision(RigidBody* bodyA, RigidBody* bodyB);
 
 Player::Player(float x, float y, int width, int height)
-	: Object(x, y, width, height, "imgs\\mario.bmp")
+	: Object(x, y, width, height, "imgs\\ninja.bmp")
 {
 	// Create the animation and set state and frame
-	mAnimation = new Animation(32, 64, 0.1, 4, 4);
+	mAnimation = new Animation(62, 64, 0.1, 6, 6);
 	mAnimation->pause();
-	mAnimation->setFrame(4);
+	mAnimation->setFrame(7);
 
 	// Load head texture
 	mHeadTexture = gGraphics->loadTexture("imgs\\mario_head.bmp");
@@ -122,7 +122,7 @@ void Player::update(float dt)
 	if(gDInput->keyDown(DIK_SPACE) && !mInAir)	{
 		setVelocity(getVelocity() + Vector(0, -500));
 		getBody()->Move(0, -1);		// Move it out of collision (:HACK:)
-		mAnimation->setFrame(4);	// Set the jumping frame
+		mAnimation->setFrame(7);	// Set the jumping frame
 		mAnimation->pause();		// Pause the animation
 		mInAir = true;				// The player is now in the air
 	}
@@ -152,11 +152,11 @@ void Player::draw()
 	// Draw the player with the right facing direction
 	if(mFaceDirection == LEFT)	{
 		gGraphics->drawTexturedShape(*getBody()->GetShape(), getTexture(), &mAnimation->getSourceRect(), true);
-		gGraphics->drawTexture(mHeadTexture, getPosition().x, getPosition().y - 20, 32, 32, 0xffffffff, mHeadRotation, mHeadFlipped);
+		//gGraphics->drawTexture(mHeadTexture, getPosition().x, getPosition().y - 20, 32, 32, 0xffffffff, mHeadRotation, mHeadFlipped);
 	}
 	else	{
 		gGraphics->drawTexturedShape(*getBody()->GetShape(), getTexture(), &mAnimation->getSourceRect(), false);
-		gGraphics->drawTexture(mHeadTexture, getPosition().x, getPosition().y - 20, 32, 32, 0xffffffff, mHeadRotation, mHeadFlipped);
+		//gGraphics->drawTexture(mHeadTexture, getPosition().x, getPosition().y - 20, 32, 32, 0xffffffff, mHeadRotation, mHeadFlipped);
 	}
 
 	char buffer[256];
@@ -221,6 +221,15 @@ void Player::checkLoot()
 {
 	// Calculate loot area
 	Rect lootArea = getRect();
+	if(getWeapon() != NULL)	{
+		// Add weapons width to loot area :NOTE: :TODO: Gives wrong result when the weapon is centered on the player etc...
+		if(mFaceDirection == RIGHT)
+			lootArea.right += getWeapon()->getWidth();
+		else if(mFaceDirection == LEFT)
+			lootArea.left -= getWeapon()->getWidth();
+	}
+
+	// Add some extra area
 	lootArea.bottom += 20;
 	lootArea.top -= 20;
 	lootArea.left -= 20;

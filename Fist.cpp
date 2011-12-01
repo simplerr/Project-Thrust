@@ -7,7 +7,7 @@
 #include "ObjectData.h"
 
 Fist::Fist(float x, float y)
-	: RangedWeapon(x, y, 22, 22, "imgs\\fist.bmp")
+	: RangedWeapon(x, y, 22, 22, "imgs\\simple_fist.bmp")
 {
 	// Init the default attributes
 	initDefaults();

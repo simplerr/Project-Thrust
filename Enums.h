@@ -10,6 +10,7 @@ using namespace std;
 #define RIGHT_NORMAL -1
 #define UP_NORMAL 1
 #define DOWN_NORMAL -1
+#define UNDEFINED -23123213
 
 #include "Vector.h"
 

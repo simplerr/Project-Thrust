@@ -1,9 +1,9 @@
-#include "RotatingEmitter.h"
+#include "Explosion.h"
 #include "Particle.h"
 #include "Level.h"
 #include "ExplosionParticle.h"
 
-RotatingEmitter::RotatingEmitter(float x, float y)
+Explosion::Explosion(float x, float y)
 	:Object(x, y, 10, 10)
 {
 	setRotatingSpeed(PI/10);
@@ -26,12 +26,12 @@ RotatingEmitter::RotatingEmitter(float x, float y)
 	mParticlesCreated = 0;
 }
 	
-RotatingEmitter::~RotatingEmitter()
+Explosion::~Explosion()
 {
 
 }
 
-void RotatingEmitter::update(float dt)
+void Explosion::update(float dt)
 {
 	mCounter += dt;
 	mLifetime -= dt;
@@ -49,7 +49,7 @@ void RotatingEmitter::update(float dt)
 		kill();
 }
 	
-void RotatingEmitter::addParticle()
+void Explosion::addParticle()
 {
 	mRotation += mRotatingSpeed;
 	//rotate(mRotatingSpeed);
@@ -66,12 +66,12 @@ void RotatingEmitter::addParticle()
 	mParticlesCreated++;	
 }
 
-void RotatingEmitter::addException(Object* object)
+void Explosion::addException(Object* object)
 {
 	mExceptionList.push_back(object);
 }
 
-bool RotatingEmitter::isException(Object* object)
+bool Explosion::isException(Object* object)
 {
 	for(int i = 0; i < mExceptionList.size(); i++)
 	{
@@ -82,52 +82,52 @@ bool RotatingEmitter::isException(Object* object)
 	return false;
 }
 
-void RotatingEmitter::setParticlesPerFrame(int speed)
+void Explosion::setParticlesPerFrame(int speed)
 {
 	mParticlesPerFrame = speed;
 }
 	
-void RotatingEmitter::setRotatingSpeed(float speed)
+void Explosion::setRotatingSpeed(float speed)
 {
 	mRotatingSpeed = speed;
 }
 	
-void RotatingEmitter::setRange(float range)
+void Explosion::setRange(float range)
 {
 	mRange = range;
 }
 
-void RotatingEmitter::setParticleDimensions(int width, int height)
+void Explosion::setParticleDimensions(int width, int height)
 {
 	mPartilceDimensions = Vector(width, height);
 }
 
-void RotatingEmitter::setParticleSpeed(float speed)
+void Explosion::setParticleSpeed(float speed)
 {
 	mParticleSpeed = speed;
 }
 
-void RotatingEmitter::setParticleTexture(string textureSource)
+void Explosion::setParticleTexture(string textureSource)
 {
 	mParticleTextureSource = textureSource;
 }
 
-void RotatingEmitter::setInterval(float interval)
+void Explosion::setInterval(float interval)
 {
 	mInterval = interval;
 }
 
-void RotatingEmitter::setCreationRadius(float radius)
+void Explosion::setCreationRadius(float radius)
 {
 	mCreationRadius = radius;
 }
 
-void RotatingEmitter::setLifetime(float lifetime)
+void Explosion::setLifetime(float lifetime)
 {
 	mLifetime = lifetime;
 }
 
-void RotatingEmitter::setMaxParticles(int maxParticles)
+void Explosion::setMaxParticles(int maxParticles)
 {
 	mMaxParticles = maxParticles;
 }

@@ -79,8 +79,8 @@ void RangedWeapon::draw()
 void RangedWeapon::attack(int attack)
 {
 	// Calculate where to spawn the projectile
-	float offsetX = - 10 + 60*cosf(getRotation());
-	float offsetY = - 5 + 60*sinf(getRotation());
+	float offsetX = - 10 + 70*cosf(getRotation());
+	float offsetY = - 5 + 70*sinf(getRotation());
 	ObjectData* data = getLevel()->loadObjectData(mProjectileName);
 
 	Projectile* projectile;

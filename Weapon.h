@@ -38,6 +38,7 @@ public:
 	bool	getAttacking();
 	bool	getFlipped();
 	float	getDamage();
+	float	getStandardRotation();
 	Vector	getOffset();
 
 	virtual bool isReady();

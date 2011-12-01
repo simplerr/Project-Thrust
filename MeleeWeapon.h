@@ -2,6 +2,7 @@
 #define MELEEWEAPON_H
 
 #include "Weapon.h"
+#include "KeyAnimation.h"
 #include <string>
 
 using namespace std;
@@ -23,8 +24,7 @@ public:
 
 	virtual bool collided(Object* collider);
 private:
-	float	mAttackTime;
-	float	mElapsedTime;
+	KeyAnimation* mAnimation;
 };
 
 #endif

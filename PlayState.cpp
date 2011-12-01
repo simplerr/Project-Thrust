@@ -18,7 +18,7 @@ PlayState::PlayState()
 	mBkgdTexture = gGraphics->loadTexture("imgs\\bkgd.bmp");
 
 	// Create the player and add it to the level
-	mPlayer = new Player(600, 200, 32, 64);
+	mPlayer = new Player(600, 200, 35, 70);
 	mLevel->addObject(mPlayer);
 	mPlayer->init();
 
@@ -39,19 +39,19 @@ PlayState::PlayState()
 	SwordLoot* loot = new SwordLoot(400, 300, 50, 50);
 	mLevel->addObject(loot);
 
-	SwordLoot* loot1 = new SwordLoot(600, 300, 50, 50);
-	mLevel->addObject(loot1);
+	//SwordLoot* loot1 = new SwordLoot(600, 300, 50, 50);
+	//mLevel->addObject(loot1);
 
-	FistLoot* fistLoot = new FistLoot(200, 200, 50,  50);
-	mLevel->addObject(fistLoot);
+	//FistLoot* fistLoot = new FistLoot(200, 200, 50,  50);
+	//mLevel->addObject(fistLoot);
 
-	RocketLoot* rocketLoot = new RocketLoot(500, 300, 50, 50);
-	mLevel->addObject(rocketLoot);
+	//RocketLoot* rocketLoot = new RocketLoot(500, 300, 50, 50);
+	//mLevel->addObject(rocketLoot);
 
-	Enemy* enemy = new Enemy(300, 200, 32, 64);
-	enemy->setMaxDistance(100.0f);
-	enemy->setSpeed(0);
-	mLevel->addObject(enemy);
+	//Enemy* enemy = new Enemy(300, 200, 32, 64);
+	//enemy->setMaxDistance(100.0f);
+	//enemy->setSpeed(0);
+	//mLevel->addObject(enemy);
 }
 
 PlayState::~PlayState()

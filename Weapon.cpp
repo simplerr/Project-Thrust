@@ -161,3 +161,8 @@ void Weapon::setCooldownCounter(float count)
 {
 	mCooldownCounter = count;
 }
+
+float Weapon::getStandardRotation()
+{
+	return mStandardRotation;
+}

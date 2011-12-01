@@ -1,6 +1,6 @@
 #include "Grenade.h"
 #include "Level.h"
-#include "RotatingEmitter.h"
+#include "Explosion.h"
 
 Grenade::Grenade(float x, float y, int width, int height)
 	: Projectile(x, y, width, height, "imgs\\grenade.bmp")
@@ -29,7 +29,7 @@ void Grenade::update(float dt)
 	else
 	{
 		// Create the explosion particles
-		RotatingEmitter* emitter = new RotatingEmitter(getPosition().x, getPosition().y);
+		Explosion* emitter = new Explosion(getPosition().x, getPosition().y);
 		emitter->setParticleTexture("imgs\\explosion_particle.bmp");		
 		emitter->setParticleSpeed(900.0f),
 		emitter->setSimulate(false);

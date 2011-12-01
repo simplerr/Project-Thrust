@@ -1,5 +1,5 @@
 #include "ExplosionParticle.h"
-#include "RotatingEmitter.h"
+#include "Explosion.h"
 #include "Player.h"
 
 Collision polyCollision(RigidBody* bodyA, RigidBody* bodyB);
@@ -27,7 +27,7 @@ void ExplosionParticle::draw()
 
 bool ExplosionParticle::collided(Object* collider)
 {
-	RotatingEmitter* explosion = dynamic_cast<RotatingEmitter*>(getParent());
+	Explosion* explosion = dynamic_cast<Explosion*>(getParent());
 
 	// Is the collider in the explosions exception list (has it already been affected by the explosion?)
 	if(!explosion->isException(collider))

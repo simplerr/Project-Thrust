@@ -10,8 +10,9 @@ MeleeWeapon::MeleeWeapon(float x, float y, int width, int height, string texture
 {
 	// Init default variables
 	setType(MELEE_WEAPON);
-	mAttackTime = 0.15f;
-	mElapsedTime = 0.0f;
+
+	mAnimation = new KeyAnimation("animations.xml", "SwordAnimation");
+	mAnimation->loadAnimation();
 }
 	
 MeleeWeapon::MeleeWeapon(ObjectData* data, float x, float y)
@@ -19,8 +20,10 @@ MeleeWeapon::MeleeWeapon(ObjectData* data, float x, float y)
 {
 	// Get data 
 	float attackTime = data->getValueDouble("AttackTime");
-
-	mAttackTime = attackTime;
+	
+	mAnimation = new KeyAnimation("animations.xml", "SwordAnimation");
+	mAnimation->loadAnimation();
+	setCooldown(mAnimation->getLength());
 }
 
 MeleeWeapon::~MeleeWeapon()
@@ -30,22 +33,27 @@ MeleeWeapon::~MeleeWeapon()
 
 void MeleeWeapon::update(float dt)
 {
-	// :TODO: 
-	if(getAttacking() && mElapsedTime < mAttackTime)
-	{
-		if(!getFlipped())
-			rotate(PI/18);
-		else
-			rotate(-PI/18);
+	// If the animation is running -> get the rotation and movement
+	if(mAnimation->interpolate(dt))	{
+		Vector movement = mAnimation->getMovement();
+		float  rotation = mAnimation->getRotation();
 
-		mElapsedTime += dt;
+		// Different when flipped and not
+		if(!getFlipped())	{
+			rotate(rotation - getRotation());
+			getBody()->Move(movement);
+			setOffset(getOffset() + movement);	
+		}
+		else	{
+			rotate(-rotation - getRotation());
+			getBody()->Move(Vector(movement.x, -movement.y));			// :NOTE No idea why it should move with inversed Y and not X, maybe has to do with the rotation
+			setOffset(getOffset() + Vector(movement.x, -movement.y));	
+		}
+		
 	}
-	else if(mElapsedTime > mAttackTime)	
-	{
-		// Restore the rotation and position
-		restoreRotation();
-
-		setAttacking(false);
+	else	{
+		if(getRotation() != getStandardRotation())
+			setRotation(getStandardRotation());	 // :NOTE: Sloppy
 	}
 }
 	
@@ -83,7 +91,7 @@ bool MeleeWeapon::collided(Object* collider)
 		getParent()->getBody()->Move(collision.pushX, collision.pushY);
 
 		// Stop the attack
-		restoreRotation();
+		//restoreRotation();
 		setAttacking(false);
 	}
 
@@ -92,27 +100,17 @@ bool MeleeWeapon::collided(Object* collider)
 
 void MeleeWeapon::attack(int attack)
 {
-	// Support for different attacks
-	if(attack == 0)
-	{
-		// Reset the rotation if currently attacking
-		if(getAttacking())	{
-			restoreRotation();
-		}
-
-		// Start the attack
-		mElapsedTime = 0.0f;
-		setAttacking(true);
-	}
+	// Start the attack animation
+	mAnimation->start();
 }
 
 void MeleeWeapon::updatePosition(Vector ownerPos)
 {
 	// Set the position depending on the owners (players) position, offset and if flipped is true or not
 	if(getFlipped())
-		setPosition(ownerPos - getOffset());
+		setPosition(ownerPos - Vector(getOffset().x, 0));	// :TODO: Y offset shouldn't be 0
 	else
-		setPosition(ownerPos + getOffset());
+		setPosition(ownerPos + Vector(getOffset().x, 0));
 }
 
 void MeleeWeapon::setFlipped(bool flipped)

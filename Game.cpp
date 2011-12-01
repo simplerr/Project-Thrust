@@ -140,6 +140,7 @@ void Game::draw()
 
 	// Cursor
 	gDInput->drawCursor();
+	gDInput->drawCursorPos();
 
 	gGraphics->getSpriteHandler()->Flush();
 	gGraphics->getSpriteHandler()->End();
